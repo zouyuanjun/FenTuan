@@ -2,7 +2,11 @@ package com.lejiaokeji.fentuan.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,100 +15,99 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.adapter.Home_Re_Adapter;
 import com.lejiaokeji.fentuan.view.dummy.DummyContent;
 import com.lejiaokeji.fentuan.view.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+import me.majiajie.pagerbottomtabstrip.MaterialMode;
+import me.majiajie.pagerbottomtabstrip.NavigationController;
+import me.majiajie.pagerbottomtabstrip.PageNavigationView;
+
 public class HomeFragment extends Fragment {
+    private String[] mTitles = new String[]{"简介", "评价", "相关"};
+    private SimpleViewPagerIndicator mIndicator;
+    private ViewPager mViewPager;
+    private FragmentPagerAdapter mAdapter;
+    private TabFragment[] mFragments = new TabFragment[mTitles.length];
+    View view;
+    NavigationController mNavigationController;
+    PageNavigationView pageBottomTabLayout;
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public HomeFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HomeFragment newInstance(int columnCount) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        initViews();
+        initDatas();
+        initEvents();
         return view;
     }
 
+    private void initEvents() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+            }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
+                mIndicator.scroll(position, positionOffset);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+    private void initDatas() {
+        mIndicator.setTitles(mTitles);
+
+        for (int i = 0; i < mTitles.length; i++) {
+            mFragments[i] = (TabFragment) TabFragment.newInstance(mTitles[i]);
         }
+        mAdapter = new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
+            @Override
+            public int getCount() {
+                return mTitles.length;
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments[position];
+            }
+
+        };
+
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(0);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private void initViews() {
+        mIndicator = (SimpleViewPagerIndicator) view.findViewById(R.id.id_stickynavlayout_indicator);
+        mViewPager = (ViewPager) view.findViewById(R.id.id_stickynavlayout_viewpager);
+        pageBottomTabLayout = (PageNavigationView)view.findViewById(R.id.intab);
+        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.pfile_ic_portrait,"首页")
+                .addItem(R.drawable.pfile_ic_portrait,"推荐")
+                .addItem(R.drawable.pfile_ic_portrait,"商城")
+                .setDefaultColor(0x89000000)
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)
+                .build();
+        mNavigationController.setupWithViewPager(mViewPager);
+		/*
+		RelativeLayout ll = (RelativeLayout) findViewById(R.id.id_stickynavlayout_topview);
+		TextView tv = new TextView(this);
+		tv.setText("我的动态添加的");
+		tv.setBackgroundColor(0x77ff0000);
+		ll.addView(tv, new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.MATCH_PARENT, 600));
+		*/
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }
+
 }

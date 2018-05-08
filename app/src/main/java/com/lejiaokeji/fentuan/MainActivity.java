@@ -5,20 +5,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
+import com.lejiaokeji.fentuan.view.BlankFragment;
 import com.lejiaokeji.fentuan.view.HomeFragment;
-import com.lejiaokeji.fentuan.view.dummy.DummyContent;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     private List<Fragment> fragmentList=new ArrayList<>();
     NavigationController mNavigationController;
@@ -39,14 +36,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         .build();
         initview();
     }
-    private  void initview(){
+    private  void initview() {
 
-        fragmentList.add(HomeFragment.newInstance(5));
-        fragmentList.add(HomeFragment.newInstance(5));
-        fragmentList.add(HomeFragment.newInstance(5));
-        fragmentList.add(HomeFragment.newInstance(5));
-        fragmentList.add(HomeFragment.newInstance(5));
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragmentList));
+        fragmentList.add(new HomeFragment());
+        fragmentList.add(new BlankFragment());
+        fragmentList.add(new BlankFragment());
+        fragmentList.add(new BlankFragment());
+        fragmentList.add(new BlankFragment());
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
         //自动适配ViewPager页面切换
         mNavigationController.setupWithViewPager(viewPager);
 
@@ -54,18 +51,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
-                Log.i("asd","selected: " + index + " old: " + old);
+                Log.i("asd", "selected: " + index + " old: " + old);
             }
 
             @Override
             public void onRepeat(int index) {
-                Log.i("asd","onRepeat selected: " + index);
+                Log.i("asd", "onRepeat selected: " + index);
             }
         });
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
     }
 }

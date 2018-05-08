@@ -9,13 +9,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v4.view.ViewPager
+    <com.lejiaokeji.fentuan.view.CustomViewpage
         android:id="@+id/myviewpage"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+    </com.lejiaokeji.fentuan.view.CustomViewpage>
     <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/tab"
         android:elevation="8dp"
