@@ -1,0 +1,16 @@
+Index: app/src/main/java/com/lejiaokeji/fentuan/activity/Sign_in_Activity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/lejiaokeji/fentuan/activity/Sign_in_Activity.java	(revision edfeff9cf9d48e2b9ee3b25a4c040b36433168ab)
++++ app/src/main/java/com/lejiaokeji/fentuan/activity/Sign_in_Activity.java	(date 1525861966468)
+@@ -14,7 +14,7 @@
+ 
+ import com.lejiaokeji.fentuan.R;
+ import com.lejiaokeji.fentuan.control.Sign_In;
+-import com.lejiaokeji.fentuan.util.GetAlerDialog;
++import com.lejiaokeji.fentuan.utils.GetAlerDialog;
+ 
+ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickListener{
+ 

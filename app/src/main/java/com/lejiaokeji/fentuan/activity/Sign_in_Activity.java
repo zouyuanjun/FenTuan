@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
-import com.lejiaokeji.fentuan.util.GetAlerDialog;
+import com.lejiaokeji.fentuan.utils.GetAlerDialog;
 
 public class Sign_in_Activity extends AppCompatActivity implements View.OnClickListener{
 
