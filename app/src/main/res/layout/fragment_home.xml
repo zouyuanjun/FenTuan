@@ -1,44 +1,122 @@
-<com.lejiaokeji.fentuan.view.StickyNavLayout
+<com.lejiaokeji.fentuan.view.helpview.StickyNavLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@id/id_stickynavlayout_topview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4400ff00">
-
-        <TextView
+        android:background="#4400ff00"
+        android:orientation="vertical">
+        <com.youth.banner.Banner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="256dp"
-            android:gravity="center"
-            android:text="软件介绍"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:layout_height="200dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_select_jd"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="70dp"
+                android:textSize="20sp"
+                android:text="京东"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+            <ImageView
+                android:background="@color/colorPrimary"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="70dp"
+                android:layout_below="@+id/tv_select_jd"
+                android:layout_width="40dp"
+                android:layout_height="5dp" />
+            <TextView
+                android:id="@+id/tv_select_pingduoduo"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="70dp"
+                android:textSize="20sp"
+                android:text="拼多多"
+                android:gravity="center"
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+              />
+            <ImageView
+                android:background="@color/colorPrimary"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="80dp"
+                android:layout_below="@+id/tv_select_pingduoduo"
+                android:layout_width="40dp"
+                android:layout_height="5dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="29dp">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_corner"
+                android:paddingLeft="20dp">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@color/colorAccent"/>
+                <EditText
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="请输入搜索关键词"/>
+                <Button
 
-    <com.lejiaokeji.fentuan.view.SimpleViewPagerIndicator
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="搜索"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator
         android:id="@id/id_stickynavlayout_indicator"
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="40dp"
         android:background="#ffffffff"
         android:orientation="vertical">
-
-
-    </com.lejiaokeji.fentuan.view.SimpleViewPagerIndicator>
-    <me.majiajie.pagerbottomtabstrip.PageNavigationView
-        android:id="@+id/intab"
+    </com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/colorPrimary"
-        android:elevation="18dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+            <me.majiajie.pagerbottomtabstrip.PageNavigationView
+                android:id="@+id/intab"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:background="@color/colorPrimary"
+                android:elevation="18dp" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/colorAccent"/>
+    </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@id/id_stickynavlayout_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        >
 
     </android.support.v4.view.ViewPager>
 
-</com.lejiaokeji.fentuan.view.StickyNavLayout>
+</com.lejiaokeji.fentuan.view.helpview.StickyNavLayout>

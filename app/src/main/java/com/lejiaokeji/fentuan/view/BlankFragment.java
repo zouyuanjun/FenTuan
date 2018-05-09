@@ -1,16 +1,9 @@
 package com.lejiaokeji.fentuan.view;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.lejiaokeji.fentuan.R;
-public class BlankFragment extends Fragment {
+import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
+
+public class BlankFragment extends LazyLoadFragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -21,13 +14,14 @@ public class BlankFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    protected int setContentView() {
+        return R.layout.fragment_recommend;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+    protected void lazyLoad() {
+
     }
 
 }

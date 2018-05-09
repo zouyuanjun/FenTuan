@@ -1,53 +1,76 @@
 package com.lejiaokeji.fentuan.view;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.lejiaokeji.fentuan.R;
-import com.lejiaokeji.fentuan.adapter.Home_Re_Adapter;
-import com.lejiaokeji.fentuan.view.dummy.DummyContent;
-import com.lejiaokeji.fentuan.view.dummy.DummyContent.DummyItem;
-
+import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
+import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
+import com.lejiaokeji.fentuan.view.helpview.OnlyTextTab;
+import com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 
-public class HomeFragment extends Fragment {
-    private String[] mTitles = new String[]{"简介", "评价", "相关"};
+public class HomeFragment extends LazyLoadFragment {
+    private String[] mTitles = new String[]{"简介", "评价", "相关","简介","简介", "评价", "相关"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private TabFragment[] mFragments = new TabFragment[mTitles.length];
-    View view;
     NavigationController mNavigationController;
     PageNavigationView pageBottomTabLayout;
-
-    @Nullable
+    List<String> images=new ArrayList<>();
+    List<String> titles=new ArrayList<>();
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+    protected int setContentView() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        images.clear();
+        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=7e2ab5aae471045c19b44966e1e6327b&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F11%2F44%2F96%2F87b3OOOPICd4.jpg");
+       images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=4ab59126e04b1afcacf93ff942c9c4f4&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D550123260c0828387c00d454d1e1cc6d%2F42166d224f4a20a4345db4fe9b529822720ed04c.jpg");
+        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827180&di=e13fd305b2ae85660894c6f4fc65ce2e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D9318f631b3389b502cf2e811ed5c8fa8%2F4ec2d5628535e5dd42d849f07cc6a7efce1b622d.jpg");
+        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827178&di=6fbd340ce8951b896105949980c46e7f&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D852d136481d4b31ce4319cf8efbf4d0a%2F8601a18b87d6277f51ef3a1f22381f30e924fc1c.jpg");
+        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827177&di=6ce6d7f037e62c9af27b0c9003cf9d92&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0135c656fb290d6ac7257948dd18af.jpg%402o.jpg");
+        titles.clear();
+        titles.add("哇哈哈");
+        titles.add("AD钙");
+        titles.add("噜啦啦");
+        titles.add("啊啊啊");
+        titles.add("阿西吧");
+        Banner banner = (Banner) findViewById(R.id.banner);
+        //设置banner样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //设置图片集合
+        banner.setImages(images);
+        //设置banner动画效果
+        banner.setBannerAnimation(Transformer.DepthPage);
+        //设置标题集合（当banner样式有显示title时）
+        banner.setBannerTitles(titles);
+        //设置自动轮播，默认为true
+        banner.isAutoPlay(true);
+        //设置轮播时间
+        banner.setDelayTime(2500);
+        //设置指示器位置（当banner模式中有指示器时）
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+        //banner设置方法全部调用完毕时最后调用
+        banner.start();
         initViews();
         initDatas();
         initEvents();
-        return view;
     }
 
     private void initEvents() {
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
             }
@@ -57,7 +80,6 @@ public class HomeFragment extends Fragment {
                                        int positionOffsetPixels) {
                 mIndicator.scroll(position, positionOffset);
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -71,7 +93,7 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < mTitles.length; i++) {
             mFragments[i] = (TabFragment) TabFragment.newInstance(mTitles[i]);
         }
-        mAdapter = new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
+        mAdapter = new FragmentPagerAdapter(this.getChildFragmentManager()) {
             @Override
             public int getCount() {
                 return mTitles.length;
@@ -89,14 +111,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViews() {
-        mIndicator = (SimpleViewPagerIndicator) view.findViewById(R.id.id_stickynavlayout_indicator);
-        mViewPager = (ViewPager) view.findViewById(R.id.id_stickynavlayout_viewpager);
-        pageBottomTabLayout = (PageNavigationView)view.findViewById(R.id.intab);
-        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.pfile_ic_portrait,"首页")
-                .addItem(R.drawable.pfile_ic_portrait,"推荐")
-                .addItem(R.drawable.pfile_ic_portrait,"商城")
-                .setDefaultColor(0x89000000)
-                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)
+        mIndicator = (SimpleViewPagerIndicator) findViewById(R.id.id_stickynavlayout_indicator);
+        mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
+        pageBottomTabLayout = (PageNavigationView)findViewById(R.id.intab);
+        mNavigationController=pageBottomTabLayout.custom()
+                .addItem(new OnlyTextTab(getContext(),"推荐"))
+                .addItem(new OnlyTextTab(getContext(),"女装"))
+                .addItem(new OnlyTextTab(getContext(),"男装"))
+                .addItem(new OnlyTextTab(getContext(),"母婴玩具"))
+                .addItem(new OnlyTextTab(getContext(),"女装"))
+                .addItem(new OnlyTextTab(getContext(),"男装"))
+                .addItem(new OnlyTextTab(getContext(),"母婴玩具"))
                 .build();
         mNavigationController.setupWithViewPager(mViewPager);
 		/*

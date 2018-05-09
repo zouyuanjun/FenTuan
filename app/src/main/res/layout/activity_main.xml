@@ -9,16 +9,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.lejiaokeji.fentuan.view.CustomViewpage
+    <com.lejiaokeji.fentuan.view.helpview.CustomViewpage
         android:id="@+id/myviewpage"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent">
 
-    </com.lejiaokeji.fentuan.view.CustomViewpage>
+    </com.lejiaokeji.fentuan.view.helpview.CustomViewpage>
+
     <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/tab"
-        android:elevation="8dp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
