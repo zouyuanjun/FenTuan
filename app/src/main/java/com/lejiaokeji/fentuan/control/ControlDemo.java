@@ -1,27 +1,15 @@
 package com.lejiaokeji.fentuan.control;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.google.gson.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
 import com.lejiaokeji.fentuan.utils.Network;
 
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-/**
- * Created by zou on 2018/3/28.
- */
-
-public class Sign_In {
+public class ControlDemo {
     Network network;
     String username;
     String password;
@@ -31,11 +19,11 @@ public class Sign_In {
         this.username = username;
         this.password = password;
     }
-    private static Sign_In instance=new Sign_In();
-    public static Sign_In getInstance(){
+    private static ControlDemo instance=new ControlDemo();
+    public static ControlDemo getInstance(){
         return instance;
     }
-    private Sign_In() {
+    private ControlDemo() {
         network= Network.getnetwork();
     }
 
@@ -46,25 +34,25 @@ public class Sign_In {
 //        network.connectnet(requestbody,"login",StaticValue.url,handler,1);
     }
     Handler handler=new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                int what=msg.what;
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int what=msg.what;
 
-                    String result=msg.obj.toString();
-                    Log.d("5555","SIGN返回数据"+result);
-                    //对返回的数据进行判断是否登陆成功
-                    isture(result);
-            }
-        };
+            String result=msg.obj.toString();
+            Log.d("5555","SIGN返回数据"+result);
+            //对返回的数据进行判断是否登陆成功
+            isture(result);
+        }
+    };
     public interface Signresult{
         public void signsuccessful();
         public void signfail(String t);
         public void fistlogin();
         public void severerr();
     }
-    private  Signresult signresult;
-    public void setsignlistener( Signresult signresult1){
+    private Sign_In.Signresult signresult;
+    public void setsignlistener( Sign_In.Signresult signresult1){
         this.signresult=signresult1;
     }
 
@@ -82,3 +70,4 @@ public class Sign_In {
     }
 
 }
+
