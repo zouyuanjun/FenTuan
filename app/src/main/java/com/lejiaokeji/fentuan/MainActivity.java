@@ -5,14 +5,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
 import com.lejiaokeji.fentuan.view.BlankFragment;
 import com.lejiaokeji.fentuan.view.HomeFragment;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;

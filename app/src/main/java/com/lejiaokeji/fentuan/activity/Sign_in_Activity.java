@@ -41,7 +41,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         tv_forget_password=findViewById(R.id.tv_forget_password);
         imageButton=findViewById(R.id.imb_weixin_sign);
         sign_in=Sign_In.getInstance();
-
+//sadfasdf;
     }
 
     @Override
