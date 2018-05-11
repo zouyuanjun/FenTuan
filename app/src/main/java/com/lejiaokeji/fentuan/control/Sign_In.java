@@ -75,11 +75,8 @@ public class Sign_In {
     public void setsignlistener( Signresult signresult1){
         this.signresult=signresult1;
     }
-
     public void isture(String result){
-
     }
-
     public void keepdata(){
 
         SharedPreferences sp = activity.getSharedPreferences("SPuser", Activity.MODE_PRIVATE);

@@ -6,8 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
-import com.lejiaokeji.fentuan.view.BlankFragment;
 import com.lejiaokeji.fentuan.view.HomeFragment;
+import com.lejiaokeji.fentuan.view.NotificationFragment;
+import com.lejiaokeji.fentuan.view.RecommendFragment;
+import com.lejiaokeji.fentuan.view.Store_Fragment;
+import com.lejiaokeji.fentuan.view.UserCentreFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
@@ -39,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private  void initview() {
 
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new BlankFragment());
-        fragmentList.add(new BlankFragment());
-        fragmentList.add(new BlankFragment());
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new RecommendFragment());
+        fragmentList.add(new NotificationFragment());
+        fragmentList.add(new Store_Fragment());
+        fragmentList.add(new UserCentreFragment());
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
         //自动适配ViewPager页面切换
         mNavigationController.setupWithViewPager(viewPager);

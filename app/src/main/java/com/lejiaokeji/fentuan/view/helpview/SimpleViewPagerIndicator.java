@@ -37,7 +37,9 @@ public class SimpleViewPagerIndicator extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mTabWidth = w / mTabCount;
+        if (mTabCount!=0) {
+            mTabWidth = w / mTabCount;
+        }
     }
 
     public void setTitles(String[] titles) {

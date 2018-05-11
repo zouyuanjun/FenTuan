@@ -12,7 +12,7 @@ import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabFragment extends LazyLoadFragment {
+public class HomeTabFragment extends LazyLoadFragment {
     public static final String TITLE = "title";
     private String mTitle = "Defaut Value";
     private RecyclerView mRecyclerView;
@@ -20,8 +20,8 @@ public class TabFragment extends LazyLoadFragment {
     private List<String> mDatas = new ArrayList<String>();
     Home_Re_Adapter adapter;
 
-    public static TabFragment newInstance(String title) {
-        TabFragment tabFragment = new TabFragment();
+    public static HomeTabFragment newInstance(String title) {
+        HomeTabFragment tabFragment = new HomeTabFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TITLE, title);
         tabFragment.setArguments(bundle);

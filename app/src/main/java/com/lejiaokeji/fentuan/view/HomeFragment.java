@@ -4,6 +4,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,7 +24,7 @@ public class HomeFragment extends LazyLoadFragment {
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
-    private TabFragment[] mFragments = new TabFragment[mTitles.length];
+    private HomeTabFragment[] mFragments = new HomeTabFragment[mTitles.length];
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
     TabLayout tabLayout;
@@ -68,13 +69,12 @@ public class HomeFragment extends LazyLoadFragment {
         initViews();
         initDatas();
     }
-
     //设置viewpage adapter
     private void initDatas() {
         mIndicator.setTitles(mTitles);
 
         for (int i = 0; i < mTitles.length; i++) {
-            mFragments[i] = (TabFragment) TabFragment.newInstance(mTitles[i]);
+            mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance(mTitles[i]);
         }
         mAdapter = new FragmentPagerAdapter(this.getChildFragmentManager()) {
             @Override
@@ -111,7 +111,7 @@ public class HomeFragment extends LazyLoadFragment {
         mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
 
         mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
-        tabLayout.setupWithViewPager(mViewPager);
+       // tabLayout.setupWithViewPager(mViewPager);
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));
@@ -124,7 +124,8 @@ public class HomeFragment extends LazyLoadFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                mViewPager.setCurrentItem(tab.getPosition()+1);
+                Log.d("555","第一次选择");
             }
 
             @Override
@@ -134,12 +135,16 @@ public class HomeFragment extends LazyLoadFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Log.d("555","第二次选择");
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d("555","viewpage position"+position+"positionOffset"+positionOffset);
+                if (position>0){
+                    tabLayout.setScrollPosition(position-1,positionOffset,true);
+                }
 
             }
 
