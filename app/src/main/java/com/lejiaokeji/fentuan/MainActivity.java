@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewPager=findViewById(R.id.myviewpage);
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
-        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.pfile_ic_portrait,"首页")
-                .addItem(R.drawable.pfile_ic_portrait,"推荐")
+        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.tool_ic_home_nor,R.drawable.tool_ic_home_sel,"",getResources().getColor(R.color.colorAccent))
+                .addItem(R.drawable.tool_ic_code_nor,R.drawable.tool_ic_code_sel,"推荐",getResources().getColor(R.color.colorAccent))
                 .addItem(R.drawable.pfile_ic_portrait,"商城")
                 .addItem(R.drawable.pfile_ic_portrait,"通知")
                 .addItem(R.drawable.pfile_ic_portrait,"我的")
-        .setDefaultColor(0x89000000)
-        .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)
+      //  .setDefaultColor(0x89000000)
+     //   .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)
         .build();
         initview();
     }
