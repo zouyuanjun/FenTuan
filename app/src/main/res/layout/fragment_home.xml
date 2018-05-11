@@ -1,7 +1,7 @@
-<com.lejiaokeji.fentuan.view.helpview.StickyNavLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lejiaokeji.fentuan.view.helpview.StickyNavLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <LinearLayout
         android:id="@id/id_stickynavlayout_topview"
@@ -88,23 +88,29 @@
     <com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator
         android:id="@id/id_stickynavlayout_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#ffffffff"
+        android:layout_height="0.1dp"
+        android:background="#666666"
         android:orientation="vertical">
     </com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=" 推 荐   |"/>
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/mytablayout"
+            android:layout_weight="1"
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabTextColor="@color/colorAccent">
 
-            <me.majiajie.pagerbottomtabstrip.PageNavigationView
-                android:id="@+id/intab"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="35dp"
-                android:background="@color/colorPrimary"
-                android:elevation="18dp" />
-
+        </android.support.design.widget.TabLayout>
         <ImageView
             android:layout_gravity="center_vertical"
             android:layout_width="20dp"

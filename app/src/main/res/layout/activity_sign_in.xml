@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorAccent">
         <RelativeLayout
-
             android:layout_alignParentTop="true"
             android:layout_marginTop="100dp"
             android:layout_width="match_parent"
@@ -31,6 +30,7 @@
                 android:layout_height="40dp"
                 android:hint="请输入手机号"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_alignParentTop="true"
             android:layout_marginTop="150dp"

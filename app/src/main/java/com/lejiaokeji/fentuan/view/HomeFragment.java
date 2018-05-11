@@ -1,7 +1,12 @@
 package com.lejiaokeji.fentuan.view;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
@@ -13,19 +18,15 @@ import com.youth.banner.Transformer;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.majiajie.pagerbottomtabstrip.NavigationController;
-import me.majiajie.pagerbottomtabstrip.PageNavigationView;
-
 public class HomeFragment extends LazyLoadFragment {
-    private String[] mTitles = new String[]{"简介", "评价", "相关","简介","简介", "评价", "相关"};
+    private String[] mTitles = new String[]{"简介", "评价", "相关","简介","简介", "评价", "相关","简介", "评价", "相关"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private TabFragment[] mFragments = new TabFragment[mTitles.length];
-    NavigationController mNavigationController;
-    PageNavigationView pageBottomTabLayout;
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
+    TabLayout tabLayout;
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
@@ -66,27 +67,9 @@ public class HomeFragment extends LazyLoadFragment {
         banner.start();
         initViews();
         initDatas();
-        initEvents();
     }
 
-    private void initEvents() {
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-                mIndicator.scroll(position, positionOffset);
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-    }
+    //设置viewpage adapter
     private void initDatas() {
         mIndicator.setTitles(mTitles);
 
@@ -104,6 +87,17 @@ public class HomeFragment extends LazyLoadFragment {
                 return mFragments[position];
             }
 
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mTitles[position];
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                super.destroyItem(container, position, object);
+
+            }
         };
 
         mViewPager.setAdapter(mAdapter);
@@ -111,28 +105,54 @@ public class HomeFragment extends LazyLoadFragment {
     }
 
     private void initViews() {
-        mIndicator = (SimpleViewPagerIndicator) findViewById(R.id.id_stickynavlayout_indicator);
-        mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
-        pageBottomTabLayout = (PageNavigationView)findViewById(R.id.intab);
-        mNavigationController=pageBottomTabLayout.custom()
-                .addItem(new OnlyTextTab(getContext(),"推荐"))
-                .addItem(new OnlyTextTab(getContext(),"女装"))
-                .addItem(new OnlyTextTab(getContext(),"男装"))
-                .addItem(new OnlyTextTab(getContext(),"母婴玩具"))
-                .addItem(new OnlyTextTab(getContext(),"女装"))
-                .addItem(new OnlyTextTab(getContext(),"男装"))
-                .addItem(new OnlyTextTab(getContext(),"母婴玩具"))
-                .build();
-        mNavigationController.setupWithViewPager(mViewPager);
-		/*
-		RelativeLayout ll = (RelativeLayout) findViewById(R.id.id_stickynavlayout_topview);
-		TextView tv = new TextView(this);
-		tv.setText("我的动态添加的");
-		tv.setBackgroundColor(0x77ff0000);
-		ll.addView(tv, new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT, 600));
-		*/
+        tabLayout=findViewById(R.id.mytablayout);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
+
+        mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[3]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[4]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[5]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[6]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[8]));
+        tabLayout.addTab(tabLayout.newTab().setText(mTitles[9]));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
-
-
 }
