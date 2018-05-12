@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
 import com.lejiaokeji.fentuan.view.HomeFragment;
-import com.lejiaokeji.fentuan.view.NotificationFragment;
+import com.lejiaokeji.fentuan.view.notification.NotificationFragment;
 import com.lejiaokeji.fentuan.view.RecommendFragment;
 import com.lejiaokeji.fentuan.view.Store_Fragment;
 import com.lejiaokeji.fentuan.view.UserCentreFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import me.majiajie.pagerbottomtabstrip.MaterialMode;
+
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;

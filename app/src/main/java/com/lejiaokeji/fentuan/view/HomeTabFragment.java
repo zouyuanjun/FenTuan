@@ -8,6 +8,7 @@ import android.util.Log;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.adapter.Home_Re_Adapter;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class HomeTabFragment extends LazyLoadFragment {
     public static final String TITLE = "title";
     private String mTitle = "Defaut Value";
-    private RecyclerView mRecyclerView;
+    private PullLoadMoreRecyclerView mRecyclerView;
     // private TextView mTextView;
     private List<String> mDatas = new ArrayList<String>();
     Home_Re_Adapter adapter;
@@ -50,8 +51,8 @@ public class HomeTabFragment extends LazyLoadFragment {
     @Override
     protected void lazyLoad() {
         adapter=new Home_Re_Adapter(getContext(),mDatas);
-        mRecyclerView = (RecyclerView)findViewById(R.id.id_stickynavlayout_innerscrollview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView = findViewById(R.id.id_stickynavlayout_innerscrollview);
+        mRecyclerView.setLinearLayout();
         mRecyclerView.setAdapter(adapter);
         Log.d("55555","内标签正在渲染");
 
@@ -61,7 +62,21 @@ public class HomeTabFragment extends LazyLoadFragment {
             mDatas.add(mTitle + " -> " + i);
         }
         adapter.notifyDataSetChanged();
+        mRecyclerView.setPullRefreshEnable(true);
+        mRecyclerView.setPushRefreshEnable(true);
 
+        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("555","刷新更多");
+            }
+
+            @Override
+            public void onLoadMore() {
+                Log.d("555","加载更多");
+            }
+        });
     }
+
 
 }

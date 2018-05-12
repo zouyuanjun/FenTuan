@@ -1,7 +1,17 @@
-package com.lejiaokeji.fentuan.view;
+package com.lejiaokeji.fentuan.view.notification;
+
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import zlc.season.practicalrecyclerview.PracticalRecyclerView;
 
 public class NotificationFragment extends LazyLoadFragment {
     @Override
@@ -13,4 +23,5 @@ public class NotificationFragment extends LazyLoadFragment {
     protected void lazyLoad() {
 
     }
+
 }

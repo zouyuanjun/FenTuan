@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import com.lejiaokeji.fentuan.utils.Network;
+import com.lejiaokeji.fentuan.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -26,8 +27,6 @@ import java.net.URLDecoder;
  */
 
 public class Sign_In {
-    private static final String APP_ID="";
-    private IWXAPI api;   //第三方和微信通信的接口
 
     Network network;
     String username;
@@ -86,12 +85,8 @@ public class Sign_In {
         editor.commit();
     }
     public void weichatsign(Context context){
-        api= WXAPIFactory.createWXAPI(context,APP_ID,true);
-        api.registerApp(APP_ID);
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_demo_test";
-        api.sendReq(req);
+        WXEntryActivity.weixinLogin();
+
     }
 
 }

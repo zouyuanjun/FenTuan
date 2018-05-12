@@ -163,10 +163,10 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
             mOffsetAnimator.start();
         } else {
             //如果子View没有消耗down事件 那么就让自身滑倒0位置
-            if (!consumed) {
-                mOffsetAnimator.setIntValues(currentOffset, 0);
-                mOffsetAnimator.start();
-            }
+//            if (!consumed) {
+//                mOffsetAnimator.setIntValues(currentOffset, 0);
+//                mOffsetAnimator.start();
+//            }
 
         }
     }
@@ -259,7 +259,6 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
         ViewGroup.LayoutParams params = mViewPager.getLayoutParams();
         params.height = getMeasuredHeight() - mNav.getMeasuredHeight();
         setMeasuredDimension(getMeasuredWidth(), mTop.getMeasuredHeight() + mNav.getMeasuredHeight() + mViewPager.getMeasuredHeight());
-
     }
 
     @Override
@@ -267,8 +266,6 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
         super.onSizeChanged(w, h, oldw, oldh);
         mTopViewHeight = mTop.getMeasuredHeight();
     }
-
-
     public void fling(int velocityY) {
         mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, mTopViewHeight);
         invalidate();

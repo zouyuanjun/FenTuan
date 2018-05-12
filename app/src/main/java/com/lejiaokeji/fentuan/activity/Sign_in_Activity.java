@@ -3,8 +3,8 @@ package com.lejiaokeji.fentuan.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -23,7 +23,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
     Button bt_signin;
     TextView tv_phone_sign_up;
     TextView tv_forget_password;
-    ImageButton imageButton;
+    ImageButton bt_weixin_sign;
     Sign_In sign_in;
     String strphonenum;
     String strpassword;
@@ -39,8 +39,12 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         bt_signin=findViewById(R.id.bt_sign);
         tv_phone_sign_up=findViewById(R.id.tv_phone_sign_up);
         tv_forget_password=findViewById(R.id.tv_forget_password);
-        imageButton=findViewById(R.id.imb_weixin_sign);
+        bt_weixin_sign =findViewById(R.id.imb_weixin_sign);
         sign_in=Sign_In.getInstance();
+        bt_signin.setOnClickListener(this);
+        bt_weixin_sign.setOnClickListener(this);
+        tv_forget_password.setOnClickListener(this);
+        tv_phone_sign_up.setOnClickListener(this);
 //sadfasdf;
     }
 
@@ -65,7 +69,14 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
             case R.id.tv_forget_password:{
                 break;
             }
+            //微信登陆
             case R.id.imb_weixin_sign:{
+                Log.d("555","微信注册");
+                sign_in.weichatsign(activity);
+
+
+
+
                 break;
             }
         }

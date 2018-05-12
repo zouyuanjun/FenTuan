@@ -98,7 +98,7 @@
                 android:id="@+id/imb_weixin_sign"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@mipmap/icon64_appwx_logo"/>
             <TextView
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="60dp"
