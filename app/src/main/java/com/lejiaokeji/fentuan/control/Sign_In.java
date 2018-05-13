@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import com.lejiaokeji.fentuan.utils.Network;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 import com.lejiaokeji.fentuan.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -85,7 +86,13 @@ public class Sign_In {
         editor.commit();
     }
     public void weichatsign(Context context){
-        WXEntryActivity.weixinLogin();
+
+        Constants.api = WXAPIFactory.createWXAPI(context, Constants.APP_ID, false);
+        Constants.api.registerApp(Constants.APP_ID);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "fentuanyizhuang";
+        Constants.api.sendReq(req);
 
     }
 
