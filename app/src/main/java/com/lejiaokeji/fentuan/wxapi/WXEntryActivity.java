@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 		//注意：
 		//第三方开发者如果使用透明界面来实现WXEntryActivity，需要判断handleIntent的返回值，如果返回值为false，则说明入参不合法未被SDK处理，应finish当前透明界面，避免外部通过传递非法参数的Intent导致停留在透明界面，引起用户的疑惑
 		try {
-			api.handleIntent(getIntent(), this);
+			Constants.api.handleIntent(getIntent(), this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,7 +48,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 		super.onNewIntent(intent);
 
 		setIntent(intent);
-		api.handleIntent(intent, this);
+		Constants.api.handleIntent(intent, this);
 	}
 
 	// 微信发送请求到第三方应用时，会回调到该方法
@@ -74,14 +75,16 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
-
+				Log.d("5555","用户授权");
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:
-
+				Log.d("5555","用户取消");
 				break;
 			case BaseResp.ErrCode.ERR_AUTH_DENIED:
+				Log.d("5555","用户拒绝");
 				break;
 			case BaseResp.ErrCode.ERR_UNSUPPORT:
+				Log.d("5555","不支持");
 				break;
 			default:
 				break;
