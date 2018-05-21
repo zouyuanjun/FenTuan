@@ -32,6 +32,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_weixin_signin);
 		context=this;
 		// 通过WXAPIFactory工厂，获取IWXAPI的实例
 
@@ -75,7 +76,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
-				Log.d("5555","用户授权");
+				Log.d("5555","用户授权"+((SendAuth.Resp)resp).code);
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:
 				Log.d("5555","用户取消");
