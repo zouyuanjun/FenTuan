@@ -11,10 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.utils.GetAlerDialog;
+import com.lejiaokeji.fentuan.wxapi.Constants;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class Sign_in_Activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -71,6 +74,14 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
             }
             //微信登陆
             case R.id.imb_weixin_sign:{
+                Constants.api= WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
+                // 将该app注册到微信
+                Constants.api.registerApp(Constants.APP_ID);
+                if (!Constants.api.isWXAppInstalled()) {
+                    Toast.makeText(this,"您还未安装微信客户端",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Log.d("555","微信注册");
                 sign_in.weichatsign(activity);
 

@@ -117,20 +117,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text=" 推 荐   |"/>
-        <android.support.design.widget.TabLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/mytablayout"
-            android:layout_weight="1"
-            app:tabSelectedTextColor="@color/colorPrimaryDark"
-            app:tabTextColor="@color/colorAccent">
-
-        </android.support.design.widget.TabLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/mytablayout"
+                android:layout_weight="1"
+                app:tabSelectedTextColor="@color/colorPrimaryDark"
+                app:tabTextColor="@color/colorAccent">
+            </android.support.design.widget.TabLayout>
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/colorAccent"
+                android:text=" 推 荐  |"/>
+        </RelativeLayout>
         <ImageView
             android:layout_gravity="center_vertical"
             android:layout_width="20dp"

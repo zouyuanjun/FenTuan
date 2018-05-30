@@ -1,6 +1,11 @@
 package com.lejiaokeji.fentuan.wxapi;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.activity.WX_Signin_Activity;
+import com.lejiaokeji.fentuan.utils.Network;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -16,6 +21,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,16 +31,64 @@ import android.widget.Toast;
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 
 	private static final int TIMELINE_SUPPORTED_VERSION = 0x21020001;
-
 	// IWXAPI 是第三方app和微信通信的openapi接口
 	private IWXAPI api;
 	static Context context;
+	Network network;
+	Activity activity;
+	String token="";
+	String openid="";
+	Handler handler=new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			int what=msg.what;
+			String result= (String) msg.obj;
+			Log.d("555",result);
+			if (what==1){
+				JsonElement je = new JsonParser().parse(result);
+				String refresh_token = je.getAsJsonObject().get("refresh_token").getAsString();
+				String url="https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=wx46b14ff64afefa78&grant_type=refresh_token&refresh_token=REFRESH_TOKEN";
+				url=url.replace("REFRESH_TOKEN",refresh_token);
+				//获取到token后刷新token
+				network.connectnet("","",url,handler,2);
+			}else if (what==2){
+				//获取到OPENid
+				JsonElement je = new JsonParser().parse(result);
+				token = je.getAsJsonObject().get("access_token").getAsString();
+				openid= je.getAsJsonObject().get("openid").getAsString();
 
+				String weixinid="{\"weixinid\":\"%openid\"}";
+				weixinid=weixinid.replace("%openid",openid);
+				String url=Constants.URL+"/user/bindPhone";
+				//请求该微信号是否已注册
+				network.connectnet(weixinid,"",url,handler,3);
+			}else if (what==3){
+				JsonElement je = new JsonParser().parse(result);
+				String code = je.getAsJsonObject().get("retCode").getAsString();
+				if (code.equals("0")){
+					String phone = je.getAsJsonObject().get("data").getAsString();
+					Intent intent=new Intent(activity, MainActivity.class);
+					intent.putExtra("phone",phone);
+					startActivity(intent);
+					activity.finish();
+				}else {
+					Intent intent=new Intent(activity, WX_Signin_Activity.class);
+					intent.putExtra("openid",openid);
+					intent.putExtra("token",token);
+					startActivity(intent);
+					activity.finish();
+				}
+			}
+		}
+	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weixin_signin);
+		setContentView(R.layout.activity_wxentry);
 		context=this;
+		activity=this;
+		network=Network.getnetwork();
 		// 通过WXAPIFactory工厂，获取IWXAPI的实例
 
 		//注意：
@@ -72,11 +127,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	public void onResp(BaseResp resp) {
 		int result = 0;
 
-		Toast.makeText(this, "baseresp.getType = " + resp.getType(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "baseresp.getType = " + resp.getType()+resp.errCode, Toast.LENGTH_SHORT).show();
 
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
-				Log.d("5555","用户授权"+((SendAuth.Resp)resp).code);
+				Log.d("5555","用户授权");
+				String code = ((SendAuth.Resp) resp).code;
+				String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx46b14ff64afefa78&secret=daa23fdc483f72080916c7955b6e26b5&code=%CODE&grant_type=authorization_code";
+				url=url.replace("%CODE",code);
+				network.connectnet("","",url,handler,1);
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:
 				Log.d("5555","用户取消");

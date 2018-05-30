@@ -28,11 +28,12 @@ public class HomeFragment extends LazyLoadFragment {
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
     TabLayout tabLayout;
+
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
     }
-
     @Override
     protected void lazyLoad() {
         images.clear();
@@ -111,7 +112,7 @@ public class HomeFragment extends LazyLoadFragment {
         mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
 
         mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
-       // tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setupWithViewPager(mViewPager);
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));
@@ -124,8 +125,8 @@ public class HomeFragment extends LazyLoadFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition()+1);
-                Log.d("555","第一次选择");
+//                mViewPager.setCurrentItem(tab.getPosition()+1);
+//                Log.d("555","第一次选择");
             }
 
             @Override
@@ -141,10 +142,10 @@ public class HomeFragment extends LazyLoadFragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d("555","viewpage position"+position+"positionOffset"+positionOffset);
-                if (position>0){
-                    tabLayout.setScrollPosition(position-1,positionOffset,true);
-                }
+//                Log.d("555","viewpage position"+position+"positionOffset"+positionOffset);
+//                if (position>0){
+//                    tabLayout.setScrollPosition(position-1,positionOffset,true);
+//                }
 
             }
 
