@@ -1,4 +1,5 @@
 package com.lejiaokeji.fentuan.view;
+import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,12 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
 import com.lejiaokeji.fentuan.view.helpview.OnlyTextTab;
 import com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -28,14 +32,17 @@ public class HomeFragment extends LazyLoadFragment {
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
     TabLayout tabLayout;
-
-
+    ImageView select_jd;
+    ImageView select_pdd;
+    TextView tv_select_jd;
+    TextView tv_select_pdd;
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
     }
     @Override
     protected void lazyLoad() {
+
         images.clear();
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=7e2ab5aae471045c19b44966e1e6327b&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F11%2F44%2F96%2F87b3OOOPICd4.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=4ab59126e04b1afcacf93ff942c9c4f4&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D550123260c0828387c00d454d1e1cc6d%2F42166d224f4a20a4345db4fe9b529822720ed04c.jpg");
@@ -75,7 +82,7 @@ public class HomeFragment extends LazyLoadFragment {
         mIndicator.setTitles(mTitles);
 
         for (int i = 0; i < mTitles.length; i++) {
-            mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance(mTitles[i]);
+            mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance("标签胜多负少"+i);
         }
         mAdapter = new FragmentPagerAdapter(this.getChildFragmentManager()) {
             @Override
@@ -106,6 +113,26 @@ public class HomeFragment extends LazyLoadFragment {
     }
 
     private void initViews() {
+        select_jd=findViewById(R.id.img_select_jd);
+        select_pdd=findViewById(R.id.img_select_pdd);
+        tv_select_jd=findViewById(R.id.tv_select_jd);
+        tv_select_jd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select_pdd.setVisibility(View.GONE);
+                select_jd.setVisibility(View.VISIBLE);
+                Constants.SELECT_JD=true;
+            }
+        });
+        tv_select_pdd=findViewById(R.id.tv_select_pingduoduo);
+        tv_select_pdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Constants.SELECT_JD=false;
+                select_pdd.setVisibility(View.VISIBLE);
+                select_jd.setVisibility(View.GONE);
+            }
+        });
         tabLayout=findViewById(R.id.mytablayout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 

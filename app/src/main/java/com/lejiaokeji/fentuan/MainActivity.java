@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
 import com.lejiaokeji.fentuan.view.HomeFragment;
 import com.lejiaokeji.fentuan.view.notification.NotificationFragment;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         viewPager=findViewById(R.id.myviewpage);
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
@@ -35,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(R.drawable.pfile_ic_portrait,"商城")
                 .addItem(R.drawable.pfile_ic_portrait,"通知")
                 .addItem(R.drawable.pfile_ic_portrait,"我的")
-      //  .setDefaultColor(0x89000000)
-     //   .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR)
         .build();
         initview();
     }

@@ -14,28 +14,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
-        <activity android:name=".activity.StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity"></activity>
-        <!--<activity android:name=".MainActivity">-->
+        <!--<activity android:name=".activity.StartActivity">-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         <!--</activity>-->
-        <!--<activity android:name=".activity.StartActivity"></activity>-->
+        <!--<activity android:name=".MainActivity"></activity>-->
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.StartActivity"></activity>
         <activity android:name=".activity.Sign_in_Activity"></activity>
         <activity android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@style/myTransparent"
             ></activity>
-<activity android:name=".activity.WX_Signin_Activity"></activity>
+        <activity android:name=".activity.WX_Signin_Activity"></activity>
     </application>
 
 </manifest>

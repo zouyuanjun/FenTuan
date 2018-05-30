@@ -16,13 +16,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             android:scrollbars="none"
             android:descendantFocusability="afterDescendants"
             android:layout_weight="1">
-
         </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
         <TextView
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
-            android:text="我是有底线的"/>
+            android:layout_height="96dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
