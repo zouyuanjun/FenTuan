@@ -36,15 +36,19 @@ public class Home_Page_Control {
             int what=msg.what;
 
             String result=msg.obj.toString();
-            Log.d("5555","SIGN返回数据"+result);
-            if (what==1){
-                Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
-                if (shop_data.getRetCode().equals("0")){
+            String retCode=JSON.parseObject(result).getString("retCode");
+            if (retCode.equals("-1")){
+                home_page_listener.connectfail();
+            }else if (retCode.equals("-2")){
+               home_page_listener.connecttimeout();
+            }else if (retCode.equals("0")){
+                Log.d("5555","SIGN返回数据"+result);
+                if (what==1){
+                    Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
                     home_page_listener.loadsuccefful(shop_data);
-                }else {
-                    home_page_listener.loadfail(shop_data.getRetCode());
                 }
-
+            }else {
+                home_page_listener.loadfail(retCode);
             }
         }
     };
@@ -53,6 +57,8 @@ public class Home_Page_Control {
         public void loadfail(String t);
         public void fistlogin();
         public void severerr();
+        public void connecttimeout();
+        public void connectfail();
     }
     private Home_Page_Listener home_page_listener;
     public void setlistener( Home_Page_Listener home_page_listener){

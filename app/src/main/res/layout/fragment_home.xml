@@ -149,15 +149,89 @@
             android:layout_height="20dp"
             android:background="@color/colorAccent"/>
     </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TextView
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="能不能隐藏啊"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_type_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女装"/>
+            <TextView
+                android:id="@+id/tv_type_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男装"/>
+            <TextView
+                android:id="@+id/tv_type_3"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="内衣配饰"/>
+            <TextView
+                android:id="@+id/tv_type_4"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="母婴玩具"/>
+            <TextView
+                android:id="@+id/tv_type_5"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="美妆个护"/>
+            <TextView
+                android:id="@+id/tv_type_11"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="数码家电"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_type_6"
+                android:layout_width="10dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="食品保健"/>
+            <TextView
+                android:id="@+id/tv_type_7"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="居家生活"/>
+            <TextView
+                android:id="@+id/tv_type_8"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="鞋品箱包"/>
+            <TextView
+                android:id="@+id/tv_type_9"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="运动户外"/>
+            <TextView
+                android:id="@+id/tv_type_10"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="文体车品"/>
+        </LinearLayout>
+
+    </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@id/id_stickynavlayout_viewpager"
         android:layout_width="match_parent"

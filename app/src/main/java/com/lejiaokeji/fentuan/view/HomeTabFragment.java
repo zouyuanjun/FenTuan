@@ -93,7 +93,8 @@ public class HomeTabFragment extends LazyLoadFragment {
             @Override
             public void loadfail(String t) {
                 mRecyclerView.setPullLoadMoreCompleted();
-                Toast.makeText(activity,"请求错误，错误码："+t,Toast.LENGTH_SHORT);
+
+                Toast.makeText(activity,"请求错误，错误码："+t,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -104,6 +105,17 @@ public class HomeTabFragment extends LazyLoadFragment {
             @Override
             public void severerr() {
 
+            }
+
+            @Override
+            public void connecttimeout() {
+                Log.d("555","请求超时");
+                Toast.makeText(activity,"连接超时，请检查您的网络",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void connectfail() {
+                Toast.makeText(activity,"连接失败，请检查您的网络",Toast.LENGTH_LONG);
             }
         });
         adapter=new Home_Re_Adapter(getContext(),myListData);

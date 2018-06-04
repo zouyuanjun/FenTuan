@@ -47,7 +47,7 @@ public class Network {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     Message message=new Message();
-                    String s="{\"message\":\"请求超时\",\"retCode\":-1,\"data\":[{}]}";
+                    String s="{\"message\":\"请求超时\",\"retCode\":-2,\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);

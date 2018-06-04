@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.lejiaokeji.fentuan.R;
@@ -28,7 +29,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends LazyLoadFragment {
+public class HomeFragment extends LazyLoadFragment implements View.OnClickListener{
     private String[] mTitles = new String[]{"推荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
@@ -43,9 +44,21 @@ public class HomeFragment extends LazyLoadFragment {
     TextView tv_select_pdd;
     TextView tv_recommend;
     ImageView im_hide;
-    RelativeLayout relativeLayout;
+    LinearLayout relativeLayout;
     boolean idshow=false;
     int page=1;
+
+    TextView tv_type_1;
+    TextView tv_type_2;
+    TextView tv_type_3;
+    TextView tv_type_4;
+    TextView tv_type_5;
+    TextView tv_type_6;
+    TextView tv_type_7;
+    TextView tv_type_8;
+    TextView tv_type_9;
+    TextView tv_type_10;
+    TextView tv_type_11;
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
@@ -124,6 +137,28 @@ public class HomeFragment extends LazyLoadFragment {
     }
 
     private void initViews() {
+        tv_type_1=findViewById(R.id.tv_type_1);
+        tv_type_1.setOnClickListener(this);
+        tv_type_2=findViewById(R.id.tv_type_2);
+        tv_type_2.setOnClickListener(this);
+        tv_type_3=findViewById(R.id.tv_type_3);
+        tv_type_3.setOnClickListener(this);
+        tv_type_4=findViewById(R.id.tv_type_4);
+        tv_type_4.setOnClickListener(this);
+        tv_type_5=findViewById(R.id.tv_type_5);
+        tv_type_5.setOnClickListener(this);
+        tv_type_6=findViewById(R.id.tv_type_6);
+        tv_type_6.setOnClickListener(this);
+        tv_type_7=findViewById(R.id.tv_type_7);
+        tv_type_7.setOnClickListener(this);
+        tv_type_8=findViewById(R.id.tv_type_8);
+        tv_type_8.setOnClickListener(this);
+        tv_type_9=findViewById(R.id.tv_type_9);
+        tv_type_9.setOnClickListener(this);
+        tv_type_10=findViewById(R.id.tv_type_10);
+        tv_type_10.setOnClickListener(this);
+        tv_type_11=findViewById(R.id.tv_type_11);
+        tv_type_11.setOnClickListener(this);
         select_jd=findViewById(R.id.img_select_jd);
         select_pdd=findViewById(R.id.img_select_pdd);
         tv_select_jd=findViewById(R.id.tv_select_jd);
@@ -272,4 +307,55 @@ public class HomeFragment extends LazyLoadFragment {
         return  (dipValue * scale + 0.5f);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.tv_type_1:{
+                mViewPager.setCurrentItem(1);
+                break;
+            }
+            case R.id.tv_type_2:{
+                mViewPager.setCurrentItem(2);
+                break;
+            }
+            case R.id.tv_type_3:{
+                mViewPager.setCurrentItem(3);
+                break;
+            }
+            case R.id.tv_type_4:{
+                mViewPager.setCurrentItem(4);
+                break;
+            }
+            case R.id.tv_type_5:{
+                mViewPager.setCurrentItem(5);
+                break;
+            }
+            case R.id.tv_type_6:{
+                mViewPager.setCurrentItem(6);
+                break;
+            }
+            case R.id.tv_type_7:{
+                mViewPager.setCurrentItem(7);
+                break;
+            }
+            case R.id.tv_type_8:{
+                mViewPager.setCurrentItem(8);
+                break;
+            }
+            case R.id.tv_type_9:{
+                mViewPager.setCurrentItem(9);
+                break;
+            }
+            case R.id.tv_type_10:{
+                mViewPager.setCurrentItem(10);
+                break;
+            }
+            case R.id.tv_type_11:{
+                mViewPager.setCurrentItem(11);
+                break;
+
+            }
+        }
+
+    }
 }

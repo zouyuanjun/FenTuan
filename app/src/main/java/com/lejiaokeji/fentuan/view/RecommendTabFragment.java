@@ -84,6 +84,16 @@ public class RecommendTabFragment extends LazyLoadFragment {
             public void severerr() {
 
             }
+
+            @Override
+            public void connecttimeout() {
+
+            }
+
+            @Override
+            public void connectfail() {
+
+            }
         });
         adapter=new Recommend_Rv_Adapter(getContext(),myListData);
         mRecyclerView = findViewById(R.id.id_stickynavlayout_innerscrollview);

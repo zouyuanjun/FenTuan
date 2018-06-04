@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentList.add(new HomeFragment());
         fragmentList.add(new RecommendFragment());
-        fragmentList.add(new NotificationFragment());
         fragmentList.add(new Store_Fragment());
+        fragmentList.add(new NotificationFragment());
         fragmentList.add(new UserCentreFragment());
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
         //自动适配ViewPager页面切换
