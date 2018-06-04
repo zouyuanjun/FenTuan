@@ -51,7 +51,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				String url="https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=wx46b14ff64afefa78&grant_type=refresh_token&refresh_token=REFRESH_TOKEN";
 				url=url.replace("REFRESH_TOKEN",refresh_token);
 				//获取到token后刷新token
-				network.connectnet("","",url,handler,2);
+				network.connectnet("",url,handler,2);
 			}else if (what==2){
 				//获取到OPENid
 				JsonElement je = new JsonParser().parse(result);
@@ -62,7 +62,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				weixinid=weixinid.replace("%openid",openid);
 				String url=Constants.URL+"/user/bindPhone";
 				//请求该微信号是否已注册
-				network.connectnet(weixinid,"",url,handler,3);
+				network.connectnet(weixinid,url,handler,3);
 			}else if (what==3){
 				JsonElement je = new JsonParser().parse(result);
 				String code = je.getAsJsonObject().get("retCode").getAsString();
@@ -135,7 +135,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				String code = ((SendAuth.Resp) resp).code;
 				String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx46b14ff64afefa78&secret=daa23fdc483f72080916c7955b6e26b5&code=%CODE&grant_type=authorization_code";
 				url=url.replace("%CODE",code);
-				network.connectnet("","",url,handler,1);
+				network.connectnet("",url,handler,1);
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:
 				Log.d("5555","用户取消");

@@ -28,7 +28,7 @@ public class Network {
     }
     private Network() {
     }
-    public void connectnet(String date ,String header, String url,final android.os.Handler handler, final int i){
+    public void connectnet(String date , String url,final android.os.Handler handler, final int i){
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(50, TimeUnit.SECONDS)
                 .readTimeout(50, TimeUnit.SECONDS)
@@ -38,7 +38,6 @@ public class Network {
         Log.d("5555","发送请求URL"+url+"请求体"+jsonStr);
         RequestBody body = RequestBody.create(JSON, jsonStr);
         Request request = new Request.Builder()
-                .addHeader("header",header)
                 .url(url)
                 .post(body)
                 .build();
@@ -47,10 +46,20 @@ public class Network {
             public void onFailure(Call call, IOException e) {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
+                    Message message=new Message();
+                    String s="{\"message\":\"请求超时\",\"retCode\":-1,\"data\":[{}]}";
+                    message.what=i;
+                    message.obj=s;
+                    handler.sendMessage(message);
                     Log.d("555","请求超时");
                 }
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
+                    Message message=new Message();
+                    String s="{\"message\":\"连接异常\",\"retCode\":-1,\"data\":[{}]}";
+                    message.what=i;
+                    message.obj=s;
+                    handler.sendMessage(message);
                     Log.d("555","连接异常");
                 }
             }

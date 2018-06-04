@@ -3,18 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
    >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sbv_item_shoprecommend_head"
                 android:layout_width="50dp"
@@ -24,11 +21,11 @@
                 android:layout_marginStart="0dp"
                 android:background="@color/colorAccent" />
             <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_item_origin"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_toEndOf="@+id/tv_item_shoprecommend_name"
                 android:background="@color/colorAccent"/>
-
             <TextView
                 android:id="@+id/tv_item_shoprecommend_name"
                 android:layout_width="wrap_content"
@@ -45,6 +42,7 @@
                 android:layout_below="@+id/tv_item_shoprecommend_name"
                 android:text="1小时前" />
             <TextView
+                android:id="@+id/tv_sharecount"
                 android:layout_alignParentEnd="true"
                 android:paddingRight="20dp"
                 android:layout_width="wrap_content"
@@ -52,6 +50,7 @@
                 android:text="已分享0次"/>
         </RelativeLayout>
         <TextView
+            android:id="@+id/tv_shoprecommend_title"
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,53 +59,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <view
-            android:layout_width="20dp"
-            android:layout_height="match_parent"></view>
+<RelativeLayout
+    android:layout_width="10dp"
+    android:layout_height="match_parent">
+
+</RelativeLayout>
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdv_item_recomment"
+            android:id="@+id/sdv_item_recomment1"
             android:layout_width="70dp"
             android:layout_weight="1"
             android:layout_height="70dp"
             android:background="@color/colorAccent"/>
-        <view
+        <RelativeLayout
             android:layout_width="20dp"
-            android:layout_height="match_parent"></view>
+            android:layout_height="match_parent"></RelativeLayout>
         <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_recomment2"
             android:layout_width="70dp"
             android:layout_weight="1"
             android:layout_height="70dp"
             android:background="@color/colorAccent"/>
-        <view
+        <RelativeLayout
             android:layout_width="20dp"
-            android:layout_height="match_parent"></view>
+            android:layout_height="match_parent"></RelativeLayout>
         <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_recomment3"
             android:layout_width="70dp"
             android:layout_weight="1"
             android:layout_height="70dp"
             android:background="@color/colorAccent"/>
-        <view
+        <RelativeLayout
             android:layout_width="20dp"
-            android:layout_height="match_parent"></view>
+            android:layout_height="match_parent"></RelativeLayout>
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="佣金："/>
             <TextView
+                android:id="@+id/tv_recomment_yongjing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3.55元"/>
-            <view
+            <RelativeLayout
                 android:layout_weight="1"
                 android:layout_width="20dp"
-                android:layout_height="match_parent"></view>
+                android:layout_height="match_parent"></RelativeLayout>
             <Button
                 android:id="@+id/bt_item_shareshop"
                 android:text="一键分享"

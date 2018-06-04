@@ -128,14 +128,14 @@ public class Sign_In {
         String url="https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
         url=url.replace("ACCESS_TOKEN",token);
         url=url.replace("OPENID",openid);
-        network.connectnet("","",url,handler,1);
+        network.connectnet("",url,handler,1);
     }
     //获取注册验证码
     public void getcode(String phone){
         String url=Constants.URL+"/user/sendCode";
         String data="{\"phone\":\"%phone\"}";
         data=data.replace("%phone",phone);
-        network.connectnet(data,"",url,handler,2);
+        network.connectnet(data,url,handler,2);
     }
 
     //绑定手机号

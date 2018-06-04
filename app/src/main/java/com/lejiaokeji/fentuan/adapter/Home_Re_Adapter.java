@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -17,6 +18,11 @@ import java.util.List;
 public class Home_Re_Adapter extends RecyclerView.Adapter{
     protected Context mContext;
     protected List<Item_Shop> mDatas;
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public Home_Re_Adapter(Context mContext, List<Item_Shop> mDatas) {
         this.mContext = mContext;
@@ -31,12 +37,27 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder)holder).title.setText(mDatas.get(position).getTitle());
         ((RecyclerHolder)holder).tv_item_price.setText(mDatas.get(position).getCoupon_price());
-        ((RecyclerHolder)holder).tv_item_yongjing.setText(mDatas.get(position).getTitle());
+        ((RecyclerHolder)holder).tv_item_yongjing.setText(mDatas.get(position).getYongjin());
         ((RecyclerHolder)holder).sdv_item_goodsphoto.setImageURI(mDatas.get(position).getGood_img());
         ((RecyclerHolder)holder).sdv_qh_price.setImageURI(mDatas.get(position).getGood_img());
+        if (onItemClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(v,position);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListener.onItemLongClick(v,position);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
@@ -60,4 +81,9 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
             sdv_qh_price=itemView.findViewById(R.id.sdv_qh_price);;
         }
     }
+    public interface OnItemClickListener{
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view,int position);
+    }
+
 }

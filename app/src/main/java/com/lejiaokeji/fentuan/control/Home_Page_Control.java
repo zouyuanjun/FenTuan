@@ -7,6 +7,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.google.gson.Gson;
+import com.lejiaokeji.fentuan.databean.Shop_Data;
 import com.lejiaokeji.fentuan.utils.Network;
 
 public class Home_Page_Control {
@@ -22,10 +26,8 @@ public class Home_Page_Control {
     private Home_Page_Control() {
         network= Network.getnetwork();
     }
-    public void loadData(){
-//        Gson gson=new Gson();
-//        String requestbody=gson.toJson(signbean);  //将json对象转换为字符
-   //     network.connectnet(requestbody,"login",StaticValue.url,handler,1);
+    public void loadData(String url,String data){
+        network.connectnet(data,url,handler,1);
     }
     Handler handler=new Handler(Looper.getMainLooper()) {
         @Override
@@ -36,13 +38,19 @@ public class Home_Page_Control {
             String result=msg.obj.toString();
             Log.d("5555","SIGN返回数据"+result);
             if (what==1){
-                home_page_listener.loadsuccefful();
+                Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
+                if (shop_data.getRetCode().equals("0")){
+                    home_page_listener.loadsuccefful(shop_data);
+                }else {
+                    home_page_listener.loadfail(shop_data.getRetCode());
+                }
+
             }
         }
     };
     public interface Home_Page_Listener{
-        public void loadsuccefful();
-        public void signfail(String t);
+        public void loadsuccefful(Shop_Data shop_data);
+        public void loadfail(String t);
         public void fistlogin();
         public void severerr();
     }

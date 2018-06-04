@@ -1,4 +1,5 @@
 package com.lejiaokeji.fentuan.view;
+import android.content.res.Resources;
 import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lejiaokeji.fentuan.R;
@@ -20,11 +23,13 @@ import com.lejiaokeji.fentuan.wxapi.Constants;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends LazyLoadFragment {
-    private String[] mTitles = new String[]{"简介", "评价", "相关","简介","简介", "评价", "相关","简介", "评价", "相关"};
+    private String[] mTitles = new String[]{"推荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
@@ -36,13 +41,19 @@ public class HomeFragment extends LazyLoadFragment {
     ImageView select_pdd;
     TextView tv_select_jd;
     TextView tv_select_pdd;
+    TextView tv_recommend;
+    ImageView im_hide;
+    RelativeLayout relativeLayout;
+    boolean idshow=false;
+    int page=1;
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
     }
+
+
     @Override
     protected void lazyLoad() {
-
         images.clear();
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=7e2ab5aae471045c19b44966e1e6327b&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F11%2F44%2F96%2F87b3OOOPICd4.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525760827184&di=4ab59126e04b1afcacf93ff942c9c4f4&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D550123260c0828387c00d454d1e1cc6d%2F42166d224f4a20a4345db4fe9b529822720ed04c.jpg");
@@ -82,7 +93,7 @@ public class HomeFragment extends LazyLoadFragment {
         mIndicator.setTitles(mTitles);
 
         for (int i = 0; i < mTitles.length; i++) {
-            mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance("标签胜多负少"+i);
+            mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance(i);
         }
         mAdapter = new FragmentPagerAdapter(this.getChildFragmentManager()) {
             @Override
@@ -133,12 +144,36 @@ public class HomeFragment extends LazyLoadFragment {
                 select_jd.setVisibility(View.GONE);
             }
         });
+        im_hide=findViewById(R.id.im_hide);
+        relativeLayout=findViewById(R.id.relative);
+
+        im_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (idshow){
+                    relativeLayout.setVisibility(View.GONE);
+                    idshow=false;
+                    Log.d("55","隐藏");
+                }else {
+                    relativeLayout.setVisibility(View.VISIBLE);
+                    idshow=true;
+                }
+            }
+        });
         tabLayout=findViewById(R.id.mytablayout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
 
         mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
+        tv_recommend=findViewById(R.id.tv_recomment);
+        tv_recommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("sd","选中推荐");
+                mViewPager.setCurrentItem(0);
+            }
+        });
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
@@ -187,5 +222,54 @@ public class HomeFragment extends LazyLoadFragment {
             }
         });
 
+        try {
+            //拿到tabLayout的mTabStrip属性
+            Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
+            mTabStripField.setAccessible(true);
+
+            LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
+
+            int dp10 = (int) dip2px(10);
+
+            for (int i = 0; i < mTabStrip.getChildCount(); i++) {
+                View tabView = mTabStrip.getChildAt(i);
+
+                //拿到tabView的mTextView属性
+                Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
+                mTextViewField.setAccessible(true);
+
+                TextView mTextView = (TextView) mTextViewField.get(tabView);
+
+                tabView.setPadding(0, 0, 0, 0);
+
+                //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
+                int width = 0;
+                width = mTextView.getWidth();
+                if (width == 0) {
+                    mTextView.measure(0, 0);
+                    width = mTextView.getMeasuredWidth();
+                }
+                //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                params.width = width ;
+                params.leftMargin = dp10;
+                params.rightMargin = dp10;
+                tabView.setLayoutParams(params);
+
+                tabView.invalidate();
+            }
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
     }
+    public static float dip2px(float dipValue)
+    {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        return  (dipValue * scale + 0.5f);
+    }
+
 }

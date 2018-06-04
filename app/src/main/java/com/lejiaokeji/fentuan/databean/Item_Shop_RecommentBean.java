@@ -3,16 +3,18 @@ package com.lejiaokeji.fentuan.databean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class Item_Shop_RecommentBean {
-    String headerurl;
-    String name;
-    String time;
-    String sharecount;
-    SimpleDraweeView simpleDraweeView1;
-    SimpleDraweeView simpleDraweeView2;
-    SimpleDraweeView simpleDraweeView3;
-    String yongjin;
+    String headerurl;    //头像url
+    String name;  //昵称
+    String time;  //时间
+    String sharecount;    //已分享次数
+    String simpleDraweeView1;
+    String simpleDraweeView2;
+    String simpleDraweeView3;
+    String yongjin;  //佣金
+    String origin;  //商品来源
+    String shop_title; //商品标题
 
-    public Item_Shop_RecommentBean(String headerurl, String name, String time, String sharecount, SimpleDraweeView simpleDraweeView1, SimpleDraweeView simpleDraweeView2, SimpleDraweeView simpleDraweeView3, String yongjin) {
+    public Item_Shop_RecommentBean(String headerurl, String name, String time, String sharecount, String simpleDraweeView1, String simpleDraweeView2, String simpleDraweeView3, String yongjin, String origin, String shop_title) {
         this.headerurl = headerurl;
         this.name = name;
         this.time = time;
@@ -21,6 +23,16 @@ public class Item_Shop_RecommentBean {
         this.simpleDraweeView2 = simpleDraweeView2;
         this.simpleDraweeView3 = simpleDraweeView3;
         this.yongjin = yongjin;
+        this.origin = origin;
+        this.shop_title = shop_title;
+    }
+
+    public String getShop_title() {
+        return shop_title;
+    }
+
+    public void setShop_title(String shop_title) {
+        this.shop_title = shop_title;
     }
 
     public String getHeaderurl() {
@@ -55,27 +67,27 @@ public class Item_Shop_RecommentBean {
         this.sharecount = sharecount;
     }
 
-    public SimpleDraweeView getSimpleDraweeView1() {
+    public String getSimpleDraweeView1() {
         return simpleDraweeView1;
     }
 
-    public void setSimpleDraweeView1(SimpleDraweeView simpleDraweeView1) {
+    public void setSimpleDraweeView1(String simpleDraweeView1) {
         this.simpleDraweeView1 = simpleDraweeView1;
     }
 
-    public SimpleDraweeView getSimpleDraweeView2() {
+    public String getSimpleDraweeView2() {
         return simpleDraweeView2;
     }
 
-    public void setSimpleDraweeView2(SimpleDraweeView simpleDraweeView2) {
+    public void setSimpleDraweeView2(String simpleDraweeView2) {
         this.simpleDraweeView2 = simpleDraweeView2;
     }
 
-    public SimpleDraweeView getSimpleDraweeView3() {
+    public String getSimpleDraweeView3() {
         return simpleDraweeView3;
     }
 
-    public void setSimpleDraweeView3(SimpleDraweeView simpleDraweeView3) {
+    public void setSimpleDraweeView3(String simpleDraweeView3) {
         this.simpleDraweeView3 = simpleDraweeView3;
     }
 
@@ -85,5 +97,13 @@ public class Item_Shop_RecommentBean {
 
     public void setYongjin(String yongjin) {
         this.yongjin = yongjin;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

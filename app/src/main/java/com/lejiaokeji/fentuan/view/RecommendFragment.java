@@ -21,11 +21,11 @@ import java.util.List;
 
 
     public class RecommendFragment extends LazyLoadFragment {
-        private String[] mTitles = new String[]{"简介", "评价", "相关"};
+        private String[] mTitles = new String[]{"商品推荐", "营销素材", "新手必发"};
         private SimpleViewPagerIndicator mIndicator;
         private ViewPager mViewPager;
         private FragmentPagerAdapter mAdapter;
-        private HomeTabFragment[] mFragments = new HomeTabFragment[mTitles.length];
+        private RecommendTabFragment[] mFragments = new RecommendTabFragment[mTitles.length];
         TabLayout tabLayout;
         @Override
         protected int setContentView() {
@@ -42,7 +42,7 @@ import java.util.List;
             mIndicator.setTitles(mTitles);
 
             for (int i = 0; i < mTitles.length; i++) {
-                mFragments[i] = (HomeTabFragment) HomeTabFragment.newInstance(mTitles[i]);
+                mFragments[i] = (RecommendTabFragment) RecommendTabFragment.newInstance(mTitles[i]);
             }
             mAdapter = new FragmentPagerAdapter(this.getChildFragmentManager()) {
                 @Override
