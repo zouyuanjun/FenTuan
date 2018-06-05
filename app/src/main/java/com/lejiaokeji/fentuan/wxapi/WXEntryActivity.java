@@ -2,6 +2,7 @@ package com.lejiaokeji.fentuan.wxapi;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.activity.WX_Signin_Activity;
@@ -65,13 +66,25 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				network.connectnet(weixinid,url,handler,3);
 			}else if (what==3){
 				JsonElement je = new JsonParser().parse(result);
-				String code = je.getAsJsonObject().get("retCode").getAsString();
+				String code="-2";
+				try {
+					code = je.getAsJsonObject().get("retCode").getAsString();
+				}catch (JsonSyntaxException e){
+					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG);
+				}
 				if (code.equals("0")){
+					//如果返回是0则说明已注册，直接跳到主页
 					String phone = je.getAsJsonObject().get("data").getAsString();
 					Intent intent=new Intent(activity, MainActivity.class);
 					intent.putExtra("phone",phone);
 					startActivity(intent);
 					activity.finish();
+				}else if(code.equals("-1")){
+					Log.d("错误码",code);
+					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG);
+				} else if(code.equals("-2")){
+					Log.d("错误码",code);
+					Toast.makeText(context,"与服务器连接超时",Toast.LENGTH_LONG);
 				}else {
 					Intent intent=new Intent(activity, WX_Signin_Activity.class);
 					intent.putExtra("openid",openid);
@@ -90,7 +103,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 		activity=this;
 		network=Network.getnetwork();
 		// 通过WXAPIFactory工厂，获取IWXAPI的实例
-
 		//注意：
 		//第三方开发者如果使用透明界面来实现WXEntryActivity，需要判断handleIntent的返回值，如果返回值为false，则说明入参不合法未被SDK处理，应finish当前透明界面，避免外部通过传递非法参数的Intent导致停留在透明界面，引起用户的疑惑
 		try {
@@ -102,11 +114,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-
 		setIntent(intent);
 		Constants.api.handleIntent(intent, this);
 	}
-
 	// 微信发送请求到第三方应用时，会回调到该方法
 	@Override
 	public void onReq(BaseReq req) {
@@ -121,17 +131,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				break;
 		}
 	}
-
 	// 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
 	@Override
 	public void onResp(BaseResp resp) {
 		int result = 0;
-
-		Toast.makeText(this, "baseresp.getType = " + resp.getType()+resp.errCode, Toast.LENGTH_SHORT).show();
-
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
 				Log.d("5555","用户授权");
+				//授权后拿到code，再用code请求tokn
 				String code = ((SendAuth.Resp) resp).code;
 				String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx46b14ff64afefa78&secret=daa23fdc483f72080916c7955b6e26b5&code=%CODE&grant_type=authorization_code";
 				url=url.replace("%CODE",code);
@@ -150,7 +157,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				break;
 		}
 
-		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 	}
 
 //	private void goToGetMsg() {

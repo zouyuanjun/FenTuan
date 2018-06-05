@@ -143,7 +143,6 @@ public class HomeTabFragment extends LazyLoadFragment {
             @Override
             public void onLoadMore() {
                 getdata();
-
                 Log.d("555","加载更多");
             }
         });

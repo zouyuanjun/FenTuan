@@ -48,7 +48,6 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         bt_weixin_sign.setOnClickListener(this);
         tv_forget_password.setOnClickListener(this);
         tv_phone_sign_up.setOnClickListener(this);
-//sadfasdf;
     }
 
     @Override
@@ -81,13 +80,8 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(this,"您还未安装微信客户端",Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 Log.d("555","微信注册");
                 sign_in.weichatsign(activity);
-
-
-
-
                 break;
             }
         }

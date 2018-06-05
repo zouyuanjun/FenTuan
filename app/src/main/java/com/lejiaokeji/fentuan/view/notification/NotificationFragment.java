@@ -13,10 +13,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import zlc.season.practicalrecyclerview.PracticalRecyclerView;
-
 public class NotificationFragment extends LazyLoadFragment {
     PullLoadMoreRecyclerView recyclerView;
     Notification_Adapter adapter;
@@ -32,6 +28,8 @@ public class NotificationFragment extends LazyLoadFragment {
         setdata();
         recyclerView =findViewById(R.id.notification_rv);
         recyclerView.setLinearLayout();
+        recyclerView.setPushRefreshEnable(false);
+        recyclerView.setPullRefreshEnable(false);
         adapter=new Notification_Adapter(getContext(),list);
         recyclerView.setAdapter(adapter);
 

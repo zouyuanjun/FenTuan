@@ -30,8 +30,8 @@ public class Network {
     }
     public void connectnet(String date , String url,final android.os.Handler handler, final int i){
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(50, TimeUnit.SECONDS)
-                .readTimeout(50, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         String jsonStr = date;//json数据.
@@ -47,7 +47,7 @@ public class Network {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     Message message=new Message();
-                    String s="{\"message\":\"请求超时\",\"retCode\":-2,\"data\":[{}]}";
+                    String s="{\"message\":\"请求超时\",\"retCode\":\"-2\",\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);
@@ -56,7 +56,7 @@ public class Network {
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
                     Message message=new Message();
-                    String s="{\"message\":\"连接异常\",\"retCode\":-1,\"data\":[{}]}";
+                    String s="{\"message\":\"连接异常\",\"retCode\":\"-1\",\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);

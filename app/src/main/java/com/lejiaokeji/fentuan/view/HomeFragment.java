@@ -29,15 +29,17 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.weyye.library.colortrackview.ColorTrackTabLayout;
+
 public class HomeFragment extends LazyLoadFragment implements View.OnClickListener{
-    private String[] mTitles = new String[]{"推荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
+    private String[] mTitles = new String[]{"推   荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private HomeTabFragment[] mFragments = new HomeTabFragment[mTitles.length];
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
-    TabLayout tabLayout;
+    ColorTrackTabLayout tabLayout;
     ImageView select_jd;
     ImageView select_pdd;
     TextView tv_select_jd;
@@ -197,7 +199,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
         });
         tabLayout=findViewById(R.id.mytablayout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
+        tabLayout.setTabPaddingLeftAndRight(15,15);
         mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
 
         mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
@@ -222,15 +224,13 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-//                mViewPager.setCurrentItem(tab.getPosition()+1);
-//                Log.d("555","第一次选择");
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 Log.d("555","第二次选择");
@@ -239,10 +239,6 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.d("555","viewpage position"+position+"positionOffset"+positionOffset);
-//                if (position>0){
-//                    tabLayout.setScrollPosition(position-1,positionOffset,true);
-//                }
 
             }
 
@@ -256,50 +252,6 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
 
             }
         });
-
-        try {
-            //拿到tabLayout的mTabStrip属性
-            Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
-            mTabStripField.setAccessible(true);
-
-            LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
-
-            int dp10 = (int) dip2px(10);
-
-            for (int i = 0; i < mTabStrip.getChildCount(); i++) {
-                View tabView = mTabStrip.getChildAt(i);
-
-                //拿到tabView的mTextView属性
-                Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
-                mTextViewField.setAccessible(true);
-
-                TextView mTextView = (TextView) mTextViewField.get(tabView);
-
-                tabView.setPadding(0, 0, 0, 0);
-
-                //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
-                int width = 0;
-                width = mTextView.getWidth();
-                if (width == 0) {
-                    mTextView.measure(0, 0);
-                    width = mTextView.getMeasuredWidth();
-                }
-                //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                params.width = width ;
-                params.leftMargin = dp10;
-                params.rightMargin = dp10;
-                tabView.setLayoutParams(params);
-
-                tabView.invalidate();
-            }
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
     }
     public static float dip2px(float dipValue)
     {
