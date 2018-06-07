@@ -1,52 +1,54 @@
 package com.lejiaokeji.fentuan.databean;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 public class Item_Shop {
     String goods_id;    //商品ID
-    String good_img;  //商品图片URL
+    String goods_image;  //商品图片URL
     String goods_name;  //标题
     String discount_link;  //领券链接
     String coupon_price; //最终价格
-    String yongjin;  //佣金
+    String commission;  //佣金
     String discount_price; //折扣券面额
     int sale_num; //已卖出数量
 
     public Item_Shop() {
     }
 
-    public Item_Shop(String id, String good_img, String title, String discount_link, String coupon_price, String yongjin, String discount_price, int sale_num) {
+    public Item_Shop(String id, String goods_image, String goods_name, String discount_link, String coupon_price, String commission, String discount_price, int sale_num) {
         this.goods_id = id;
-        this.good_img = good_img;
-        this.goods_name = title;
+        this.goods_image = goods_image;
+        this.goods_name = goods_name;
         this.discount_link = discount_link;
         this.coupon_price = coupon_price;
-        this.yongjin = yongjin;
+        this.commission = commission;
         this.discount_price = discount_price;
         this.sale_num = sale_num;
     }
 
-    public String getId() {
+
+    public String getGoods_image() {
+        return goods_image;
+    }
+
+    public void setGoods_image(String goods_image) {
+        this.goods_image = goods_image;
+    }
+
+    public String getGoods_id() {
         return goods_id;
     }
 
-    public void setId(String id) {
-        this.goods_id = id;
+    public void setGoods_id(String goods_id) {
+        this.goods_id = goods_id;
     }
 
-    public String getGood_img() {
-        return good_img;
-    }
-
-    public void setGood_img(String good_img) {
-        this.good_img = good_img;
-    }
-    public String getTitle() {
+    public String getGoods_name() {
         return goods_name;
     }
-    public void setTitle(String title) {
-        this.goods_name = title;
+
+    public void setGoods_name(String goods_name) {
+        this.goods_name = goods_name;
     }
+
     public String getDiscount_link() {
         return discount_link;
     }
@@ -59,12 +61,12 @@ public class Item_Shop {
     public void setCoupon_price(String coupon_price) {
         this.coupon_price = coupon_price;
     }
-    public String getYongjin() {
-        return yongjin;
+    public String getCommission() {
+        return commission;
     }
 
-    public void setYongjin(String yongjin) {
-        this.yongjin = yongjin;
+    public void setCommission(String commission) {
+        this.commission = commission;
     }
 
     public String getDiscount_price() {

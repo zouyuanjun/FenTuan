@@ -63,13 +63,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				weixinid=weixinid.replace("%openid",openid);
 				String url=Constants.URL+"/user/bindPhone";
 				//请求该微信号是否已注册
-				Intent intent=new Intent(activity, MainActivity.class);
-				intent.putExtra("phone","44");
-				startActivity(intent);
-				activity.finish();
-
-
-			//	network.connectnet(weixinid,url,handler,3);
+//				Intent intent=new Intent(activity, MainActivity.class);
+//				intent.putExtra("phone","44");
+//				startActivity(intent);
+//				activity.finish();
+				network.connectnet(weixinid,url,handler,3);
 			}else if (what==3){
 				JsonElement je = null;
 				String code="-2";

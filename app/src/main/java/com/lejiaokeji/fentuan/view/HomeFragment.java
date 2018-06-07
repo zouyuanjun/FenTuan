@@ -170,6 +170,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 select_pdd.setVisibility(View.GONE);
                 select_jd.setVisibility(View.VISIBLE);
                 Constants.SELECT_JD=true;
+                mViewPager.invalidate();
             }
         });
         tv_select_pdd=findViewById(R.id.tv_select_pingduoduo);
@@ -179,6 +180,8 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 Constants.SELECT_JD=false;
                 select_pdd.setVisibility(View.VISIBLE);
                 select_jd.setVisibility(View.GONE);
+                mViewPager.invalidate();
+
             }
         });
         im_hide=findViewById(R.id.im_hide);
@@ -252,11 +255,6 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
 
             }
         });
-    }
-    public static float dip2px(float dipValue)
-    {
-        final float scale = Resources.getSystem().getDisplayMetrics().density;
-        return  (dipValue * scale + 0.5f);
     }
 
     @Override

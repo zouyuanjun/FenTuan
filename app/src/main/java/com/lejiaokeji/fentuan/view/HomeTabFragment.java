@@ -1,12 +1,14 @@
 package com.lejiaokeji.fentuan.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.activity.Shop_Details_Activity;
 import com.lejiaokeji.fentuan.adapter.Home_Re_Adapter;
 import com.lejiaokeji.fentuan.control.Home_Page_Control;
 import com.lejiaokeji.fentuan.databean.Item_Shop;
@@ -22,7 +24,6 @@ public class HomeTabFragment extends LazyLoadFragment {
     public static final String TITLE = "shoptype";
     private int mTitle = 0;
     private PullLoadMoreRecyclerView mRecyclerView;
-    // private TextView mTextView;
     List<Item_Shop> myListData= new ArrayList<Item_Shop>();
     Home_Re_Adapter adapter;
     Home_Page_Control home_page_control;
@@ -67,15 +68,61 @@ public class HomeTabFragment extends LazyLoadFragment {
     protected void lazyLoad() {
         Log.d("当前类型",""+shoptype);
         String data="";
-        if (shoptype==0){
-          url= Constants.URL+"shopList/sendJdData";
-            data="{\"pageStart\":\"1\"}";
+        if (Constants.SELECT_JD){
+            if (shoptype==0){
+                url= Constants.URL+"shopList/sendJdData";
+                data="{\"pageStart\":\"1\"}";
+            }else {
+                url= Constants.URL+"shopList/findByTypePage";
+                data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
+                data=data.replace("type",String.valueOf(shoptype));
+            }
         }else {
-            url= Constants.URL+"shopList/findByTypePage";
-            data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
-            data=data.replace("type",String.valueOf(shoptype));
+            if (shoptype==0){
+                url= Constants.URL+"shopList/sendJdData";
+                data="{\"pageStart\":\"1\"}";
+                home_page_control.loadData(url,data);
+            }else {
+                switch (shoptype){
+                    case 1:{
+                        data="{\"catId\":\"210\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                    }
+                    case 2:{
+                        data="{\"catId\":\"239\",\"pageStart\":\"1\",\"categoryId\":\"743\"}";
+                    }
+                    case 3:{
+                        data="{\"catId\":\"3817\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                    }
+                    case 4:{
+                        data="{\"catId\":\"4\",\"pageStart\":\"1\",\"categoryId\":\"77\"}";
+                    }
+                    case 5:{
+                        data="{\"catId\":\"1464\",\"pageStart\":\"1\",\"categoryId\":\"16\"}";
+                    }
+                    case 6:{
+                        data="{\"catId\":\"2\",\"pageStart\":\"1\",\"categoryId\":\"16\"}";
+                    }
+                    case 7:{
+                        data="{\"catId\":\"489\",\"pageStart\":\"1\",\"categoryId\":\"1\"}";
+                    }
+                    case 8:{
+                        data="{\"catId\":\"277\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                    }
+                    case 9:{
+                        data="{\"catId\":\"2351\",\"pageStart\":\"1\",\"categoryId\":\"1281\"}";
+                    }
+                    case 10:{
+                        data="{\"catId\":\"7639\",\"pageStart\":\"1\",\"categoryId\":\"1451\"}";
+                    }
+                    case 11:{
+                        data="{\"catId\":\"6076\",\"pageStart\":\"1\",\"categoryId\":\"18\"}";
+                    }
+                }
+                url= Constants.URL+"shopList/findByTypePage";
+                data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
+                data=data.replace("type",String.valueOf(shoptype));
+            }
         }
-
         home_page_control=Home_Page_Control.getInstance();
         home_page_control.loadData(url,data);
         home_page_control.setlistener(new Home_Page_Control.Home_Page_Listener() {
@@ -106,7 +153,6 @@ public class HomeTabFragment extends LazyLoadFragment {
             public void severerr() {
 
             }
-
             @Override
             public void connecttimeout() {
                 Log.d("555","请求超时");
@@ -123,9 +169,6 @@ public class HomeTabFragment extends LazyLoadFragment {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setAdapter(adapter);
         Log.d("55555","内标签正在渲染");
-
-        // mTextView = (TextView) view.findViewById(R.id.id_info);
-        // mTextView.setText(mTitle);
         adapter.notifyDataSetChanged();
         mRecyclerView.setPullRefreshEnable(true);
         mRecyclerView.setPushRefreshEnable(true);
@@ -149,6 +192,9 @@ public class HomeTabFragment extends LazyLoadFragment {
         adapter.setOnItemClickListener(new Home_Re_Adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent  intent=new Intent(activity, Shop_Details_Activity.class);
+                intent.putExtra("shopid",myListData.get(position).getGoods_id());
+                activity.startActivity(intent);
 
             }
             @Override
@@ -157,18 +203,77 @@ public class HomeTabFragment extends LazyLoadFragment {
         });
     }
  public void getdata(){
-     if (shoptype==0){
-         url= Constants.URL+"shopList/sendJdData";
-         String data="{\"pageStart\":\"%pageStart\"}";
-         data=data.replace("%pageStart",String.valueOf(page));
-         home_page_control.loadData(url,data);
-     }else {
-         url= Constants.URL+"shopList/findByTypePage";
-         String data="{\"goodsType\":\"%type\",\"pageStart\":\"%pageStart\"}";
-         data=data.replace("%pageStart",String.valueOf(page));
-         data=data.replace("%type",String.valueOf(shoptype));
-         home_page_control.loadData(url,data);
-     }
+        if (Constants.SELECT_JD){
+            if (shoptype==0){
+                url= Constants.URL+"shopList/sendJdData";
+                String data="{\"pageStart\":\"%pageStart\"}";
+                data=data.replace("%pageStart",String.valueOf(page));
+                home_page_control.loadData(url,data);
+                home_page_control.loadData(url,data);
+            }else {
+                url= Constants.URL+"shopList/findByTypePage";
+                String data="{\"goodsType\":\"%type\",\"pageStart\":\"%pageStart\"}";
+                data=data.replace("%pageStart",String.valueOf(page));
+                data=data.replace("%type",String.valueOf(shoptype));
+                home_page_control.loadData(url,data);
+            }
+        }else {
+            String data="";
+
+            if (shoptype==0){
+                url= Constants.URL+"shopList/sendJdData";
+                data="{\"pageStart\":\"1\"}";
+            }else {
+                switch (shoptype){
+                    case 1:{
+                        data="{\"catId\":\"210\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 2:{
+                        data="{\"catId\":\"239\",\"pageStart\":\"%pageStart\",\"categoryId\":\"743\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 3:{
+                        data="{\"catId\":\"3817\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 4:{
+                        data="{\"catId\":\"4\",\"pageStart\":\"%pageStart\",\"categoryId\":\"77\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 5:{
+                        data="{\"catId\":\"1464\",\"pageStart\":\"%pageStart\",\"categoryId\":\"16\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 6:{
+                        data="{\"catId\":\"2\",\"pageStart\":\"%pageStart\",\"categoryId\":\"16\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 7:{
+                        data="{\"catId\":\"489\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 8:{
+                        data="{\"catId\":\"277\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 9:{
+                        data="{\"catId\":\"2351\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1281\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 10:{
+                        data="{\"catId\":\"7639\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1451\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                    case 11:{
+                        data="{\"catId\":\"6076\",\"pageStart\":\"%pageStart\",\"categoryId\":\"18\"}";
+                        data=data.replace("%pageStart",String.valueOf(page));
+                    }
+                }
+                url= Constants.URL+"shopList/findByTypePage";
+                home_page_control.loadData(url,data);
+            }
+        }
  }
 
 }
