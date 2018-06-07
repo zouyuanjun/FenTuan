@@ -63,14 +63,22 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				weixinid=weixinid.replace("%openid",openid);
 				String url=Constants.URL+"/user/bindPhone";
 				//请求该微信号是否已注册
-				network.connectnet(weixinid,url,handler,3);
+				Intent intent=new Intent(activity, MainActivity.class);
+				intent.putExtra("phone","44");
+				startActivity(intent);
+				activity.finish();
+
+
+			//	network.connectnet(weixinid,url,handler,3);
 			}else if (what==3){
-				JsonElement je = new JsonParser().parse(result);
+				JsonElement je = null;
 				String code="-2";
 				try {
+					je = new JsonParser().parse(result);
 					code = je.getAsJsonObject().get("retCode").getAsString();
 				}catch (JsonSyntaxException e){
-					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG);
+					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG).show();
+					activity.finish();
 				}
 				if (code.equals("0")){
 					//如果返回是0则说明已注册，直接跳到主页
@@ -81,10 +89,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 					activity.finish();
 				}else if(code.equals("-1")){
 					Log.d("错误码",code);
-					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG);
+					Toast.makeText(context,"与服务器连接异常",Toast.LENGTH_LONG).show();
+					activity.finish();
 				} else if(code.equals("-2")){
 					Log.d("错误码",code);
-					Toast.makeText(context,"与服务器连接超时",Toast.LENGTH_LONG);
+					Toast.makeText(context,"与服务器连接超时",Toast.LENGTH_LONG).show();
+					activity.finish();
 				}else {
 					Intent intent=new Intent(activity, WX_Signin_Activity.class);
 					intent.putExtra("openid",openid);
@@ -146,12 +156,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:
 				Log.d("5555","用户取消");
+				activity.finish();
 				break;
 			case BaseResp.ErrCode.ERR_AUTH_DENIED:
 				Log.d("5555","用户拒绝");
+				activity.finish();
 				break;
 			case BaseResp.ErrCode.ERR_UNSUPPORT:
 				Log.d("5555","不支持");
+				activity.finish();
 				break;
 			default:
 				break;

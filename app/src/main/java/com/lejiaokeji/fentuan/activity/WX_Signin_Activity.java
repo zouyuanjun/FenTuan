@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class WX_Signin_Activity extends AppCompatActivity {
     boolean cansend = true;
     Activity activity;
     CountDownTimer timer;
+    RadioButton radioButton;
+    boolean isaccpet=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,13 +53,16 @@ public class WX_Signin_Activity extends AppCompatActivity {
         et_yaoqingcode = findViewById(R.id.et_yaoqingcode);
         bt_getcode = findViewById(R.id.bt_getcode);
         bt_bind = findViewById(R.id.bt_bind);
+        radioButton =findViewById(R.id.radioButton);
         init();
         getinputdata();
     }
 
     public void init() {
         Log.d("555",token+openid);
-        sign_in.getwxinfo(token,openid);
+        if (null!=token&&null!=openid){
+            sign_in.getwxinfo(token,openid);
+        }
         sign_in.setsignlistener(new Sign_In.Signresult() {
             @Override
             public void signsuccessful() {
@@ -72,7 +78,7 @@ public class WX_Signin_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void severerr() {
+            public void uppasswordsuccessful() {
             }
 
             @Override
@@ -83,9 +89,6 @@ public class WX_Signin_Activity extends AppCompatActivity {
     }
 
     public void getinputdata() {
-
-
-
         bt_getcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,14 +100,25 @@ public class WX_Signin_Activity extends AppCompatActivity {
         bt_bind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phone = et_phone.getText().toString();
-                String code = et_code.getText().toString();
-                String password = et_password.getText().toString();
-                String yaoqingcode = et_yaoqingcode.getText().toString();
-                sign_in.bindphone(activity,phone,password,code,yaoqingcode);
+
+                if (isaccpet){
+                    phone = et_phone.getText().toString();
+                    String code = et_code.getText().toString();
+                    String password = et_password.getText().toString();
+                    String yaoqingcode = et_yaoqingcode.getText().toString();
+                    sign_in.bindphone(activity,phone,password,code,yaoqingcode);
+                }else {
+                    Toast.makeText(activity,"必须接受粉团用户协议",Toast.LENGTH_LONG);
+                }
+
             }
         });
-
+        radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 isaccpet=true;
+            }
+        });
 
         /**
          * 倒数计时器
@@ -155,6 +169,8 @@ public class WX_Signin_Activity extends AppCompatActivity {
             }
         }
     }
+
+    //请求验证码
     public void sendcode( String phone) {
         Log.d("5555",phone+phone.length());
         if (phone.length() == 11) {

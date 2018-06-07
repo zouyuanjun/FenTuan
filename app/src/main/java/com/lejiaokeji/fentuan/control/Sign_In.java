@@ -56,12 +56,12 @@ public class Sign_In {
 //        String requestbody=gson.toJson(signbean);  //将json对象转换为字符
 //        network.connectnet(requestbody,"login",StaticValue.url,handler,1);
     }
-    String openid;
-    String nickname;
-    String sex;
-    String province;
-    String city;
-    String headimgurl;
+    String openid="";
+    String nickname="";
+    String sex="";
+    String province="";
+    String city="";
+    String headimgurl="";
     Handler handler=new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -70,7 +70,6 @@ public class Sign_In {
                 String result=msg.obj.toString();
                 Log.d("5555","SIGN返回数据"+result);
                 if (what==1){
-
                     JsonElement je = new JsonParser().parse(result);
                      openid = je.getAsJsonObject().get("openid").getAsString();
                      nickname = je.getAsJsonObject().get("nickname").getAsString();
@@ -80,6 +79,7 @@ public class Sign_In {
                      headimgurl=je.getAsJsonObject().get("headimgurl").getAsString();
 
                 }if (what==3){
+                    //登陆结果
                     JsonElement je = new JsonParser().parse(result);
                     String retCode = je.getAsJsonObject().get("retCode").getAsString();
                     if (retCode.equals("0")){
@@ -87,6 +87,14 @@ public class Sign_In {
                         intent.putExtra("phone",wx_info_bean.getPhone());
                         activity.startActivity(intent);
                         signresult.signsuccessful();
+                    }
+                }if (what==4){
+                    //修改密码结果
+                    JsonElement je = new JsonParser().parse(result);
+                    String retCode = je.getAsJsonObject().get("retCode").getAsString();
+                    if (retCode.equals("0")){
+
+                        signresult.uppasswordsuccessful();
                     }
                 }
                     isture(result);
@@ -96,7 +104,7 @@ public class Sign_In {
         public void signsuccessful();
         public void signfail(String t);
         public void fistlogin();
-        public void severerr();
+        public void uppasswordsuccessful();
         public void wxinfo();
     }
     private  Signresult signresult;
@@ -121,7 +129,6 @@ public class Sign_In {
         req.scope = "snsapi_userinfo";
         req.state = "fentuanyizhuang";
         Constants.api.sendReq(req);
-
     }
     //获取微信用户基本信息
     public void getwxinfo(String token,String openid){
@@ -137,7 +144,6 @@ public class Sign_In {
         data=data.replace("%phone",phone);
         network.connectnet(data,url,handler,2);
     }
-
     //绑定手机号
     public void bindphone(Activity activity,String phone ,String password,String code,String yaoqingcode){
         this.activity=activity;
@@ -153,6 +159,14 @@ public class Sign_In {
         String data=new Gson().toJson(wx_info_bean);
         Log.d("555",data);
         String url=Constants.URL+"/user/perfectInfo";
-     //   network.connectnet(data,"",url,handler,3);
+        network.connectnet(data,url,handler,3);
+    }
+    //找回密码
+    public void findpassword(String phone,String code,String password){
+        String data="{\"phone\":\"%phone\",\"code\":\"%code\",\"password\":\"%password\"}";
+        data=data.replace("%phone",phone);
+        data=data.replace("%code",code);
+        data=data.replace("%password",password);
+        network.connectnet(data,Constants.URL+"/findPassWord ",handler,4);
     }
 }

@@ -1,112 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent">
-        <RelativeLayout
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner">
-            <ImageView
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="30dp"
-                android:layout_centerVertical="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@color/colorAccent"/>
-            <AutoCompleteTextView
-                android:id="@+id/tv_input_phonenum"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/shape_corner"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="请输入手机号"/>
-        </RelativeLayout>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_bg">
 
-        <RelativeLayout
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner">
-            <ImageView
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="30dp"
-                android:layout_centerVertical="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@color/colorAccent"/>
-            <EditText
-                android:id="@+id/tv_input_password"
-                android:gravity="center_vertical"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/shape_corner"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="请输入密码"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="220dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner">
-            <Button
-                android:id="@+id/bt_sign"
-                android:gravity="center"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/shape_corner"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="登陆"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="270dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_phone_sign_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="手机号快速注册"/>
-            <TextView
-                android:id="@+id/tv_forget_password"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="忘记密码？"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="370dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/imb_weixin_sign"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@mipmap/icon64_appwx_logo"/>
-            <TextView
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="60dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="微信登陆"/>
-        </RelativeLayout>
+
+
+
+    <AutoCompleteTextView
+        android:id="@+id/tv_input_phonenum"
+        android:layout_width="329dp"
+        android:layout_height="43dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/shape_corner"
+        android:hint="请输入手机号"
+        android:textColorHint="@color/hui9999"
+        android:textSize="14sp"
+        android:paddingLeft="48dp"
+        android:textColor="@color/blackfont0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ig_ic_user"
+        app:layout_constraintStart_toStartOf="@+id/tv_input_phonenum"
+        app:layout_constraintTop_toTopOf="@+id/tv_input_phonenum" />
+
+    <EditText
+        android:id="@+id/tv_input_password"
+        android:layout_width="329dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_corner"
+        android:gravity="center_vertical"
+        android:hint="请输入密码"
+        android:textColorHint="@color/hui9999"
+        android:textSize="14sp"
+        android:paddingLeft="48dp"
+        android:textColor="@color/blackfont0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_input_phonenum" />
+
+    <Button
+        android:id="@+id/bt_sign"
+        android:layout_width="329dp"
+        android:layout_height="42dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_corner"
+        android:gravity="center"
+        android:hint="登陆"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_input_password" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ig_ic_password"
+        app:layout_constraintStart_toStartOf="@+id/bt_sign"
+        app:layout_constraintTop_toTopOf="@+id/tv_input_password" />
+    <TextView
+        android:id="@+id/tv_phone_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:text="手机号快速注册"
+        android:textSize="13sp"
+        android:textColor="@color/whitefff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign" />
+
+    <TextView
+        android:id="@+id/tv_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="15dp"
+        android:text="忘记密码？"
+        android:textSize="13sp"
+        android:textColor="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign" />
+
+    <LinearLayout
+        android:layout_width="123dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="104dp"
+        android:background="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="123dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="104dp"
+        android:background="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign">
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:text="第三方登陆"
+        android:textColor="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign" />
+
+    <ImageButton
+        android:id="@+id/imb_weixin_sign"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="128dp"
+        android:background="@mipmap/icon64_appwx_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="微信登陆"
+        android:textSize="13sp"
+        android:textColor="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imb_weixin_sign" />
+
+
 
 </android.support.constraint.ConstraintLayout>

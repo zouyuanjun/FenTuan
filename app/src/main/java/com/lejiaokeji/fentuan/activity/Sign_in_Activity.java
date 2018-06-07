@@ -1,6 +1,7 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -65,10 +66,13 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.tv_phone_sign_up:{
-
+                Intent intent=new Intent(activity,WX_Signin_Activity.class);
+                activity.startActivity(intent);
                 break;
             }
             case R.id.tv_forget_password:{
+
+
                 break;
             }
             //微信登陆

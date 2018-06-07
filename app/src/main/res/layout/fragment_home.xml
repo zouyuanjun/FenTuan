@@ -7,13 +7,13 @@
         android:id="@id/id_stickynavlayout_topview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4400ff00"
+        android:background="@color/whitefff"
         android:orientation="vertical">
         <com.youth.banner.Banner
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="180dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,52 +23,54 @@
                 android:layout_height="wrap_content">
                 <ImageButton
                     android:id="@+id/imb_jd_zhuanglian"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
                 <TextView
                     android:layout_below="@+id/imb_jd_zhuanglian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="京东转链"
-                    android:textColor="@color/blackfont"
+                    android:textColor="@color/blackfont0000"
                     />
             </RelativeLayout>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="42dp"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/tv_select_jd"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="70dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="76dp"
+                android:textSize="15sp"
                 android:text="京东"
+                android:textColor="@color/hei3333"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp" />
+                android:layout_height="30dp" />
             <ImageView
                 android:id="@+id/img_select_jd"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/list_ic_underline"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="70dp"
                 android:layout_below="@+id/tv_select_jd"
                 android:layout_width="40dp"
-                android:layout_height="5dp" />
+                android:layout_height="4dp" />
             <TextView
                 android:id="@+id/tv_select_pingduoduo"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="70dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:text="拼多多"
+                android:textColor="@color/hui88888"
                 android:gravity="center"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_width="wrap_content"
               />
             <ImageView
                 android:visibility="gone"
                 android:id="@+id/img_select_pdd"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/list_ic_underline"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="80dp"
                 android:layout_below="@+id/tv_select_pingduoduo"
@@ -76,43 +78,43 @@
                 android:layout_height="5dp" />
         </RelativeLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:background="@drawable/shape_corner_f2f2f2"
+            android:layout_width="330dp"
+            android:layout_height="39dp"
             android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="29dp">
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/shape_corner"
-                android:paddingLeft="20dp">
+            android:layout_gravity="center"
+           android:paddingLeft="19dp"
+            >
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@color/colorAccent"/>
                 <EditText
+                    android:paddingLeft="5dp"
+                    android:background="@color/transparent"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textSize="15sp"
                     android:hint="请输入搜索关键词"/>
                 <Button
-
+                    android:background="@drawable/shape_corner_sousuo"
                     android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
+                    android:textColor="@color/whitefff"
+                    android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:text="搜索"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator
         android:id="@id/id_stickynavlayout_indicator"
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="#666666"
+        android:layout_height="5dp"
+        android:background="#ffff"
         android:orientation="vertical">
     </com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator>
 
@@ -136,11 +138,12 @@
             <TextView
                 android:id="@+id/tv_recomment"
                 android:focusable="true"
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@color/colorAccent"
-                android:text=" 推荐|"/>
+                android:textSize="15sp"
+                android:background="@color/whitefff"
+                android:text=" 推荐   |"/>
         </RelativeLayout>
         <ImageView
             android:id="@+id/im_hide"
