@@ -224,8 +224,10 @@ public class HomeTabFragment extends LazyLoadFragment {
                 if (Constants.SELECT_JD){
                     Intent  intent=new Intent(activity, JD_Shop_Details_Activity.class);
                     intent.putExtra("shopid",myListData.get(position).getGoods_id());
+                    intent.putExtra("link",myListData.get(position).getDiscount_link());
+                    intent.putExtra("discount",myListData.get(position).getDiscount_price());
+                    intent.putExtra("yongjin",myListData.get(position).getCommission());
                     activity.startActivity(intent);
-
                 }else {
                     Intent  intent=new Intent(activity, Pdd_Shop_Details_Activity.class);
                     intent.putExtra("shopid",myListData.get(position).getGoods_id());

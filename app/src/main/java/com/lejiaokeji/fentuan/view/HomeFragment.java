@@ -130,6 +130,10 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 super.destroyItem(container, position, object);
 
             }
+            @Override
+            public int getItemPosition(Object object) {
+                return POSITION_NONE;
+            }
         };
 
         mViewPager.setAdapter(mAdapter);
@@ -168,7 +172,9 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 select_pdd.setVisibility(View.GONE);
                 select_jd.setVisibility(View.VISIBLE);
                 Constants.SELECT_JD=true;
-                mViewPager.invalidate();
+                int pageindex=mViewPager.getCurrentItem();
+                mViewPager.setCurrentItem(pageindex);
+                mViewPager.getAdapter().notifyDataSetChanged();
             }
         });
         tv_select_pdd=findViewById(R.id.tv_select_pingduoduo);
@@ -178,8 +184,9 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 Constants.SELECT_JD=false;
                 select_pdd.setVisibility(View.VISIBLE);
                 select_jd.setVisibility(View.GONE);
-                mViewPager.invalidate();
-
+                int pageindex=mViewPager.getCurrentItem();
+             mViewPager.setCurrentItem(pageindex);
+                mViewPager.getAdapter().notifyDataSetChanged();
             }
         });
         im_hide=findViewById(R.id.im_hide);

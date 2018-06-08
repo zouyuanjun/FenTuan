@@ -7,6 +7,11 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.lejiaokeji.fentuan.activity.JD_Shop_Details_Activity;
+import com.lejiaokeji.fentuan.databean.JD_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
@@ -32,22 +37,34 @@ public class Shop_Details {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int what=msg.what;
-
             String result=msg.obj.toString();
             Log.d("5555","SIGN返回数据"+result);
-            //对返回的数据进行判断是否登陆成功
-            isture(result);
+            String code=JSON.parseObject(result).getString("retCode");
+            if (code.equals("0")){
+                if (what==1){
+                    String data=JSON.parseObject(result).getString("data");
+                    JSONObject jsonObject=JSON.parseObject(data);
+                    JD_Shop_Details_Bean jd_shop_details_bean=new JD_Shop_Details_Bean();
+                    jd_shop_details_bean.setGoodsName(jsonObject.getString("goodsName"));
+                    jd_shop_details_bean.setImgUrl(jsonObject.getString("imgUrl"));
+                    jd_shop_details_bean.setMaterialUrl(jsonObject.getString("materialUrl"));
+                    jd_shop_details_bean.setUnitPrice(jsonObject.getString("unitPrice"));
+                    jd_shop_details_bean.setShopId(jsonObject.getString("shopId"));
+                    detailsListener.getdatasuccessful(jd_shop_details_bean);
+                }
+            }
+
         }
     };
-    public interface Signresult{
-        public void signsuccessful();
+    public interface DetailsListener {
+        public void getdatasuccessful(JD_Shop_Details_Bean shop_data);
         public void signfail(String t);
         public void fistlogin();
         public void severerr();
     }
-    private Sign_In.Signresult signresult;
-    public void setsignlistener( Sign_In.Signresult signresult1){
-        this.signresult=signresult1;
+    private DetailsListener detailsListener;
+    public void setslistener( DetailsListener detailsListener){
+        this.detailsListener=detailsListener;
     }
 
     public void isture(String result){
