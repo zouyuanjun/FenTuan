@@ -34,15 +34,15 @@ public class Home_Page_Control {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int what=msg.what;
-
             String result=msg.obj.toString();
+            Log.d("5555","SIGN返回数据"+result);
             String retCode=JSON.parseObject(result).getString("retCode");
             if (retCode.equals("-1")){
                 home_page_listener.connectfail();
             }else if (retCode.equals("-2")){
                home_page_listener.connecttimeout();
             }else if (retCode.equals("0")){
-                Log.d("5555","SIGN返回数据"+result);
+
                 if (what==1){
                     Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
                     home_page_listener.loadsuccefful(shop_data);

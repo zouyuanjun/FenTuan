@@ -87,6 +87,8 @@ public class Sign_In {
                         intent.putExtra("phone",wx_info_bean.getPhone());
                         activity.startActivity(intent);
                         signresult.signsuccessful();
+                    }else {
+                        signresult.signfail(retCode);
                     }
                 }if (what==4){
                     //修改密码结果

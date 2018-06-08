@@ -10,6 +10,8 @@ import android.util.Log;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
+import java.util.Date;
+
 public class Shop_Details {
     Network network;
     String username;
@@ -61,10 +63,34 @@ public class Shop_Details {
         editor.commit();
     }
     public void getdata(String id){
-        String data="{\"goodsId\":\"%id\"}";
-        data=data.replace("%id",id);
-        String url= Constants.URL+"/goodsInfo/getShopinfo";
-        network.connectnet(data,url,handler,1);
-    }
+        if (Constants.SELECT_JD){
+            String data="{\"goodsId\":\"%id\"}";
+            data=data.replace("%id",id);
+            String url= Constants.URL+"/goodsInfo/getShopinfo";
+            network.connectnet(data,url,handler,1);
+        }else {
+            String data="{\"goodsId\":\"%id\"}";
+            data=data.replace("%id",id);
+            String url= Constants.URL+"goodsDetail/getGoodsDetail";
+            network.connectnet(data,url,handler,1);
+        }
 
+    }
+    public void getUnionData(String pid,String shopid){
+        if (Constants.SELECT_JD){
+            String data="{\"goodsId\":\"%goodsid\",\"jdPid\":\"%jdPid\"}";
+            data=data.replace("%goodsid",shopid);
+            data=data.replace("%jdPid",pid);
+            String url=Constants.URL+"union/getUnionData";
+            network.connectnet(data,url,handler,2);
+        }else {
+            String data="{\"goodsId\":\"%goodsid\",\"pddPid\":\"%pddPid\"}";
+            data=data.replace("%goodsid",shopid);
+            data=data.replace("%pddPid",pid);
+            String url=Constants.URL+"generate/getGenerate";
+            network.connectnet(data,url,handler,3);
+        }
+
+
+    }
 }

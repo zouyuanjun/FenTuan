@@ -71,6 +71,7 @@ public class WX_Signin_Activity extends AppCompatActivity {
 
             @Override
             public void signfail(String t) {
+                Toast.makeText(activity,"错误代码："+t+", 邀请码好像错了哦",Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -106,9 +107,14 @@ public class WX_Signin_Activity extends AppCompatActivity {
                     String code = et_code.getText().toString();
                     String password = et_password.getText().toString();
                     String yaoqingcode = et_yaoqingcode.getText().toString();
-                    sign_in.bindphone(activity,phone,password,code,yaoqingcode);
+                    if (!phone.isEmpty()&&!code.isEmpty()&&!password.isEmpty()&&!yaoqingcode.isEmpty()){
+                        sign_in.bindphone(activity,phone,password,code,yaoqingcode);
+                    }else {
+                        Toast.makeText(activity,"请填写所有信息",Toast.LENGTH_LONG).show();
+                    }
+
                 }else {
-                    Toast.makeText(activity,"必须接受粉团用户协议",Toast.LENGTH_LONG);
+                    Toast.makeText(activity,"必须接受粉团用户协议",Toast.LENGTH_LONG).show();
                 }
 
             }

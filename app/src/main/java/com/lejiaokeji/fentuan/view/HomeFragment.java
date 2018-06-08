@@ -65,8 +65,6 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
     protected int setContentView() {
         return R.layout.fragment_home;
     }
-
-
     @Override
     protected void lazyLoad() {
         images.clear();

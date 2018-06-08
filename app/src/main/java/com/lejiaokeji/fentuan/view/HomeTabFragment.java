@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lejiaokeji.fentuan.R;
-import com.lejiaokeji.fentuan.activity.Shop_Details_Activity;
+import com.lejiaokeji.fentuan.activity.JD_Shop_Details_Activity;
+import com.lejiaokeji.fentuan.activity.Pdd_Shop_Details_Activity;
 import com.lejiaokeji.fentuan.adapter.Home_Re_Adapter;
 import com.lejiaokeji.fentuan.control.Home_Page_Control;
 import com.lejiaokeji.fentuan.databean.Item_Shop;
+import com.lejiaokeji.fentuan.databean.PDD_Shop_Bean;
 import com.lejiaokeji.fentuan.databean.Shop_Data;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
 import com.lejiaokeji.fentuan.wxapi.Constants;
@@ -31,6 +34,7 @@ public class HomeTabFragment extends LazyLoadFragment {
      int page=2;
     String url=Constants.URL+"shopList/recommended";
     Activity activity;
+    String pid="10004_15554651";
     public static HomeTabFragment newInstance(int type) {
         HomeTabFragment tabFragment = new HomeTabFragment();
         Bundle bundle = new Bundle();
@@ -43,7 +47,6 @@ public class HomeTabFragment extends LazyLoadFragment {
     public void onStart() {
         super.onStart();
         int page=2;
-        myListData.clear();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,11 @@ public class HomeTabFragment extends LazyLoadFragment {
     }
     @Override
     protected void lazyLoad() {
-        Log.d("当前类型",""+shoptype);
+        myListData.clear();
+        home_page_control=Home_Page_Control.getInstance();
         String data="";
         if (Constants.SELECT_JD){
+            Log.d("当前类型","京东"+shoptype);
             if (shoptype==0){
                 url= Constants.URL+"shopList/sendJdData";
                 data="{\"pageStart\":\"1\"}";
@@ -78,52 +83,74 @@ public class HomeTabFragment extends LazyLoadFragment {
                 data=data.replace("type",String.valueOf(shoptype));
             }
         }else {
+            Log.d("当前类型","拼多多"+shoptype);
             if (shoptype==0){
                 url= Constants.URL+"shopList/sendJdData";
                 data="{\"pageStart\":\"1\"}";
-                home_page_control.loadData(url,data);
             }else {
+                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,pid);
                 switch (shoptype){
                     case 1:{
-                        data="{\"catId\":\"210\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                        pdd_shop_bean.setCatId(210);
+                        pdd_shop_bean.setCategoryId(12);
+                        break;
+
                     }
                     case 2:{
-                        data="{\"catId\":\"239\",\"pageStart\":\"1\",\"categoryId\":\"743\"}";
+                        pdd_shop_bean.setCatId(239);
+                        pdd_shop_bean.setCategoryId(743);
+                        break;
                     }
                     case 3:{
-                        data="{\"catId\":\"3817\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                        pdd_shop_bean.setCatId(3817);
+                        pdd_shop_bean.setCategoryId(13);
+                        break;
                     }
                     case 4:{
-                        data="{\"catId\":\"4\",\"pageStart\":\"1\",\"categoryId\":\"77\"}";
+                        pdd_shop_bean.setCatId(77);
+                        pdd_shop_bean.setCategoryId(4);
+                        break;
                     }
                     case 5:{
-                        data="{\"catId\":\"1464\",\"pageStart\":\"1\",\"categoryId\":\"16\"}";
+                        pdd_shop_bean.setCatId(1464);
+                        pdd_shop_bean.setCategoryId(16);
+                        break;
                     }
                     case 6:{
-                        data="{\"catId\":\"2\",\"pageStart\":\"1\",\"categoryId\":\"16\"}";
+                        pdd_shop_bean.setCatId(2);
+                        pdd_shop_bean.setCategoryId(1);
+                        break;
                     }
                     case 7:{
-                        data="{\"catId\":\"489\",\"pageStart\":\"1\",\"categoryId\":\"1\"}";
+                        pdd_shop_bean.setCatId(489);
+                        pdd_shop_bean.setCategoryId(14);
+                        break;
                     }
                     case 8:{
-                        data="{\"catId\":\"277\",\"pageStart\":\"1\",\"categoryId\":\"12\"}";
+                        pdd_shop_bean.setCatId(277);
+                        pdd_shop_bean.setCategoryId(1281);
+                        break;
                     }
                     case 9:{
-                        data="{\"catId\":\"2351\",\"pageStart\":\"1\",\"categoryId\":\"1281\"}";
+                        pdd_shop_bean.setCatId(2351);
+                        pdd_shop_bean.setCategoryId(1451);
+                        break;
                     }
                     case 10:{
-                        data="{\"catId\":\"7639\",\"pageStart\":\"1\",\"categoryId\":\"1451\"}";
+                        pdd_shop_bean.setCatId(7639);
+                        break;
                     }
                     case 11:{
-                        data="{\"catId\":\"6076\",\"pageStart\":\"1\",\"categoryId\":\"18\"}";
+                        pdd_shop_bean.setCatId(6076);
+                        pdd_shop_bean.setCategoryId(18);
+                        break;
                     }
                 }
-                url= Constants.URL+"shopList/findByTypePage";
-                data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
-                data=data.replace("type",String.valueOf(shoptype));
+                url= Constants.URL+"goodsSearch/selectCategory";
+                data=new Gson().toJson(pdd_shop_bean);
             }
         }
-        home_page_control=Home_Page_Control.getInstance();
+
         home_page_control.loadData(url,data);
         home_page_control.setlistener(new Home_Page_Control.Home_Page_Listener() {
 
@@ -157,10 +184,12 @@ public class HomeTabFragment extends LazyLoadFragment {
             public void connecttimeout() {
                 Log.d("555","请求超时");
                 Toast.makeText(activity,"连接超时，请检查您的网络",Toast.LENGTH_LONG).show();
+                mRecyclerView.setPullLoadMoreCompleted();
             }
 
             @Override
             public void connectfail() {
+                mRecyclerView.setPullLoadMoreCompleted();
                 Toast.makeText(activity,"连接失败，请检查您的网络",Toast.LENGTH_LONG);
             }
         });
@@ -192,9 +221,17 @@ public class HomeTabFragment extends LazyLoadFragment {
         adapter.setOnItemClickListener(new Home_Re_Adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent  intent=new Intent(activity, Shop_Details_Activity.class);
-                intent.putExtra("shopid",myListData.get(position).getGoods_id());
-                activity.startActivity(intent);
+                if (Constants.SELECT_JD){
+                    Intent  intent=new Intent(activity, JD_Shop_Details_Activity.class);
+                    intent.putExtra("shopid",myListData.get(position).getGoods_id());
+                    activity.startActivity(intent);
+
+                }else {
+                    Intent  intent=new Intent(activity, Pdd_Shop_Details_Activity.class);
+                    intent.putExtra("shopid",myListData.get(position).getGoods_id());
+                    activity.startActivity(intent);
+
+                }
 
             }
             @Override
@@ -224,53 +261,65 @@ public class HomeTabFragment extends LazyLoadFragment {
                 url= Constants.URL+"shopList/sendJdData";
                 data="{\"pageStart\":\"1\"}";
             }else {
+                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(page,pid);
                 switch (shoptype){
                     case 1:{
-                        data="{\"catId\":\"210\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(210);
+                        pdd_shop_bean.setCategoryId(12);
+                        break;
                     }
                     case 2:{
-                        data="{\"catId\":\"239\",\"pageStart\":\"%pageStart\",\"categoryId\":\"743\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(239);
+                        pdd_shop_bean.setCategoryId(743);
+                        break;
                     }
                     case 3:{
-                        data="{\"catId\":\"3817\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(3817);
+                        pdd_shop_bean.setCategoryId(13);
+                        break;
                     }
                     case 4:{
-                        data="{\"catId\":\"4\",\"pageStart\":\"%pageStart\",\"categoryId\":\"77\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(77);
+                        pdd_shop_bean.setCategoryId(4);
+                        break;
                     }
                     case 5:{
-                        data="{\"catId\":\"1464\",\"pageStart\":\"%pageStart\",\"categoryId\":\"16\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(1464);
+                        pdd_shop_bean.setCategoryId(16);
+                        break;
                     }
                     case 6:{
-                        data="{\"catId\":\"2\",\"pageStart\":\"%pageStart\",\"categoryId\":\"16\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(2);
+                        pdd_shop_bean.setCategoryId(1);
+                        break;
                     }
                     case 7:{
-                        data="{\"catId\":\"489\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(489);
+                        pdd_shop_bean.setCategoryId(14);
+                        break;
                     }
                     case 8:{
-                        data="{\"catId\":\"277\",\"pageStart\":\"%pageStart\",\"categoryId\":\"12\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(277);
+                        pdd_shop_bean.setCategoryId(1281);
+                        break;
                     }
                     case 9:{
-                        data="{\"catId\":\"2351\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1281\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(2351);
+                        pdd_shop_bean.setCategoryId(1451);
+                        break;
                     }
                     case 10:{
-                        data="{\"catId\":\"7639\",\"pageStart\":\"%pageStart\",\"categoryId\":\"1451\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(7639);
+                        break;
                     }
                     case 11:{
-                        data="{\"catId\":\"6076\",\"pageStart\":\"%pageStart\",\"categoryId\":\"18\"}";
-                        data=data.replace("%pageStart",String.valueOf(page));
+                        pdd_shop_bean.setCatId(6076);
+                        pdd_shop_bean.setCategoryId(18);
+                        break;
                     }
                 }
-                url= Constants.URL+"shopList/findByTypePage";
+                data=new Gson().toJson(pdd_shop_bean);
+                url= Constants.URL+"goodsSearch/selectCategory";
                 home_page_control.loadData(url,data);
             }
         }

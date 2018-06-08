@@ -43,18 +43,19 @@
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/et_code"
         app:layout_constraintTop_toTopOf="@+id/et_code" />
+
     <EditText
         android:id="@+id/et_password"
-        android:layout_width="310dp"
+        android:layout_width="319dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="请设置密码"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_code" />
 
@@ -111,8 +112,8 @@
         android:id="@+id/et_yaoqingcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="请输入邀请码"
         android:inputType="number"

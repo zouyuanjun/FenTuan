@@ -9,6 +9,7 @@ import android.util.Log;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
 import com.lejiaokeji.fentuan.view.HomeFragment;
+import com.lejiaokeji.fentuan.view.helpview.OnlyIconItemView;
 import com.lejiaokeji.fentuan.view.notification.NotificationFragment;
 import com.lejiaokeji.fentuan.view.RecommendFragment;
 import com.lejiaokeji.fentuan.view.Store_Fragment;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
+import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,12 +35,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewPager=findViewById(R.id.myviewpage);
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
-        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.tool_ic_home_nor,R.drawable.tool_ic_home_sel,"",getResources().getColor(R.color.colorAccent))
-                .addItem(R.drawable.tool_ic_code_nor,R.drawable.tool_ic_code_sel,"推荐",getResources().getColor(R.color.colorAccent))
-                .addItem(R.drawable.pfile_ic_portrait,"商城")
-                .addItem(R.drawable.pfile_ic_portrait,"通知")
-                .addItem(R.drawable.pfile_ic_portrait,"我的")
-        .build();
+//        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.tool_ic_home_nor,R.drawable.tool_ic_home_sel,"",getResources().getColor(R.color.colorAccent))
+//                .addItem(R.drawable.tool_ic_code_nor,R.drawable.tool_ic_code_sel,"推荐",getResources().getColor(R.color.colorAccent))
+//                .addItem(R.drawable.pfile_ic_portrait,"商城")
+//                .addItem(R.drawable.pfile_ic_portrait,"通知")
+//                .addItem(R.drawable.pfile_ic_portrait,"我的")
+//        .build();
+        mNavigationController = pageBottomTabLayout.custom()
+                .addItem(newItem(R.drawable.tab_ic_home_def,R.drawable.tab_ic_home_sel))
+                .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))
+                .addItem(newItem(R.drawable.tab_ic_mall_def,R.drawable.tab_ic_mall_sel))
+                .addItem(newItem(R.drawable.tab_ic_inform_def,R.drawable.tab_ic_inform_sel))
+                .addItem(newItem(R.drawable.tab_ic_my_def,R.drawable.tab_ic_my_sel))
+                .build();
         initview();
     }
     private  void initview() {
@@ -64,5 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("asd", "onRepeat selected: " + index);
             }
         });
+    }
+    private BaseTabItem newItem(int drawable, int checkedDrawable){
+        OnlyIconItemView onlyIconItemView = new OnlyIconItemView(this);
+        onlyIconItemView.initialize(drawable,checkedDrawable);
+        return onlyIconItemView;
     }
 }
