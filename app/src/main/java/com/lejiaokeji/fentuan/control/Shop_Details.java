@@ -15,6 +15,7 @@ import com.lejiaokeji.fentuan.databean.JD_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class Shop_Details {
@@ -51,16 +52,29 @@ public class Shop_Details {
                     jd_shop_details_bean.setUnitPrice(jsonObject.getString("unitPrice"));
                     jd_shop_details_bean.setShopId(jsonObject.getString("shopId"));
                     detailsListener.getdatasuccessful(jd_shop_details_bean);
+                }else if (what==2){
+                    String url=JSON.parseObject(result).getString("data");
+                    try {
+                        detailsListener.getjdsharurl(url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else if (what==4){
+                    String url=JSON.parseObject(result).getString("data");
+                    try {
+                        detailsListener.getjdsharurl(url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
         }
     };
     public interface DetailsListener {
         public void getdatasuccessful(JD_Shop_Details_Bean shop_data);
-        public void signfail(String t);
+        public void sharejd(String t);
         public void fistlogin();
-        public void severerr();
+        public void getjdsharurl(String url) throws IOException;
     }
     private DetailsListener detailsListener;
     public void setslistener( DetailsListener detailsListener){
@@ -93,21 +107,34 @@ public class Shop_Details {
         }
 
     }
-    public void getUnionData(String pid,String shopid){
+    public void getUnionData(String pid,String shopid,String couponUrl){
         if (Constants.SELECT_JD){
-            String data="{\"goodsId\":\"%goodsid\",\"jdPid\":\"%jdPid\"}";
+            String data="{\"goodsId\":\"%goodsid\",\"positionId\":\"%jdPid\",\"couponUrl\":\"%couponUrl\"}";
             data=data.replace("%goodsid",shopid);
             data=data.replace("%jdPid",pid);
-            String url=Constants.URL+"union/getUnionData";
+            data=data.replace("%couponUrl",couponUrl);
+            String url=Constants.URL+"shopList/chain";
             network.connectnet(data,url,handler,2);
-        }else {
+        }
+    }
+    public void getpddUnion(String pid,String shopid){
+        if (!Constants.SELECT_JD){
             String data="{\"goodsId\":\"%goodsid\",\"pddPid\":\"%pddPid\"}";
             data=data.replace("%goodsid",shopid);
             data=data.replace("%pddPid",pid);
             String url=Constants.URL+"generate/getGenerate";
             network.connectnet(data,url,handler,3);
         }
-
-
     }
+    public void shareJD(String pid,String shopid,String couponUrl){
+        if (Constants.SELECT_JD){
+            String data="{\"goodsId\":\"%goodsid\",\"positionId\":\"%jdPid\",\"couponUrl\":\"%couponUrl\"}";
+            data=data.replace("%goodsid",shopid);
+            data=data.replace("%jdPid",pid);
+            data=data.replace("%couponUrl",couponUrl);
+            String url=Constants.URL+"shopList/chain";
+            network.connectnet(data,url,handler,4);
+        }
+    }
+
 }

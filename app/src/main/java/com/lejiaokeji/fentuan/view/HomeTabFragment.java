@@ -42,11 +42,10 @@ public class HomeTabFragment extends LazyLoadFragment {
         tabFragment.setArguments(bundle);
         return tabFragment;
     }
-
     @Override
     public void onStart() {
         super.onStart();
-        int page=2;
+         page=2;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,8 +84,8 @@ public class HomeTabFragment extends LazyLoadFragment {
         }else {
             Log.d("当前类型","拼多多"+shoptype);
             if (shoptype==0){
-                url= Constants.URL+"shopList/sendJdData";
-                data="{\"pageStart\":\"1\"}";
+                url= Constants.URL+"goodsSearch/recommend";
+                data="{\"pageStart\":\"1\",\"pddPid\":\"10004_15554651\"}";
             }else {
                 PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,pid);
                 switch (shoptype){
@@ -199,16 +198,12 @@ public class HomeTabFragment extends LazyLoadFragment {
         mRecyclerView.setAdapter(adapter);
         Log.d("55555","内标签正在渲染");
         adapter.notifyDataSetChanged();
-        mRecyclerView.setPullRefreshEnable(true);
+        mRecyclerView.setPullRefreshEnable(false);
         mRecyclerView.setPushRefreshEnable(true);
    //     getdata();
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                getdata();
-                mRecyclerView.setPullLoadMoreCompleted();
-                adapter.notifyDataSetChanged();
-                page++;
                 Log.d("555","刷新更多");
             }
 
@@ -248,7 +243,6 @@ public class HomeTabFragment extends LazyLoadFragment {
                 String data="{\"pageStart\":\"%pageStart\"}";
                 data=data.replace("%pageStart",String.valueOf(page));
                 home_page_control.loadData(url,data);
-                home_page_control.loadData(url,data);
             }else {
                 url= Constants.URL+"shopList/findByTypePage";
                 String data="{\"goodsType\":\"%type\",\"pageStart\":\"%pageStart\"}";
@@ -258,10 +252,10 @@ public class HomeTabFragment extends LazyLoadFragment {
             }
         }else {
             String data="";
-
             if (shoptype==0){
-                url= Constants.URL+"shopList/sendJdData";
-                data="{\"pageStart\":\"1\"}";
+                url= Constants.URL+"goodsSearch/recommend";
+                data="{\"pageStart\":\"%pageStart\",\"pddPid\":\"10004_15554651\"}";
+                data=data.replace("%pageStart",String.valueOf(page));
             }else {
                 PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(page,pid);
                 switch (shoptype){
@@ -322,8 +316,8 @@ public class HomeTabFragment extends LazyLoadFragment {
                 }
                 data=new Gson().toJson(pdd_shop_bean);
                 url= Constants.URL+"goodsSearch/selectCategory";
-                home_page_control.loadData(url,data);
             }
+            home_page_control.loadData(url,data);
         }
  }
 

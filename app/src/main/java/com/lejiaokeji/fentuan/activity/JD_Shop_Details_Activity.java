@@ -1,9 +1,19 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +58,11 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
     RelativeLayout lingquan;
     RelativeLayout tuiguang;
 
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE" };
+
     BitmapUtil bitmapUtil;
     View view;
     @Override
@@ -55,6 +70,7 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jd_shop_details);
         activity=this;
+        verifyStoragePermissions(activity);
         shopid=getIntent().getStringExtra("shopid");
         discount_link=getIntent().getStringExtra("link");
         discount=getIntent().getStringExtra("discount");
@@ -72,7 +88,7 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         tuiguang=findViewById(R.id.rv_tuiguang);
         shop_details=Shop_Details.getInstance();
         setlistener();
-        shop_details.getUnionData("1331837784",shopid);
+
         shop_details.getdata(shopid);
 
     }
@@ -92,64 +108,113 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
                 tv_yongjing.setText("佣金：￥"+yongjin);
                 tv_title.setText(shop_data.getGoodsName());
             }
-
             @Override
-            public void signfail(String t) {
-
+            public void sharejd(String url) {
+                if (uninstallSoftware(activity)){
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }else {
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
             }
-
             @Override
             public void fistlogin() {
 
             }
-
             @Override
-            public void severerr() {
-
+            public void getjdsharurl(String url) throws IOException {
+                getbitmap(url);
             }
         });
         lingquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               shop_details.shareJD("1331837784",shopid,discount_link);
             }
         });
         tuiguang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    getbitmap();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                shop_details.getUnionData("1331837784",shopid,discount_link);
+
+            }
+        });
+        im_detail_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
-    public void setdata(){
-
-
-
-    }
-
-    public void  getbitmap() throws IOException {
+    public void  getbitmap(String url) throws IOException {
         relativeLayout=findViewById(R.id.relative);
         relativeLayout.setDrawingCacheEnabled(true);
         view=activity.getWindow().getDecorView();
+        //获取标题的bitmap
         view.setDrawingCacheEnabled(true);//生成View的副本，是一个Bitmap
         Bitmap bmp = relativeLayout.getDrawingCache();//获取View的副本，就是这个View上面所显示的任何内容
+        //获取商品图片的bitmap
         simpleDraweeView.setDrawingCacheEnabled(true);
         Bitmap bitmap =simpleDraweeView.getDrawingCache();
         bitmapUtil=BitmapUtil.getinstance();
+        //合成
         Bitmap addbitmap= bitmapUtil.addBitmap(bmp,bitmap);
-        String path="/data/user/0/com.lejiaokeji.fentuan/cache/";
-        String filename="5645.png";
-        bitmapUtil.saveFile(addbitmap,path,filename);
+        //获取二维码背景bitmap
+        Drawable db = getResources().getDrawable(R.drawable.qr);
+        BitmapDrawable drawable = (BitmapDrawable)db;
+        Bitmap qrbj = drawable.getBitmap();
+        addbitmap=bitmapUtil.resizeImage(addbitmap,qrbj.getWidth()/addbitmap.getWidth());
+
+        //获取二维码
+        int size= (int) (qrbj.getHeight()/0.8);
+        Bitmap qrbitmap=BitmapUtil.createQRBitmap(url,size);
+        //合成二维码bj
+        Bitmap erbgbitmap=bitmapUtil.toConformBitmap(qrbj,qrbitmap,qrbj.getHeight()/10);
+        //最终合成
+        Bitmap aa=bitmapUtil.addBitmap(addbitmap,erbgbitmap);
+        Bitmap bitmap1=bitmapUtil.resizeImage(aa,0.50f);
+        String path= Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/";
+        String filename=shopid+".jpg";
+        bitmapUtil.saveFile(activity,bitmap1,filename);
         List<String> imageUris=new ArrayList<>();
         imageUris.add(path+filename);
-        WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
-     //   WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
+        imageUris.add(path+"5645.png");
+        imageUris.add(path+filename);
+     //   WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
+        WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
         Log.d("55","截图完成");
 
+    }
+    public static void verifyStoragePermissions(Activity activity) {
+
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //判断是否安装京东客户端
+    private static boolean uninstallSoftware(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo("com.jingdong.app.mall", PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+            if (packageInfo != null) {
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

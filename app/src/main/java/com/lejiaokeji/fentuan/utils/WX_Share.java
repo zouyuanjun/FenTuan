@@ -26,8 +26,8 @@ public class WX_Share {
     //分享多张照片到朋友圈
     public static void sharePhotosToWX(Context context, String text, List<String> imageUris) {
 
-        ArrayList<Uri> Uris = new ArrayList<>();
-        Uris.clear();
+        ArrayList<Uri> uriArrayList = new ArrayList<>();
+        uriArrayList.clear();
         if (!uninstallSoftware(context, "com.tencent.mm")) {
             Toast.makeText(context, "微信没有安装！", Toast.LENGTH_SHORT).show();
             return;
@@ -37,25 +37,25 @@ public class WX_Share {
             if (!file.exists()) {
                 return;
             }
-            Uris.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
+            uriArrayList.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
         }
         Intent intent = new Intent();
-//        ComponentName comp = new ComponentName("com.tencent.mm",
-//                "com.tencent.mm.ui.tools.ShareToTimeLineUI");
-//        intent.setComponent(comp);
+        ComponentName comp = new ComponentName("com.tencent.mm",
+                "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+        intent.setComponent(comp);
         intent.setType("image/*");
-        intent.setAction("android.intent.action.SEND");
-        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, Uris);
-        intent.putExtra("Kdescription", "sfdafasfa");
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriArrayList);
+        intent.putExtra("Kdescription", text);
         context.startActivity(intent);
     }
     //分享单张照片到朋友圈
-    public static void sharePhotoToWX(Context context, String text, String imageUris) {
+    public static void sharePhotoToWX(Context context, String text, String imagepath) {
         if (!uninstallSoftware(context, "com.tencent.mm")) {
             Toast.makeText(context, "微信没有安装！", Toast.LENGTH_SHORT).show();
             return;
         }
-        File file = new File(imageUris);
+        File file = new File(imagepath);
         Uri uri=FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file);
         Intent intent = new Intent();
         ComponentName comp = new ComponentName("com.tencent.mm",

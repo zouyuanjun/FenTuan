@@ -23,12 +23,12 @@ ImageView imageView;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdd_shop_details);
         shopid =getIntent().getStringExtra("shopid");
-        imageView=findViewById(R.id.imageView);
+
         shop_details=Shop_Details.getInstance();
         shop_details.getdata(shopid);
-        shop_details.getUnionData("10004_15554651",shopid);
+    //    shop_details.getUnionData("10004_15554651",shopid);
         createBitmap(shopid);
-        imageView.setImageBitmap(createBitmap(shopid));
+      //  imageView.setImageBitmap(createBitmap(shopid));
     }
     public static Bitmap createBitmap(String str){
         Bitmap bitmap = null;

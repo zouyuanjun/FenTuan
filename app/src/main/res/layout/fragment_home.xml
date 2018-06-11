@@ -126,7 +126,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-
             <me.weyye.library.colortrackview.ColorTrackTabLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

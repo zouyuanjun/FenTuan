@@ -2,6 +2,7 @@
 <resources>
     <paths xmlns:android="http://schemas.android.com/apk/res/android">
         <cache-path name="cache" path="" />
+        <external-path name="external_files" path="."/>
         <!--<cache-path name="cache" path="image_manager_disk_cache" />-->
         <!--<files-path  path="images/" name="my_images" />-->
         <!--<files-path  path="audios/" name="my_audios" />-->

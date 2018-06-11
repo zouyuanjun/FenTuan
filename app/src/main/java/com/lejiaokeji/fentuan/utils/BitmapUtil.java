@@ -1,13 +1,25 @@
 package com.lejiaokeji.fentuan.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -20,7 +32,7 @@ public class BitmapUtil {
     private BitmapUtil() {
     }
 
-    public Bitmap toConformBitmap(Bitmap background, Bitmap foreground) {
+    public Bitmap toConformBitmap(Bitmap background, Bitmap foreground,int size) {
         if( background == null ) {
             return null;
         }
@@ -35,7 +47,7 @@ public class BitmapUtil {
         //draw bg into
         cv.drawBitmap(background, 0, 0, null);//在 0，0坐标开始画入bg
         //draw fg into
-        cv.drawBitmap(foreground, 0, 0, null);//在 0，0坐标开始画入fg ，可以从任意位置画入
+        cv.drawBitmap(foreground, size, size, null);//在 0，0坐标开始画入fg ，可以从任意位置画入
         //save all clip
         cv.save(Canvas.ALL_SAVE_FLAG);//保存
         //store
@@ -66,17 +78,63 @@ public class BitmapUtil {
     }
 
     //保存bitmap为文件
-    public  void saveFile(Bitmap bmp , String path,String fileName) throws IOException {
+    public  void saveFile(Context context,Bitmap bmp ,String fileName) throws IOException {
 
-        File dirFile = new File("/data/user/0/com.lejiaokeji.fentuan/cache/");
+        File dirFile = new File(Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/");
         if(!dirFile.exists()){
+            Log.d("路径不存在","sd");
             dirFile.mkdir();
         }
-        File myCaptureFile = new File("/data/user/0/com.lejiaokeji.fentuan/cache/" + fileName);
+        File myCaptureFile = new File(dirFile,fileName);
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
         bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
         bos.flush();
         bos.close();
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/", fileName, null);
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.fromFile(new File(Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/"))));
+
+    }
+
+
+
+
+    //缩放BITMAP
+    public Bitmap resizeImage(Bitmap bitmap, float scale) {
+        Bitmap BitmapOrg = bitmap;
+        int width = BitmapOrg.getWidth();
+        int height = BitmapOrg.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        // if you want to rotate the Bitmap
+        // matrix.postRotate(45);
+        Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
+                height, matrix, true);
+        return resizedBitmap;
+    }
+    //创建二维码
+    public static Bitmap createQRBitmap(String str,int size){
+        Bitmap bitmap = null;
+        BitMatrix result = null;
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE, size, size);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.createBitmap(result);
+        } catch (WriterException e){
+            e.printStackTrace();
+        } catch (IllegalArgumentException iae){ // ?
+            return null;
+        }
+        return bitmap;
     }
 
 }
