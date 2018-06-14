@@ -1,10 +1,17 @@
 package com.lejiaokeji.fentuan;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
@@ -25,6 +32,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
+    Context context;
     private List<Fragment> fragmentList=new ArrayList<>();
     NavigationController mNavigationController;
     PageNavigationView pageBottomTabLayout;
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         viewPager=findViewById(R.id.myviewpage);
+        context=this;
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
 //        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.tool_ic_home_nor,R.drawable.tool_ic_home_sel,"",getResources().getColor(R.color.colorAccent))
 //                .addItem(R.drawable.tool_ic_code_nor,R.drawable.tool_ic_code_sel,"推荐",getResources().getColor(R.color.colorAccent))
@@ -65,7 +74,10 @@ public class MainActivity extends AppCompatActivity {
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
-                Log.i("asd", "selected: " + index + " old: " + old);
+               if (index>3){
+
+
+               }
             }
 
             @Override

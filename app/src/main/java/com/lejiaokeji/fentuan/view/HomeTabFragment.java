@@ -171,7 +171,7 @@ public class HomeTabFragment extends LazyLoadFragment {
             }
 
             @Override
-            public void fistlogin() {
+            public void searchresult(Shop_Data shop_data) {
 
             }
 
@@ -226,6 +226,8 @@ public class HomeTabFragment extends LazyLoadFragment {
                 }else {
                     Intent  intent=new Intent(activity, Pdd_Shop_Details_Activity.class);
                     intent.putExtra("shopid",myListData.get(position).getGoods_id());
+                    intent.putExtra("yongjin",myListData.get(position).getCommission());
+                    intent.putExtra("quan_price",myListData.get(position).getCoupon_price());
                     activity.startActivity(intent);
 
                 }

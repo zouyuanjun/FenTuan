@@ -41,6 +41,11 @@
         <activity android:name=".activity.Find_Password_Activity"></activity>
         <activity android:name=".activity.Pdd_Shop_Details_Activity"></activity>
         <activity android:name=".activity.JD_Shop_Details_Activity"></activity>
+        <activity android:name=".activity.Search_Activity"></activity>
+        <activity android:name=".activity.Invite_Activity"></activity>
+        <activity android:name=".activity.Setting_Activity"></activity>
+        <activity android:name=".activity.Order_Activity"></activity>
+        <activity android:name=".activity.Shouyi_Activity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lejiaokeji.fentuan.fileprovider"

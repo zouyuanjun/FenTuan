@@ -1,14 +1,21 @@
 package com.lejiaokeji.fentuan.view;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +23,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.activity.Search_Activity;
+import com.lejiaokeji.fentuan.view.helpview.ColorTrackTabLayout;
 import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
 import com.lejiaokeji.fentuan.view.helpview.OnlyTextTab;
@@ -29,7 +38,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.weyye.library.colortrackview.ColorTrackTabLayout;
 
 public class HomeFragment extends LazyLoadFragment implements View.OnClickListener{
     private String[] mTitles = new String[]{"推   荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
@@ -37,6 +45,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private HomeTabFragment[] mFragments = new HomeTabFragment[mTitles.length];
+    RelativeLayout rl_select_jd;
     List<String> images=new ArrayList<>();
     List<String> titles=new ArrayList<>();
     ColorTrackTabLayout tabLayout;
@@ -47,11 +56,9 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
     TextView tv_recommend;
     ImageView im_hide;
     LinearLayout relativeLayout;
+    EditText ed_search;
     boolean idshow=false;
     int page=1;
-
-    TextView tv_type_1;
-    TextView tv_type_2;
     TextView tv_type_3;
     TextView tv_type_4;
     TextView tv_type_5;
@@ -61,6 +68,11 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
     TextView tv_type_9;
     TextView tv_type_10;
     TextView tv_type_11;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE" };
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
@@ -139,12 +151,8 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);
     }
-
     private void initViews() {
-        tv_type_1=findViewById(R.id.tv_type_1);
-        tv_type_1.setOnClickListener(this);
-        tv_type_2=findViewById(R.id.tv_type_2);
-        tv_type_2.setOnClickListener(this);
+        verifyStoragePermissions(getActivity());
         tv_type_3=findViewById(R.id.tv_type_3);
         tv_type_3.setOnClickListener(this);
         tv_type_4=findViewById(R.id.tv_type_4);
@@ -172,6 +180,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 select_pdd.setVisibility(View.GONE);
                 select_jd.setVisibility(View.VISIBLE);
                 Constants.SELECT_JD=true;
+                rl_select_jd.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.home_bg_jd));
                 int pageindex=mViewPager.getCurrentItem();
                 mViewPager.setCurrentItem(pageindex);
                 mViewPager.getAdapter().notifyDataSetChanged();
@@ -182,6 +191,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 Constants.SELECT_JD=false;
+                rl_select_jd.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.home_bg_pdd));
                 select_pdd.setVisibility(View.VISIBLE);
                 select_jd.setVisibility(View.GONE);
                 int pageindex=mViewPager.getCurrentItem();
@@ -205,6 +215,7 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
                 }
             }
         });
+        rl_select_jd=findViewById(R.id.rl_jd_selcet);
         tabLayout=findViewById(R.id.mytablayout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabPaddingLeftAndRight(15,15);
@@ -217,8 +228,10 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
             public void onClick(View v) {
                 Log.d("sd","选中推荐");
                 mViewPager.setCurrentItem(0);
+                tv_recommend.setTextColor(Color.parseColor("#ff2d55"));
             }
         });
+
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
         tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
@@ -232,18 +245,24 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                if (tab.getPosition() > 0) {
+                    tv_recommend.setTextColor(Color.parseColor("#000000"));
+                } else {
+                    tv_recommend.setTextColor(Color.parseColor("#ff2d55"));
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 Log.d("555","第二次选择");
             }
         });
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -260,57 +279,91 @@ public class HomeFragment extends LazyLoadFragment implements View.OnClickListen
 
             }
         });
+        ed_search=findViewById(R.id.ed_home_search);
+        ed_search.setFocusable(false);
+        ed_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), Search_Activity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.tv_type_1:{
-                mViewPager.setCurrentItem(1);
-                break;
-            }
-            case R.id.tv_type_2:{
-                mViewPager.setCurrentItem(2);
-                break;
-            }
             case R.id.tv_type_3:{
                 mViewPager.setCurrentItem(3);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_4:{
                 mViewPager.setCurrentItem(4);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_5:{
                 mViewPager.setCurrentItem(5);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_6:{
                 mViewPager.setCurrentItem(6);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_7:{
                 mViewPager.setCurrentItem(7);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_8:{
                 mViewPager.setCurrentItem(8);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_9:{
                 mViewPager.setCurrentItem(9);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_10:{
                 mViewPager.setCurrentItem(10);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
             }
             case R.id.tv_type_11:{
                 mViewPager.setCurrentItem(11);
+                idshow=false;
+                relativeLayout.setVisibility(View.GONE);
                 break;
 
             }
         }
 
+    }
+
+    public static void verifyStoragePermissions(Activity activity) {
+
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

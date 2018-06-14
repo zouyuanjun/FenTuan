@@ -32,7 +32,7 @@ public class BitmapUtil {
     private BitmapUtil() {
     }
 
-    public Bitmap toConformBitmap(Bitmap background, Bitmap foreground,int size) {
+    public Bitmap toConformBitmap(Bitmap background, Bitmap foreground,int size,int x) {
         if( background == null ) {
             return null;
         }
@@ -47,7 +47,7 @@ public class BitmapUtil {
         //draw bg into
         cv.drawBitmap(background, 0, 0, null);//在 0，0坐标开始画入bg
         //draw fg into
-        cv.drawBitmap(foreground, size, size, null);//在 0，0坐标开始画入fg ，可以从任意位置画入
+        cv.drawBitmap(foreground, x, size, null);//在 0，0坐标开始画入fg ，可以从任意位置画入
         //save all clip
         cv.save(Canvas.ALL_SAVE_FLAG);//保存
         //store
@@ -90,17 +90,6 @@ public class BitmapUtil {
         bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
         bos.flush();
         bos.close();
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/", fileName, null);
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-        }
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.fromFile(new File(Environment.getExternalStorageDirectory()+ "/FenTuan_IMG/"))));
-
     }
 
 

@@ -2,12 +2,18 @@ package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -36,11 +42,26 @@ public class WX_Signin_Activity extends AppCompatActivity {
     CountDownTimer timer;
     RadioButton radioButton;
     boolean isaccpet=false;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor("#ff475d"));
+        }
         setContentView(R.layout.activity_weixin_signin);
+        toolbar=findViewById(R.id.toolbar_bindphone);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         activity = this;
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
@@ -48,9 +69,49 @@ public class WX_Signin_Activity extends AppCompatActivity {
         network = Network.getnetwork();
         sign_in = Sign_In.getInstance();
         et_phone = findViewById(R.id.et_phone);
+        et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    et_phone.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
+                }else {
+                    et_phone.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                }
+            }
+        });
         et_password = findViewById(R.id.et_password);
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    et_password.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
+                }else {
+                    et_password.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                }
+            }
+        });
         et_code = findViewById(R.id.et_code);
+        et_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    et_code.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
+                }else {
+                    et_code.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                }
+            }
+        });
         et_yaoqingcode = findViewById(R.id.et_yaoqingcode);
+        et_yaoqingcode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    et_yaoqingcode.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
+                }else {
+                    et_yaoqingcode.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                }
+            }
+        });
         bt_getcode = findViewById(R.id.bt_getcode);
         bt_bind = findViewById(R.id.bt_bind);
         radioButton =findViewById(R.id.radioButton);
@@ -149,7 +210,6 @@ public class WX_Signin_Activity extends AppCompatActivity {
             }
         };
     }
-
     /**
      * 将毫秒转化为 分钟：秒 的格式
      *
@@ -175,7 +235,6 @@ public class WX_Signin_Activity extends AppCompatActivity {
             }
         }
     }
-
     //请求验证码
     public void sendcode( String phone) {
         Log.d("5555",phone+phone.length());
@@ -190,6 +249,4 @@ public class WX_Signin_Activity extends AppCompatActivity {
             Toast.makeText(activity, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

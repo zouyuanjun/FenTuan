@@ -2,7 +2,7 @@ package com.lejiaokeji.fentuan.databean;
 
 public class Item_Shop {
     String goods_id;    //商品ID
-    String goods_image;  //商品图片URL
+    String goods_img;  //商品图片URL
     String goods_name;  //标题
     String discount_link;  //领券链接
     String coupon_price; //最终价格
@@ -13,9 +13,9 @@ public class Item_Shop {
     public Item_Shop() {
     }
 
-    public Item_Shop(String id, String goods_image, String goods_name, String discount_link, String coupon_price, String commission, String discount_price, int sale_num) {
+    public Item_Shop(String id, String goods_img, String goods_name, String discount_link, String coupon_price, String commission, String discount_price, int sale_num) {
         this.goods_id = id;
-        this.goods_image = goods_image;
+        this.goods_img = goods_img;
         this.goods_name = goods_name;
         this.discount_link = discount_link;
         this.coupon_price = coupon_price;
@@ -25,12 +25,12 @@ public class Item_Shop {
     }
 
 
-    public String getGoods_image() {
-        return goods_image;
+    public String getGoods_img() {
+        return goods_img;
     }
 
-    public void setGoods_image(String goods_image) {
-        this.goods_image = goods_image;
+    public void setGoods_img(String goods_img) {
+        this.goods_img = goods_img;
     }
 
     public String getGoods_id() {

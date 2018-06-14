@@ -3,59 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="#f2f2f2"
     android:clickable="true"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp"
+    android:paddingRight="15dp"
+    >
 
     <ImageView
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="15dp"
         android:id="@+id/head"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@mipmap/ic_launcher"/>
-
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:background="@drawable/inform_ic_inform"/>
     <LinearLayout
+        android:paddingBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/inputbox"
+        android:paddingTop="12dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="12dp">
+
             <TextView
                 android:id="@+id/tv_notification_title"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="title"></TextView>
+                android:layout_weight="1"
+                android:text="关于注册问题的通知"
+                android:textColor="@color/hei3333"
+                android:textSize="13sp"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1小时前"
+                android:textColor="@color/hui9999"
+                android:textSize="11sp"
                 android:id="@+id/tv_notification_time"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/whitefff">
+            android:layout_height="1dp"
+            android:background="@color/hui9999">
         </LinearLayout>
         <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginTop="5dp"
             android:id="@+id/sdv_notification"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="116dp"
             android:background="@color/colorAccent"/>
         <TextView
+            android:textSize="13sp"
+            android:textColor="#666666"
+            android:layout_marginTop="10dp"
             android:id="@+id/tv_notification_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="3dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            tools:text="这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj"/>
+            tools:text="这是内容walsajjflasdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj这是内容walsajdflsjdlfjslkdjflasdkjflkj"/>
     </LinearLayout>
 
 

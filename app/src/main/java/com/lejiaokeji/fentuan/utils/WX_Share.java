@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,7 +26,6 @@ public class WX_Share {
 
     //分享多张照片到朋友圈
     public static void sharePhotosToWX(Context context, String text, List<String> imageUris) {
-
         ArrayList<Uri> uriArrayList = new ArrayList<>();
         uriArrayList.clear();
         if (!uninstallSoftware(context, "com.tencent.mm")) {
@@ -37,11 +37,11 @@ public class WX_Share {
             if (!file.exists()) {
                 return;
             }
-            uriArrayList.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
+            uriArrayList.add(Uri.fromFile(file));
+            //uriArrayList.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
         }
         Intent intent = new Intent();
-        ComponentName comp = new ComponentName("com.tencent.mm",
-                "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
         intent.setComponent(comp);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -57,18 +57,16 @@ public class WX_Share {
         }
         File file = new File(imagepath);
         Uri uri=FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file);
-        Intent intent = new Intent();
-        ComponentName comp = new ComponentName("com.tencent.mm",
-                "com.tencent.mm.ui.tools.ShareToTimeLineUI");
-        intent.setComponent(comp);
-        intent.setType("image/*");
-        intent.setAction("android.intent.action.SEND");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
 
-        intent.putExtra("Kdescription", text);
+        Intent intent = new Intent();
+        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+        intent.setComponent(comp);
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra("Kdescription", "这个也不显示");
         context.startActivity(intent);
     }
-
     //判断是否安装微信客户端
     private static boolean uninstallSoftware(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();

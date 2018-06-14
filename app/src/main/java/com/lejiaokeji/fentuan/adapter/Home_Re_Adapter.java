@@ -39,7 +39,7 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
         ((RecyclerHolder)holder).title.setText(mDatas.get(position).getGoods_name());
         ((RecyclerHolder)holder).tv_item_price.setText("￥"+mDatas.get(position).getCoupon_price());
         ((RecyclerHolder)holder).tv_item_yongjing.setText(mDatas.get(position).getCommission());
-        ((RecyclerHolder)holder).sdv_item_goodsphoto.setImageURI(mDatas.get(position).getGoods_image());
+        ((RecyclerHolder)holder).sdv_item_goodsphoto.setImageURI(mDatas.get(position).getGoods_img());
         String youhuiquan=mDatas.get(position).getDiscount_price();
         youhuiquan=youhuiquan.substring(0,youhuiquan.length()-2);
         ((RecyclerHolder)holder).tv_youhuiquan.setText(youhuiquan+"元");

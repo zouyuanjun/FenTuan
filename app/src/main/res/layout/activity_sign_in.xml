@@ -8,22 +8,21 @@
     android:background="@drawable/my_bg">
 
 
-
-
     <AutoCompleteTextView
         android:id="@+id/tv_input_phonenum"
-        android:layout_width="329dp"
+        android:layout_width="0dp"
         android:layout_height="43dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/shape_corner"
         android:hint="请输入手机号"
-        android:textColorHint="@color/hui9999"
-        android:textSize="14sp"
+        android:inputType="number"
         android:paddingLeft="48dp"
         android:textColor="@color/blackfont0000"
+        android:textColorHint="@color/hui9999"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,34 +40,35 @@
 
     <EditText
         android:id="@+id/tv_input_password"
-        android:layout_width="329dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_corner"
         android:gravity="center_vertical"
         android:hint="请输入密码"
-        android:textColorHint="@color/hui9999"
-        android:textSize="14sp"
         android:paddingLeft="48dp"
         android:textColor="@color/blackfont0000"
+        android:textColorHint="@color/hui9999"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_input_phonenum" />
 
     <Button
         android:id="@+id/bt_sign"
-        android:layout_width="329dp"
+        android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_signin"
         android:gravity="center"
-        android:hint="登陆"
+        android:text="登陆"
+        android:textColor="@color/whitefff"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
@@ -111,13 +111,13 @@
         app:layout_constraintTop_toBottomOf="@+id/bt_sign" />
 
     <LinearLayout
-        android:layout_width="123dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="104dp"
         android:background="@color/whitefff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_sign">
 
@@ -125,12 +125,14 @@
 
     <RelativeLayout
         android:id="@+id/linearLayout"
-        android:layout_width="123dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="104dp"
         android:background="@color/whitefff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/bt_sign">
 
     </RelativeLayout>
@@ -174,6 +176,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imb_weixin_sign" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:text="粉团易赚"
+        android:textSize="40sp"
+        android:textColor="@color/whitefff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

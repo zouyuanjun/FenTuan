@@ -105,7 +105,7 @@ public class RecommendTabFragment extends LazyLoadFragment {
             }
 
             @Override
-            public void fistlogin() {
+            public void searchresult(Shop_Data shop_data) {
 
             }
             @Override

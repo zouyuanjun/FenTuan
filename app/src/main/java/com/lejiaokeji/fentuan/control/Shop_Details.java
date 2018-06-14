@@ -8,15 +8,15 @@ import android.os.Message;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.lejiaokeji.fentuan.activity.JD_Shop_Details_Activity;
 import com.lejiaokeji.fentuan.databean.JD_Shop_Details_Bean;
+import com.lejiaokeji.fentuan.databean.Pdd_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class Shop_Details {
     Network network;
@@ -43,6 +43,7 @@ public class Shop_Details {
             String code=JSON.parseObject(result).getString("retCode");
             if (code.equals("0")){
                 if (what==1){
+                    //京东商品详情
                     String data=JSON.parseObject(result).getString("data");
                     JSONObject jsonObject=JSON.parseObject(data);
                     JD_Shop_Details_Bean jd_shop_details_bean=new JD_Shop_Details_Bean();
@@ -53,28 +54,45 @@ public class Shop_Details {
                     jd_shop_details_bean.setShopId(jsonObject.getString("shopId"));
                     detailsListener.getdatasuccessful(jd_shop_details_bean);
                 }else if (what==2){
+                    //自买获取京东三合一转链
                     String url=JSON.parseObject(result).getString("data");
-                    try {
-                        detailsListener.getjdsharurl(url);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    detailsListener.openjdurl(url);
+
+                }else if (what==3){
+                    //平多多商品相亲
+                    String data=JSON.parseObject(result).getString("data");
+                    JSONArray jsonObject=JSON.parseArray(data);
+                    JSONObject jsonObject1=jsonObject.getJSONObject(0);
+                    Pdd_Shop_Details_Bean pdd_shop_details_bean=JSON.parseObject(jsonObject1.toString(), new TypeReference<Pdd_Shop_Details_Bean>() {});
+                    detailsListener.getpdddata(pdd_shop_details_bean);
                 }else if (what==4){
+                    //分享京东商品到朋友圈
                     String url=JSON.parseObject(result).getString("data");
                     try {
                         detailsListener.getjdsharurl(url);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else if (what==5){
+                    //打开平多多购买链接
+                    String url=JSON.parseObject(result).getString("data");
+                    detailsListener.openpddurl(url);
+                }else if (what==6){
+                    //分享平多多商品到朋友圈
+                    String url=JSON.parseObject(result).getString("data");
+                    detailsListener.sharepdd(url);
+
                 }
             }
         }
     };
     public interface DetailsListener {
         public void getdatasuccessful(JD_Shop_Details_Bean shop_data);
-        public void sharejd(String t);
-        public void fistlogin();
+        public void openjdurl(String t);
+        public void getpdddata(Pdd_Shop_Details_Bean pdd_shop_details_bean);
         public void getjdsharurl(String url) throws IOException;
+        public void openpddurl(String url);
+        public void sharepdd(String url);
     }
     private DetailsListener detailsListener;
     public void setslistener( DetailsListener detailsListener){
@@ -103,7 +121,7 @@ public class Shop_Details {
             String data="{\"goodsId\":\"%id\"}";
             data=data.replace("%id",id);
             String url= Constants.URL+"goodsDetail/getGoodsDetail";
-            network.connectnet(data,url,handler,1);
+            network.connectnet(data,url,handler,3);
         }
 
     }
@@ -117,15 +135,7 @@ public class Shop_Details {
             network.connectnet(data,url,handler,2);
         }
     }
-    public void getpddUnion(String pid,String shopid){
-        if (!Constants.SELECT_JD){
-            String data="{\"goodsId\":\"%goodsid\",\"pddPid\":\"%pddPid\"}";
-            data=data.replace("%goodsid",shopid);
-            data=data.replace("%pddPid",pid);
-            String url=Constants.URL+"generate/getGenerate";
-            network.connectnet(data,url,handler,3);
-        }
-    }
+
     public void shareJD(String pid,String shopid,String couponUrl){
         if (Constants.SELECT_JD){
             String data="{\"goodsId\":\"%goodsid\",\"positionId\":\"%jdPid\",\"couponUrl\":\"%couponUrl\"}";
@@ -136,5 +146,22 @@ public class Shop_Details {
             network.connectnet(data,url,handler,4);
         }
     }
-
+    public void getpddUnion(String pid,String shopid){
+        if (!Constants.SELECT_JD){
+            String data="{\"goodsId\":\"%goodsid\",\"pddPid\":\"%pddPid\"}";
+            data=data.replace("%goodsid",shopid);
+            data=data.replace("%pddPid",pid);
+            String url=Constants.URL+"generate/getGenerate";
+            network.connectnet(data,url,handler,5);
+        }
+    }
+    public void sharepdd(String pid,String shopid){
+        if (!Constants.SELECT_JD){
+            String data="{\"goodsId\":\"%goodsid\",\"pddPid\":\"%pddPid\"}";
+            data=data.replace("%goodsid",shopid);
+            data=data.replace("%pddPid",pid);
+            String url=Constants.URL+"generate/getGenerate";
+            network.connectnet(data,url,handler,6);
+        }
+    }
 }

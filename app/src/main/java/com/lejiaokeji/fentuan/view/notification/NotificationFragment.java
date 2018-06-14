@@ -1,8 +1,13 @@
 package com.lejiaokeji.fentuan.view.notification;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.adapter.Notification_Adapter;
@@ -20,6 +25,7 @@ public class NotificationFragment extends LazyLoadFragment {
 
     @Override
     protected int setContentView() {
+
         return R.layout.fragment_notification;
     }
 
