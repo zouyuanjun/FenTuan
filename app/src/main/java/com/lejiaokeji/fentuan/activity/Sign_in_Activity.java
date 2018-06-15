@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.utils.GetAlerDialog;
@@ -34,8 +35,6 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
     TextView tv_forget_password;
     ImageButton bt_weixin_sign;
     Sign_In sign_in;
-    String strphonenum;
-    String strpassword;
     Activity activity;
 
     @Override
@@ -66,6 +65,12 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         bt_weixin_sign.setOnClickListener(this);
         tv_forget_password.setOnClickListener(this);
         tv_phone_sign_up.setOnClickListener(this);
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listtener();
     }
 
     @Override
@@ -83,7 +88,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.tv_phone_sign_up:{
-                Intent intent=new Intent(activity,WX_Signin_Activity.class);
+                Intent intent=new Intent(activity,Phone_Signin_Activity.class);
                 activity.startActivity(intent);
                 break;
             }
@@ -102,10 +107,44 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(this,"您还未安装微信客户端",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Log.d("555","微信注册");
                 sign_in.weichatsign(activity);
                 break;
             }
         }
+    }
+    private void listtener(){
+        sign_in.setsignlistener(new Sign_In.Signresult() {
+            @Override
+            public void signsuccessful() {
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void yaoqing_err(String t) {
+
+            }
+
+            @Override
+            public void code_err() {
+
+            }
+
+            @Override
+            public void uppasswordsuccessful() {
+
+            }
+
+            @Override
+            public void othererr(String errcode) {
+
+            }
+
+            @Override
+            public void get_code_err(String code) {
+
+            }
+        });
     }
 }

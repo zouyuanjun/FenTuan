@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,11 +31,11 @@ public class HomeTabFragment extends LazyLoadFragment {
     List<Item_Shop> myListData= new ArrayList<Item_Shop>();
     Home_Re_Adapter adapter;
     Home_Page_Control home_page_control;
+    ProgressBar progressBar;
      int  shoptype=0;
      int page=2;
     String url=Constants.URL+"shopList/recommended";
     Activity activity;
-    String pid="10004_15554651";
     public static HomeTabFragment newInstance(int type) {
         HomeTabFragment tabFragment = new HomeTabFragment();
         Bundle bundle = new Bundle();
@@ -87,7 +88,7 @@ public class HomeTabFragment extends LazyLoadFragment {
                 url= Constants.URL+"goodsSearch/recommend";
                 data="{\"pageStart\":\"1\",\"pddPid\":\"10004_15554651\"}";
             }else {
-                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,pid);
+                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,Constants.USERINFO.getPddpid());
                 switch (shoptype){
                     case 1:{
                         pdd_shop_bean.setCatId(210);
@@ -137,6 +138,7 @@ public class HomeTabFragment extends LazyLoadFragment {
                     }
                     case 10:{
                         pdd_shop_bean.setCatId(7639);
+                        pdd_shop_bean.setCategoryId(2);
                         break;
                     }
                     case 11:{
@@ -156,8 +158,10 @@ public class HomeTabFragment extends LazyLoadFragment {
 
             @Override
             public void loadsuccefful(Shop_Data shop_data) {
-                for (Item_Shop item_shop:shop_data.getData())
-                myListData.add(item_shop);
+                for (Item_Shop item_shop:shop_data.getData()){
+                    myListData.add(item_shop);
+                }
+                progressBar.setVisibility(View.GONE);
                 mRecyclerView.setPullLoadMoreCompleted();
                 adapter.notifyDataSetChanged();
                 page++;
@@ -166,8 +170,7 @@ public class HomeTabFragment extends LazyLoadFragment {
             @Override
             public void loadfail(String t) {
                 mRecyclerView.setPullLoadMoreCompleted();
-
-                Toast.makeText(activity,"请求错误，错误码："+t,Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity,"暂无数据，返回码："+t,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -192,6 +195,7 @@ public class HomeTabFragment extends LazyLoadFragment {
                 Toast.makeText(activity,"连接失败，请检查您的网络",Toast.LENGTH_LONG);
             }
         });
+        progressBar=findViewById(R.id.pb_shop_list);
         adapter=new Home_Re_Adapter(getContext(),myListData);
         mRecyclerView = findViewById(R.id.id_stickynavlayout_innerscrollview);
         mRecyclerView.setLinearLayout();
@@ -259,7 +263,7 @@ public class HomeTabFragment extends LazyLoadFragment {
                 data="{\"pageStart\":\"%pageStart\",\"pddPid\":\"10004_15554651\"}";
                 data=data.replace("%pageStart",String.valueOf(page));
             }else {
-                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(page,pid);
+                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(page,Constants.USERINFO.getPddpid());
                 switch (shoptype){
                     case 1:{
                         pdd_shop_bean.setCatId(210);
@@ -308,6 +312,7 @@ public class HomeTabFragment extends LazyLoadFragment {
                     }
                     case 10:{
                         pdd_shop_bean.setCatId(7639);
+                        pdd_shop_bean.setCategoryId(2);
                         break;
                     }
                     case 11:{

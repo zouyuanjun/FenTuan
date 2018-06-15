@@ -24,7 +24,7 @@ import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.view.helpview.GetAlerDialog;
 
-public class Find_Password_Activity extends AppCompatActivity{
+public class Find_Password_Activity extends AppCompatActivity {
     EditText et_phone;
     EditText et_password;
     EditText et_code;
@@ -38,6 +38,7 @@ public class Find_Password_Activity extends AppCompatActivity{
     Activity activity;
     CountDownTimer timer;
     Sign_In sign_in;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +48,8 @@ public class Find_Password_Activity extends AppCompatActivity{
             window.setStatusBarColor(Color.parseColor("#ff475d"));
         }
         setContentView(R.layout.activity_forgetpassword);
-        activity=this;
-        mToolbar=findViewById(R.id.toolbar_findpassword);
+        activity = this;
+        mToolbar = findViewById(R.id.toolbar_findpassword);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,15 +59,15 @@ public class Find_Password_Activity extends AppCompatActivity{
                 finish();
             }
         });
-        sign_in=Sign_In.getInstance();
+        sign_in = Sign_In.getInstance();
         et_phone = findViewById(R.id.et_phone);
         et_phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    et_phone.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
-                }else {
-                    et_phone.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                if (hasFocus) {
+                    et_phone.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444miao143));
+                } else {
+                    et_phone.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444));
                 }
             }
         });
@@ -74,10 +75,10 @@ public class Find_Password_Activity extends AppCompatActivity{
         et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    et_password.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
-                }else {
-                    et_password.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                if (hasFocus) {
+                    et_password.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444miao143));
+                } else {
+                    et_password.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444));
                 }
             }
         });
@@ -85,15 +86,15 @@ public class Find_Password_Activity extends AppCompatActivity{
         et_code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    et_code.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444miao143));
-                }else {
-                    et_code.setBackground(ContextCompat.getDrawable(activity,R.drawable.shape_corner444));
+                if (hasFocus) {
+                    et_code.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444miao143));
+                } else {
+                    et_code.setBackground(ContextCompat.getDrawable(activity, R.drawable.shape_corner444));
                 }
             }
         });
-        bt_uppassword=findViewById(R.id.bt_updatpassword);
-        bt_getcode=findViewById(R.id.bt_getcode);
+        bt_uppassword = findViewById(R.id.bt_updatpassword);
+        bt_getcode = findViewById(R.id.bt_getcode);
         bt_getcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,45 +106,12 @@ public class Find_Password_Activity extends AppCompatActivity{
         bt_uppassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                code=et_code.getText().toString();
-                password=et_password.getText().toString();
-                sign_in.findpassword(phone,code,password);
+                code = et_code.getText().toString();
+                password = et_password.getText().toString();
+                sign_in.findpassword(phone, code, password);
             }
         });
-        sign_in.setsignlistener(new Sign_In.Signresult() {
-            @Override
-            public void signsuccessful() {
 
-            }
-
-            @Override
-            public void signfail(String t) {
-
-            }
-
-            @Override
-            public void fistlogin() {
-
-            }
-
-            @Override
-            public void uppasswordsuccessful() {
-                AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"修改密码","密码重置成功，点击确定返回登陆");
-                alertDialog.show();
-alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        activity.finish();
-    }
-});
-
-            }
-
-            @Override
-            public void wxinfo() {
-
-            }
-        });
         /**
          * 倒数计时器
          */
@@ -154,7 +122,7 @@ alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                bt_getcode.setText("重新发送（" + millisUntilFinished/1000 + ")秒");
+                bt_getcode.setText("重新发送（" + millisUntilFinished / 1000 + ")秒");
             }
 
             /**
@@ -163,21 +131,66 @@ alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onFinish() {
                 bt_getcode.setText("重新发送");
-                bt_getcode.setBackground(ContextCompat.getDrawable(activity,R.drawable.signup_bt_verif_def));
+                bt_getcode.setBackground(ContextCompat.getDrawable(activity, R.drawable.signup_bt_verif_def));
                 cansend = true;
             }
         };
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sign_in.setsignlistener(new Sign_In.Signresult() {
+            @Override
+            public void signsuccessful() {
+
+            }
+
+            @Override
+            public void yaoqing_err(String t) {
+
+            }
+
+            @Override
+            public void code_err() {
+                Toast.makeText(activity,"验证码错误",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void uppasswordsuccessful() {
+                AlertDialog alertDialog = GetAlerDialog.getdialog(activity, "修改密码", "密码重置成功，点击确定返回登陆");
+                alertDialog.show();
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        activity.finish();
+                    }
+                });
+
+            }
+
+            @Override
+            public void othererr(String errcode) {
+
+            }
+
+            @Override
+            public void get_code_err(String code) {
+
+            }
+
+        });
+    }
+
     //请求验证码
-    public void sendcode( String phone) {
-        Log.d("5555",phone+phone.length());
+    public void sendcode(String phone) {
+        Log.d("5555", phone + phone.length());
         if (phone.length() == 11) {
             if (cansend) {
                 timer.start();
-                cansend=false;
-                bt_getcode.setBackground(ContextCompat.getDrawable(activity,R.drawable.signup_bt_verif_dis));
-                sign_in.getcode(phone);
+                cansend = false;
+                bt_getcode.setBackground(ContextCompat.getDrawable(activity, R.drawable.signup_bt_verif_dis));
+                sign_in.findpassword_code(phone);
             }
 
         } else {

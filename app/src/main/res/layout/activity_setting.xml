@@ -58,13 +58,13 @@
         android:background="@color/whitefff">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView6"
+            android:id="@+id/sdv_setting_photo"
             android:layout_width="77dp"
             android:layout_height="77dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/ig_ic_user"
+            android:src="@drawable/ig_ic_user"
             app:roundAsCircle="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
             android:textColor="@color/hei3333"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            app:layout_constraintTop_toBottomOf="@+id/sdv_setting_photo" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout

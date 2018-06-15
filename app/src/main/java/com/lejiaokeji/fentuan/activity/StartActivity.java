@@ -59,6 +59,7 @@ public class StartActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(activity,Sign_in_Activity.class);
                 startActivity(intent);
+                finish();
             }
         };
 
@@ -94,7 +95,7 @@ public class StartActivity extends AppCompatActivity {
       builder= AllenVersionChecker
                 .getInstance()
                 .requestVersion()
-                .setRequestUrl("https://www.baidu.com/")
+                .setRequestUrl("http://www.baidu.com/")
                 .request(new RequestVersionListener() {
                     @Nullable
                     @Override

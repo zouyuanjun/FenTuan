@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 
 public class Setting_Activity extends AppCompatActivity {
-
+    SimpleDraweeView sdv_photo;
     ImageView im_setting_back;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,5 +24,7 @@ public class Setting_Activity extends AppCompatActivity {
                 finish();
             }
         });
+        sdv_photo=findViewById(R.id.sdv_setting_photo);
+        sdv_photo.setImageURI(Constants.USERINFO.getHeadportrait());
     }
 }

@@ -1,11 +1,15 @@
 package com.lejiaokeji.fentuan.wxapi;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.activity.WX_Signin_Activity;
+import com.lejiaokeji.fentuan.databean.Shop_Data;
+import com.lejiaokeji.fentuan.databean.Userinfo_Bean;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -79,10 +83,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 					activity.finish();
 				}
 				if (code.equals("0")){
-					//如果返回是0则说明已注册，直接跳到主页
-					String phone = je.getAsJsonObject().get("data").getAsString();
+					//查询微信号是否注册，如果返回是0则说明已注册，直接跳到主页
+					String data = JSON.parseObject(result).getString("data");;
+					Constants.USERINFO = JSON.parseObject(data, new TypeReference<Userinfo_Bean>() {});
 					Intent intent=new Intent(activity, MainActivity.class);
-					intent.putExtra("phone",phone);
 					startActivity(intent);
 					activity.finish();
 				}else if(code.equals("-1")){
@@ -94,6 +98,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 					Toast.makeText(context,"与服务器连接超时",Toast.LENGTH_LONG).show();
 					activity.finish();
 				}else {
+					//没有注册。跳到绑定手机号页面
 					Intent intent=new Intent(activity, WX_Signin_Activity.class);
 					intent.putExtra("openid",openid);
 					intent.putExtra("token",token);

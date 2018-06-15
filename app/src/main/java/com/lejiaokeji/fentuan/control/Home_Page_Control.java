@@ -8,6 +8,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.TypeReference;
 import com.google.gson.Gson;
 import com.lejiaokeji.fentuan.databean.Shop_Data;
@@ -35,7 +36,13 @@ public class Home_Page_Control {
             int what=msg.what;
             String result=msg.obj.toString();
             Log.d("5555","SIGN返回数据"+result);
-            String retCode=JSON.parseObject(result).getString("retCode");
+            String retCode="999";
+            try {
+                retCode=JSON.parseObject(result).getString("retCode");
+            }catch (JSONException e){
+                home_page_listener.loadfail(retCode);
+            }
+
             if (retCode.equals("-1")){
                 home_page_listener.connectfail();
             }else if (retCode.equals("-2")){

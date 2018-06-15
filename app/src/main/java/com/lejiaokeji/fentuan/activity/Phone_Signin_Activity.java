@@ -1,6 +1,8 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -24,10 +26,9 @@ import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.utils.Network;
+import com.lejiaokeji.fentuan.view.helpview.GetAlerDialog;
 
-public class WX_Signin_Activity extends AppCompatActivity {
-    String token = "";
-    String openid = "";
+public class Phone_Signin_Activity extends AppCompatActivity {
     Network network;
     Sign_In sign_in;
     EditText et_phone;
@@ -52,11 +53,12 @@ public class WX_Signin_Activity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.parseColor("#ff475d"));
         }
-        setContentView(R.layout.activity_weixin_signin);
+        setContentView(R.layout.activity_phone_signin);
         toolbar=findViewById(R.id.toolbar_bindphone);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle("");
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +66,6 @@ public class WX_Signin_Activity extends AppCompatActivity {
             }
         });
         activity = this;
-        Intent intent = getIntent();
-        token = intent.getStringExtra("token");
-        openid = intent.getStringExtra("openid");
         network = Network.getnetwork();
         sign_in = Sign_In.getInstance();
         et_phone = findViewById(R.id.et_phone);
@@ -116,21 +115,10 @@ public class WX_Signin_Activity extends AppCompatActivity {
         bt_getcode = findViewById(R.id.bt_getcode);
         bt_bind = findViewById(R.id.bt_bind);
         radioButton =findViewById(R.id.radioButton);
-
+        init();
         getinputdata();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        init();
-    }
-
     public void init() {
-        Log.d("555",token+openid);
-        if (null!=token&&null!=openid){
-            sign_in.getwxinfo(token,openid);
-        }
         sign_in.setsignlistener(new Sign_In.Signresult() {
             @Override
             public void signsuccessful() {
@@ -138,33 +126,35 @@ public class WX_Signin_Activity extends AppCompatActivity {
                 activity.startActivity(intent);
                 finish();
             }
-
             @Override
             public void yaoqing_err(String t) {
-                Toast.makeText(activity,"邀请码好像错了哦",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity,"错误代码："+t+", 邀请码好像错了哦",Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void code_err() {
-                Toast.makeText(activity,"验证码好像错了哦",Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void uppasswordsuccessful() {
             }
-
             @Override
             public void othererr(String errcode) {
-                Toast.makeText(activity,"抱歉，发生看意料之外的错误，错误码："+errcode,Toast.LENGTH_LONG).show();
+                    if (errcode.equals("999")){
+                        Toast.makeText(activity,"抱歉，服务器内部错误，请稍后再试",Toast.LENGTH_LONG).show();
+                    }
             }
-
             @Override
             public void get_code_err(String code) {
-
+                AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"错误码："+code,"该手机号已注册或已绑定微信号，可直接登陆");
+                alertDialog.show();
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        activity.finish();
+                    }
+                });
             }
         });
     }
-
     public void getinputdata() {
         bt_getcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +174,7 @@ public class WX_Signin_Activity extends AppCompatActivity {
                     String password = et_password.getText().toString();
                     String yaoqingcode = et_yaoqingcode.getText().toString();
                     if (!phone.isEmpty()&&!code.isEmpty()&&!password.isEmpty()){
-                        sign_in.bindphone(activity,phone,password,code,yaoqingcode);
+                        sign_in.phonesignin(phone,password,code,yaoqingcode);
                     }else {
                         Toast.makeText(activity,"请填写所有信息",Toast.LENGTH_LONG).show();
                     }
@@ -198,7 +188,7 @@ public class WX_Signin_Activity extends AppCompatActivity {
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 isaccpet=true;
+                isaccpet=true;
             }
         });
 
@@ -252,7 +242,6 @@ public class WX_Signin_Activity extends AppCompatActivity {
     }
     //请求验证码
     public void sendcode( String phone) {
-        Log.d("5555",phone+phone.length());
         if (phone.length() == 11) {
             if (cansend) {
                 timer.start();

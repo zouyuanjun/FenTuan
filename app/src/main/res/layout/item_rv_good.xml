@@ -15,14 +15,15 @@
         android:background="@drawable/shop_img_fail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_item_shoptitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="13dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/sdv_item_goodsphoto"
+        app:layout_constraintStart_toEndOf="@+id/im_mall_ico"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -128,5 +129,13 @@
         app:layout_constraintEnd_toEndOf="@+id/sdv_qh_price"
         app:layout_constraintStart_toStartOf="@+id/sdv_qh_price"
         app:layout_constraintTop_toTopOf="@+id/sdv_qh_price" />
+
+    <ImageView
+        android:id="@+id/im_mall_ico"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        app:layout_constraintStart_toStartOf="@+id/sdv_qh_price"
+        app:layout_constraintTop_toTopOf="@+id/sdv_item_goodsphoto"
+      />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,15 +2,19 @@ package com.lejiaokeji.fentuan.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.databean.Item_Shop;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 
 import java.util.List;
 
@@ -43,6 +47,11 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
         String youhuiquan=mDatas.get(position).getDiscount_price();
         youhuiquan=youhuiquan.substring(0,youhuiquan.length()-2);
         ((RecyclerHolder)holder).tv_youhuiquan.setText(youhuiquan+"元");
+        if (Constants.SELECT_JD){
+            ((RecyclerHolder)holder).im_mall_ico.setBackground(ContextCompat.getDrawable(mContext,R.drawable.home_ic_jd));
+        }else {
+            ((RecyclerHolder)holder).im_mall_ico.setBackground(ContextCompat.getDrawable(mContext,R.drawable.home_ic_pdd));
+        }
         if (onItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,11 +78,13 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
         TextView tv_item_price;
         TextView tv_item_yongjing;
         TextView tv_youhuiquan;
+        ImageView im_mall_ico;
         SimpleDraweeView  sdv_item_goodsphoto;
         SimpleDraweeView  sdv_qh_price;
 
         private RecyclerHolder(View itemView) {
             super(itemView);
+            im_mall_ico=itemView.findViewById(R.id.im_mall_ico);
             sdv_item_goodsphoto=itemView.findViewById(R.id.sdv_item_goodsphoto);
             tv_item_price =  itemView.findViewById(R.id.tv_item_price);
             title = itemView.findViewById(R.id.tv_item_shoptitle);

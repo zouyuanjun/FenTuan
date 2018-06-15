@@ -10,6 +10,15 @@ public class Pdd_Shop_Details_Bean {
     String goods_image_url;
     String min_group_price;
     List<String> goods_gallery_urls;
+    String has_coupon;
+
+    public String getHas_coupon() {
+        return has_coupon;
+    }
+
+    public void setHas_coupon(String has_coupon) {
+        this.has_coupon = has_coupon;
+    }
 
     public Pdd_Shop_Details_Bean() {
     }

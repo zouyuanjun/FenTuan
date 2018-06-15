@@ -1,6 +1,8 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,12 +37,14 @@ import com.lejiaokeji.fentuan.databean.JD_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.databean.Pdd_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.utils.BitmapUtil;
 import com.lejiaokeji.fentuan.utils.WX_Share;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +63,8 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
     Button bt_add_mall;
     TextView tv_lingquan;
     TextView tv_tuiguang;
+    TextView tv_quan;
+
     Activity activity;
     RelativeLayout relativeLayout;
     RelativeLayout lingquan;
@@ -103,6 +110,8 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         tv_tuiguang=findViewById(R.id.tv_tuiguang_count);
         lingquan=findViewById(R.id.rv_lingquan);
         tuiguang=findViewById(R.id.rv_tuiguang);
+        tv_quan=findViewById(R.id.tv_quan);
+        tv_quan.setText(discount.substring(0,discount.length()-2)+"元优惠券");
         shop_details=Shop_Details.getInstance();
         setlistener();
 
@@ -117,10 +126,12 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
                 Glide.with(activity)
                         .load(shop_data.getImgUrl())
                         .into(simpleDraweeView);
-                tv_lingquan.setText(discount);
+                tv_lingquan.setText("￥"+discount);
                 tv_price.setText("原价：￥"+shop_data.getUnitPrice());
-                float sale_price=Float.parseFloat(shop_data.getUnitPrice())-Float.parseFloat(discount);
-                tv_sale_price.setText("￥"+sale_price);
+                double sale_price=Double.parseDouble(shop_data.getUnitPrice())-Double.parseDouble(discount);
+                DecimalFormat df = new DecimalFormat("0.00");
+                String CNY = df.format(sale_price);
+                tv_sale_price.setText("￥"+CNY);
                 tv_tuiguang.setText("￥"+yongjin);
                 tv_yongjing.setText("佣金：￥"+yongjin);
                 tv_title.setText(shop_data.getGoodsName());
@@ -143,6 +154,12 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
             }
             @Override
             public void getjdsharurl(String url) throws IOException {
+                String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价："+tv_sale_price.getText().toString()
+                        +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接到浏览器打开或长按识别二维码领券即可购买";
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData mClipData = ClipData.newPlainText("Label", shareText);
+                Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();
+                cm.setPrimaryClip(mClipData);
                 getbitmap(url);
             }
 
@@ -159,13 +176,13 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         lingquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shop_details.getUnionData("1331837784",shopid,discount_link);
+                shop_details.getUnionData(Constants.USERINFO.getJdpid(),shopid,discount_link);
             }
         });
         tuiguang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shop_details.shareJD("1331837784",shopid,discount_link);
+                shop_details.shareJD(Constants.USERINFO.getJdpid(),shopid,discount_link);
             }
         });
         im_detail_back.setOnClickListener(new View.OnClickListener() {
@@ -207,8 +224,8 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         List<String> imageUris=new ArrayList<>();
         imageUris.add(path+filename);
         imageUris.add(path+filename);
-       WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
-     //  WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
+       // WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
+     WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
         Log.d("55","截图完成");
 
     }

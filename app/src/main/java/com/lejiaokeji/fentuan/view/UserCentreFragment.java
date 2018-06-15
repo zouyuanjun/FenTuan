@@ -6,18 +6,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.activity.Invite_Activity;
 import com.lejiaokeji.fentuan.activity.Order_Activity;
 import com.lejiaokeji.fentuan.activity.Setting_Activity;
+import com.lejiaokeji.fentuan.activity.Shouyi_Activity;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 
 public class UserCentreFragment extends LazyLoadFragment implements View.OnClickListener {
     ImageView im_user_centent_shouyi;
     ImageView im_user_centent_renshu;
     ImageView im_user_centent_order;
-
+    SimpleDraweeView sdv_photo;
+    TextView tv_nickname;
 
     LinearLayout rl_service;
     LinearLayout rl_help;
@@ -41,6 +46,10 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
         im_user_centent_order=findViewById(R.id.im_user_centent_order);
         im_user_centent_shouyi=findViewById(R.id.im_user_centent_shouyi);
         im_user_centent_renshu=findViewById(R.id.im_user_centent_renshu);
+        sdv_photo=findViewById(R.id.sdv_user_centent);
+        tv_nickname=findViewById(R.id.tv_user_centent_name);
+        sdv_photo.setImageURI(Constants.USERINFO.getHeadportrait());
+        tv_nickname.setText(Constants.USERINFO.getNickname());
 
         rl_help.setOnClickListener(this);
         rl_service.setOnClickListener(this);
@@ -80,7 +89,7 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
                 getActivity().startActivity(intent);
                 break;
             }case R.id.im_user_centent_shouyi:{
-                Intent intent=new Intent(getActivity(), Setting_Activity.class);
+                Intent intent=new Intent(getActivity(), Shouyi_Activity.class);
                 getActivity().startActivity(intent);
                 break;
             }case R.id.im_user_centent_renshu:{

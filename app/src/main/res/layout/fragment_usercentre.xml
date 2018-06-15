@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/simpleDraweeView2"
+            android:id="@+id/sdv_user_centent"
             android:layout_width="77dp"
             android:layout_height="77dp"
             android:layout_marginEnd="8dp"
@@ -58,12 +58,12 @@
             android:text="合伙人"
             android:textColor="@color/whitefff"
             android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@+id/simpleDraweeView2"
+            app:layout_constraintBottom_toBottomOf="@+id/sdv_user_centent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tv_user_centent_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

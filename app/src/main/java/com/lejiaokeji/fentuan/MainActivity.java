@@ -44,12 +44,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager=findViewById(R.id.myviewpage);
         context=this;
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
-//        mNavigationController=pageBottomTabLayout.material().addItem(R.drawable.tool_ic_home_nor,R.drawable.tool_ic_home_sel,"",getResources().getColor(R.color.colorAccent))
-//                .addItem(R.drawable.tool_ic_code_nor,R.drawable.tool_ic_code_sel,"推荐",getResources().getColor(R.color.colorAccent))
-//                .addItem(R.drawable.pfile_ic_portrait,"商城")
-//                .addItem(R.drawable.pfile_ic_portrait,"通知")
-//                .addItem(R.drawable.pfile_ic_portrait,"我的")
-//        .build();
         mNavigationController = pageBottomTabLayout.custom()
                 .addItem(newItem(R.drawable.tab_ic_home_def,R.drawable.tab_ic_home_sel))
                 .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))

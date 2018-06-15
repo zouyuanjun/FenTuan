@@ -49,6 +49,7 @@
         android:background="@drawable/shape_corner"
         android:gravity="center_vertical"
         android:hint="请输入密码"
+        android:inputType="textPassword"
         android:paddingLeft="48dp"
         android:textColor="@color/blackfont0000"
         android:textColorHint="@color/hui9999"

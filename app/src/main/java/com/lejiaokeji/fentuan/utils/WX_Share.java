@@ -37,8 +37,10 @@ public class WX_Share {
             if (!file.exists()) {
                 return;
             }
-            uriArrayList.add(Uri.fromFile(file));
-            //uriArrayList.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
+         //   uriArrayList.add(Uri.fromFile(file));
+           uriArrayList.add(FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file));
+          Log.d("sdf",FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file).getPath());
+            Log.d("string",FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file).toString());
         }
         Intent intent = new Intent();
         ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
@@ -64,6 +66,8 @@ public class WX_Share {
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
+        Log.d("555",uri.getPath());
+        Log.d("string",uri.toString());
         intent.putExtra("Kdescription", "这个也不显示");
         context.startActivity(intent);
     }

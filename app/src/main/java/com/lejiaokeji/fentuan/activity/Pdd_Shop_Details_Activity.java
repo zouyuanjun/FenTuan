@@ -1,6 +1,8 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -20,9 +22,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.zxing.BarcodeFormat;
@@ -37,18 +41,19 @@ import com.lejiaokeji.fentuan.databean.Pdd_Shop_Details_Bean;
 import com.lejiaokeji.fentuan.utils.BitmapUtil;
 import com.lejiaokeji.fentuan.utils.WX_Share;
 import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Pdd_Shop_Details_Activity extends AppCompatActivity{
     String shopid;
-    String goods_decs;
     Shop_Details shop_details;
     Banner banner;
     String yongjin;
@@ -60,6 +65,8 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
     TextView tv_quan_price;
     TextView tv_title;
     TextView tv_goods_desc;
+    TextView tv_quan;
+    Button bt_detail_add_mall;
     Activity activity;
     String imgurl="";
     RelativeLayout rl_lingquan;
@@ -92,11 +99,18 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         tv_title=findViewById(R.id.tv_detail_title);
         tv_quan_price=findViewById(R.id.tv_sale_price);
         tv_goods_desc=findViewById(R.id.tv_goods_desc);
+        tv_quan=findViewById(R.id.tv_quan);
         shop_details=Shop_Details.getInstance();
         shop_details.getdata(shopid);
         rl_lingquan=findViewById(R.id.rv_lingquan);
         rl_tuiguang=findViewById(R.id.rv_tuiguang);
-    //    shop_details.getUnionData("10004_15554651",shopid);
+    bt_detail_add_mall=findViewById(R.id.bt_detail_add_mall);
+    bt_detail_add_mall.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(activity,"该功能正在加紧开发，请在给我们点时间吧~~",Toast.LENGTH_LONG).show();
+        }
+    });
         createBitmap(shopid);
         initdata();
     }
@@ -137,10 +151,23 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
                 lingquan.setText(Float.parseFloat(pdd_shop_details_bean.getCoupon_discount())/100+"");
                 tv_price.setText("原价：￥"+Float.parseFloat(pdd_shop_details_bean.getMin_group_price())/100);
                 tv_title.setText(pdd_shop_details_bean.getGoods_name());
-                tv_quan_price.setText("￥"+quan_price);
                 tv_goods_desc.setMovementMethod(ScrollingMovementMethod.getInstance());
                 tv_goods_desc.setText("                 "+pdd_shop_details_bean.getGoods_desc());
-                goods_decs=pdd_shop_details_bean.getGoods_desc();
+          if (pdd_shop_details_bean.getHas_coupon().equals("false")){
+              tv_quan.setText("优惠券已过期");
+              tv_quan_price.setText("￥"+Float.parseFloat(pdd_shop_details_bean.getMin_group_price())/100);
+          }else {
+              String quan=Float.parseFloat(pdd_shop_details_bean.getCoupon_discount())/100+"";
+              tv_quan.setText(quan.substring(0,quan.length()-2)+"元优惠券");
+
+              double sale_price=Double.parseDouble(pdd_shop_details_bean.getMin_group_price())/100-Double.parseDouble(pdd_shop_details_bean.getCoupon_discount())/100;
+              DecimalFormat df = new DecimalFormat("0.00");
+              String CNY = df.format(sale_price);
+
+              tv_quan_price.setText("￥"+CNY);
+          }
+
+
             }
             @Override
             public void getjdsharurl(String url) throws IOException {
@@ -163,6 +190,12 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
             @Override
             public void sharepdd(String url) {
                 try {
+                    String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价：￥"+quan_price
+                            +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接到浏览器打开或长按识别二维码领券即可购买";
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData mClipData = ClipData.newPlainText("Label", shareText);
+                    Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();
+                    cm.setPrimaryClip(mClipData);
                     getbitmap(url);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -176,18 +209,19 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         rl_lingquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shop_details.getpddUnion("10004_15375879",shopid);
+                shop_details.getpddUnion(Constants.USERINFO.getPddpid(),shopid);
             }
         });
         rl_tuiguang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shop_details.sharepdd("10004_15375879",shopid);
+                shop_details.sharepdd(Constants.USERINFO.getPddpid(),shopid);
 
             }
         });
 
     }
+    //创建链接二维码
     public static Bitmap createBitmap(String str){
         Bitmap bitmap = null;
         BitMatrix result = null;
@@ -226,6 +260,7 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         //获取商品图片的bitmap
         banner.setDrawingCacheEnabled(true);
         Bitmap goodsbitmap = banner.getDrawingCache(true);
+        banner.setDrawingCacheEnabled(false);
         BitmapUtil bitmapUtil= BitmapUtil.getinstance();
         //缩放标题bitmap
         titlebmp=bitmapUtil.resizeImage(titlebmp,Float.parseFloat(goodsbitmap.getWidth()+"")/titlebmp.getWidth());
