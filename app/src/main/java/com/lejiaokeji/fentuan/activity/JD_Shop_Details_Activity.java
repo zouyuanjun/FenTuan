@@ -155,7 +155,7 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
             @Override
             public void getjdsharurl(String url) throws IOException {
                 String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价："+tv_sale_price.getText().toString()
-                        +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接到浏览器打开或长按识别二维码领券即可购买";
+                        +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接打开或长按识别二维码领券即可购买";
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData mClipData = ClipData.newPlainText("Label", shareText);
                 Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();

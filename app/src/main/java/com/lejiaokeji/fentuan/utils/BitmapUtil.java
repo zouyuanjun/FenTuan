@@ -103,8 +103,6 @@ public class BitmapUtil {
 
         Matrix matrix = new Matrix();
         matrix.postScale(scale, scale);
-        // if you want to rotate the Bitmap
-        // matrix.postRotate(45);
         Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
                 height, matrix, true);
         return resizedBitmap;

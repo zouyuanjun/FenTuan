@@ -80,7 +80,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                 String phone=autoCompleteTextView.getText().toString();
                 String password=editText.getText().toString();
                 if (phone.length()==11&&!(password.isEmpty())){
-                    sign_in.sign_in(phone,password);
+                    sign_in.sign_in(activity,phone,password);
                 }else{
                     AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"登陆失败","请填写正确的账号密码再登陆");
                     alertDialog.show();
@@ -120,17 +120,14 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                 activity.startActivity(intent);
                 finish();
             }
-
             @Override
             public void yaoqing_err(String t) {
 
             }
-
             @Override
             public void code_err() {
 
             }
-
             @Override
             public void uppasswordsuccessful() {
 
@@ -146,5 +143,16 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+    }
+    boolean isexit=false;
+    @Override
+    public void onBackPressed() {
+        if (isexit){
+            finish();
+        }else {
+            isexit=true;
+            Toast.makeText(activity,"再按一次返回退出",Toast.LENGTH_LONG).show();
+        }
+
     }
 }

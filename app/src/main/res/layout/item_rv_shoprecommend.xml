@@ -1,126 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-   >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sbv_item_shoprecommend_head"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:background="@color/colorAccent" />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdv_item_origin"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_toEndOf="@+id/tv_item_shoprecommend_name"
-                android:background="@color/colorAccent"/>
-            <TextView
-                android:id="@+id/tv_item_shoprecommend_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/sbv_item_shoprecommend_head"
-                android:paddingLeft="11dp"
-                android:text="小编推荐" />
-            <TextView
-                android:id="@+id/tv_item_shoprecommend_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/sbv_item_shoprecommend_head"
-                android:paddingLeft="11dp"
-                android:layout_below="@+id/tv_item_shoprecommend_name"
-                android:text="1小时前" />
-            <TextView
-                android:id="@+id/tv_sharecount"
-                android:layout_alignParentEnd="true"
-                android:paddingRight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已分享0次"/>
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/tv_shoprecommend_title"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="环保用料哈萨克就打发时间快点放假拉山口点击发送 卢卡斯的积分拉萨"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-<RelativeLayout
-    android:layout_width="10dp"
-    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sbv_item_shoprecommend_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        app:roundAsCircle="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sdv_item_origin"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/tv_item_shoprecommend_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_shoprecommend_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_shoprecommend_name" />
+
+    <TextView
+        android:id="@+id/tv_item_shoprecommend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/sbv_item_shoprecommend_head"
+        android:text="小编推荐"
+        android:textColor="#ff3c64"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/sbv_item_shoprecommend_head"
+        app:layout_constraintTop_toTopOf="@+id/sbv_item_shoprecommend_head" />
+
+    <TextView
+        android:id="@+id/tv_item_shoprecommend_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_item_shoprecommend_name"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/sbv_item_shoprecommend_head"
+        android:text="1小时前"
+        android:textColor="@color/hui9999"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_shoprecommend_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_shoprecommend_name" />
+
+    <TextView
+        android:id="@+id/tv_sharecount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:text="已分享0次"
+        android:textColor="#666666"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sdv_item_origin" />
+
+    <TextView
+        android:id="@+id/tv_shoprecommend_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="16dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="环保用料哈萨克就打发时间快点放假拉山口点击发送 卢卡斯的积分拉萨"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/hei3333"
+
+        app:layout_constraintTop_toBottomOf="@+id/sbv_item_shoprecommend_head" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_shoprecommend_title">
+
+        <RelativeLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_item_recomment1"
             android:layout_width="70dp"
-            android:layout_weight="1"
             android:layout_height="70dp"
-            android:background="@color/colorAccent"/>
+            android:layout_weight="1"
+            android:background="@color/colorAccent" />
+
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"></RelativeLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_item_recomment2"
             android:layout_width="70dp"
-            android:layout_weight="1"
             android:layout_height="70dp"
-            android:background="@color/colorAccent"/>
+            android:layout_weight="1"
+            android:background="@color/colorAccent" />
+
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"></RelativeLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_item_recomment3"
             android:layout_width="70dp"
-            android:layout_weight="1"
             android:layout_height="70dp"
-            android:background="@color/colorAccent"/>
+            android:layout_weight="1"
+            android:background="@color/colorAccent" />
+
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"></RelativeLayout>
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
+
+        <TextView
+
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
+            android:layout_gravity="center"
+            android:paddingLeft="15dp"
+            android:textSize="13sp"
+            android:textColor="#666666"
+            android:text="佣金：" />
 
-                android:layout_gravity="center"
-                android:paddingLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="佣金："/>
-            <TextView
-                android:id="@+id/tv_recomment_yongjing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3.55元"/>
-            <RelativeLayout
-                android:layout_weight="1"
-                android:layout_width="20dp"
-                android:layout_height="match_parent"></RelativeLayout>
-            <Button
-                android:id="@+id/bt_item_shareshop"
-                android:text="一键分享"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"/>
-        </LinearLayout>
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_recomment_yongjing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#ff286e"
+            android:text="3.55元" />
 
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></RelativeLayout>
 
+        <Button
+            android:layout_marginRight="16dp"
+            android:id="@+id/bt_item_shareshop"
+            android:layout_width="78dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="27dp"
+            android:textSize="13sp"
+            android:textColor="@color/whitefff"
+            android:background="@drawable/gradientff286eyuan"
+            android:text="一键分享" />
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

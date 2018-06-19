@@ -69,6 +69,7 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
     Button bt_detail_add_mall;
     Activity activity;
     String imgurl="";
+    ImageView im_detail_back;
     RelativeLayout rl_lingquan;
     RelativeLayout rl_tuiguang;
     @Override
@@ -100,6 +101,13 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         tv_quan_price=findViewById(R.id.tv_sale_price);
         tv_goods_desc=findViewById(R.id.tv_goods_desc);
         tv_quan=findViewById(R.id.tv_quan);
+        im_detail_back=findViewById(R.id.im_detail_back);
+        im_detail_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         shop_details=Shop_Details.getInstance();
         shop_details.getdata(shopid);
         rl_lingquan=findViewById(R.id.rv_lingquan);
@@ -166,8 +174,6 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
 
               tv_quan_price.setText("￥"+CNY);
           }
-
-
             }
             @Override
             public void getjdsharurl(String url) throws IOException {
@@ -190,8 +196,8 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
             @Override
             public void sharepdd(String url) {
                 try {
-                    String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价：￥"+quan_price
-                            +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接到浏览器打开或长按识别二维码领券即可购买";
+                    String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价："+tv_quan_price.getText().toString()
+                            +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接打开或长按识别二维码领券即可购买";
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData mClipData = ClipData.newPlainText("Label", shareText);
                     Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();
@@ -260,7 +266,7 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         //获取商品图片的bitmap
         banner.setDrawingCacheEnabled(true);
         Bitmap goodsbitmap = banner.getDrawingCache(true);
-        banner.setDrawingCacheEnabled(false);
+
         BitmapUtil bitmapUtil= BitmapUtil.getinstance();
         //缩放标题bitmap
         titlebmp=bitmapUtil.resizeImage(titlebmp,Float.parseFloat(goodsbitmap.getWidth()+"")/titlebmp.getWidth());
@@ -289,6 +295,6 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity{
         //   WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
         WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
         Log.d("55","截图完成");
-
+        banner.setDrawingCacheEnabled(false);
     }
 }

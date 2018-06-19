@@ -106,6 +106,7 @@ public class Sign_In {
                     if (retCode.equals("0")) {
                         String data = JSON.parseObject(result).getString("data");;
                         Constants.USERINFO = JSON.parseObject(data, new TypeReference<Userinfo_Bean>() {});
+                        keepdata();  //保存账户信息
                         signresult.signsuccessful();
                     } else {
                         signresult.yaoqing_err(retCode);
@@ -148,14 +149,10 @@ public class Sign_In {
         this.signresult = signresult1;
     }
 
-    public void isture(String result) {
-    }
-
     public void keepdata() {
-
-        SharedPreferences sp = activity.getSharedPreferences("SPuser", Activity.MODE_PRIVATE);
+        SharedPreferences sp = activity.getSharedPreferences("account", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("name", phone);
+        editor.putString("phone", phone);
         editor.putString("password", password);
         editor.commit();
     }
@@ -213,7 +210,8 @@ public class Sign_In {
         network.connectnet(data, Constants.URL + "user/findPassWord ", handler, 4);
     }
     //手机号登陆
-    public void sign_in(String phone, String password) {
+    public void sign_in(Activity activity,String phone, String password) {
+        this.activity=activity;
         this.phone = phone;
         this.password = password;
         String data = "{\"phone\":\"%phone\",\"password\":\"%password\"}";

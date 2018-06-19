@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
@@ -93,8 +94,7 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
                 getActivity().startActivity(intent);
                 break;
             }case R.id.im_user_centent_renshu:{
-                Intent intent=new Intent(getActivity(), Setting_Activity.class);
-                getActivity().startActivity(intent);
+                Toast.makeText(getActivity(),"该功能正在开发，敬请期待",Toast.LENGTH_LONG).show();
                 break;
             }case R.id.bt_setting:{
                 Intent intent=new Intent(getActivity(), Setting_Activity.class);

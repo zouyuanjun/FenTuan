@@ -130,7 +130,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@color/colorAccent"/>
+                    android:background="@drawable/home_ic_search"/>
                 <EditText
                     android:id="@+id/ed_home_search"
                     android:paddingLeft="5dp"
@@ -188,7 +188,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textSize="15sp"
-                android:textColor="@color/blackfont0000"
+                android:textColor="#ff2d55"
                 android:text="  推 荐 |"/>
         </RelativeLayout>
         <ImageView

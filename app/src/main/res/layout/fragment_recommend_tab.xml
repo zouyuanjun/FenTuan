@@ -17,7 +17,9 @@
             android:descendantFocusability="afterDescendants"
             android:layout_weight="1">
         </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

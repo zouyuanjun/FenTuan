@@ -2,7 +2,6 @@ package com.lejiaokeji.fentuan.databean;
 
 public class PDD_Shop_Bean {
     int catId;
-    int categoryId;
     int pageStart ;
     String pddPid ="";
 
@@ -26,13 +25,6 @@ public class PDD_Shop_Bean {
         this.catId = catId;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
 
     public int getPageStart() {
         return pageStart;

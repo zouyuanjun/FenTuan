@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -54,13 +55,10 @@ public class RecommendTabFragment extends LazyLoadFragment {
     public static final String TITLE = "title";
     private String mTitle = "Defaut Value";
     private PullLoadMoreRecyclerView mRecyclerView;
-    // private TextView mTextView;
     List<Item_Shop_RecommentBean> myListData = new ArrayList<Item_Shop_RecommentBean>();
     Recommend_Rv_Adapter adapter;
     Home_Page_Control home_page_control;
-    private ActionMode actionMode;
-    public Set<Integer> positionSet = new HashSet<>();
-
+    ProgressBar progressBar;
     public static RecommendTabFragment newInstance(String title) {
         RecommendTabFragment tabFragment = new RecommendTabFragment();
         Bundle bundle = new Bundle();
@@ -80,7 +78,7 @@ public class RecommendTabFragment extends LazyLoadFragment {
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_home_tab;
+        return R.layout.fragment_recommend_tab;
     }
 
     @Override
@@ -173,7 +171,7 @@ public class RecommendTabFragment extends LazyLoadFragment {
     public void getdata(){
         for (int i = 0; i < 10; i++) {
             String url="http://img.zcool.cn/community/01635d571ed29832f875a3994c7836.png@900w_1l_2o_100sh.jpg";
-            myListData.add(new Item_Shop_RecommentBean(url,"不才","2小时前"+i,"已分享52次",url,url,url,"25",url,"按实际学生考试地点"));
+            myListData.add(new Item_Shop_RecommentBean(url,"不才","2小时前"+i,"已分享52次",url,url,url,"25","1","按实际学生考试地点"));
         }
     }
     public static void getBitmap(final List<String> urlList, final Context context) throws IOException {

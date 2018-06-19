@@ -92,58 +92,47 @@ public class HomeTabFragment extends LazyLoadFragment {
                 switch (shoptype){
                     case 1:{
                         pdd_shop_bean.setCatId(210);
-                        pdd_shop_bean.setCategoryId(12);
                         break;
 
                     }
                     case 2:{
                         pdd_shop_bean.setCatId(239);
-                        pdd_shop_bean.setCategoryId(743);
                         break;
                     }
                     case 3:{
                         pdd_shop_bean.setCatId(3817);
-                        pdd_shop_bean.setCategoryId(13);
                         break;
                     }
                     case 4:{
                         pdd_shop_bean.setCatId(77);
-                        pdd_shop_bean.setCategoryId(4);
                         break;
                     }
                     case 5:{
                         pdd_shop_bean.setCatId(1464);
-                        pdd_shop_bean.setCategoryId(16);
                         break;
                     }
                     case 6:{
                         pdd_shop_bean.setCatId(2);
-                        pdd_shop_bean.setCategoryId(1);
                         break;
                     }
                     case 7:{
                         pdd_shop_bean.setCatId(489);
-                        pdd_shop_bean.setCategoryId(14);
                         break;
                     }
                     case 8:{
                         pdd_shop_bean.setCatId(277);
-                        pdd_shop_bean.setCategoryId(1281);
                         break;
                     }
                     case 9:{
                         pdd_shop_bean.setCatId(2351);
-                        pdd_shop_bean.setCategoryId(1451);
                         break;
                     }
                     case 10:{
                         pdd_shop_bean.setCatId(7639);
-                        pdd_shop_bean.setCategoryId(2);
                         break;
                     }
                     case 11:{
                         pdd_shop_bean.setCatId(6076);
-                        pdd_shop_bean.setCategoryId(18);
                         break;
                     }
                 }
@@ -267,57 +256,46 @@ public class HomeTabFragment extends LazyLoadFragment {
                 switch (shoptype){
                     case 1:{
                         pdd_shop_bean.setCatId(210);
-                        pdd_shop_bean.setCategoryId(12);
                         break;
                     }
                     case 2:{
                         pdd_shop_bean.setCatId(239);
-                        pdd_shop_bean.setCategoryId(743);
                         break;
                     }
                     case 3:{
                         pdd_shop_bean.setCatId(3817);
-                        pdd_shop_bean.setCategoryId(13);
                         break;
                     }
                     case 4:{
                         pdd_shop_bean.setCatId(77);
-                        pdd_shop_bean.setCategoryId(4);
                         break;
                     }
                     case 5:{
                         pdd_shop_bean.setCatId(1464);
-                        pdd_shop_bean.setCategoryId(16);
                         break;
                     }
                     case 6:{
                         pdd_shop_bean.setCatId(2);
-                        pdd_shop_bean.setCategoryId(1);
                         break;
                     }
                     case 7:{
                         pdd_shop_bean.setCatId(489);
-                        pdd_shop_bean.setCategoryId(14);
                         break;
                     }
                     case 8:{
                         pdd_shop_bean.setCatId(277);
-                        pdd_shop_bean.setCategoryId(1281);
                         break;
                     }
                     case 9:{
                         pdd_shop_bean.setCatId(2351);
-                        pdd_shop_bean.setCategoryId(1451);
                         break;
                     }
                     case 10:{
                         pdd_shop_bean.setCatId(7639);
-                        pdd_shop_bean.setCategoryId(2);
                         break;
                     }
                     case 11:{
                         pdd_shop_bean.setCatId(6076);
-                        pdd_shop_bean.setCategoryId(18);
                         break;
                     }
                 }

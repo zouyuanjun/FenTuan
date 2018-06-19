@@ -24,6 +24,8 @@
     </com.lejiaokeji.fentuan.view.helpview.SimpleViewPagerIndicator>
 
     <LinearLayout
+        android:id="@+id/ly_tab"
+        android:background="@drawable/recom_bg_01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

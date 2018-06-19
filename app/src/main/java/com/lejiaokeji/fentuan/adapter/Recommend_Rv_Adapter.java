@@ -2,12 +2,14 @@ package com.lejiaokeji.fentuan.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -44,7 +46,12 @@ public class Recommend_Rv_Adapter extends RecyclerView.Adapter{
         ((RecyclerHolder)holder).tv_nickname.setText(mDatas.get(position).getName());
         ((RecyclerHolder)holder).tv_sharecount.setText(mDatas.get(position).getSharecount());
         ((RecyclerHolder)holder).sdv_item_headerphoto.setImageURI(mDatas.get(position).getHeaderurl());
-        ((RecyclerHolder)holder).sdv_origin.setImageURI(mDatas.get(position).getOrigin());
+        if (mDatas.get(position).getOrigin().equals("1")){
+            ((RecyclerHolder)holder).sdv_origin.setBackground(ContextCompat.getDrawable(mContext,R.drawable.home_ic_jd));
+        }else {
+            ((RecyclerHolder)holder).sdv_origin.setBackground(ContextCompat.getDrawable(mContext,R.drawable.home_ic_pdd));
+        }
+
         ((RecyclerHolder)holder).sdv_item_goodsphoto3.setImageURI(mDatas.get(position).getSimpleDraweeView3());
         ((RecyclerHolder)holder).sdv_item_goodsphoto2.setImageURI(mDatas.get(position).getSimpleDraweeView2());
         ((RecyclerHolder)holder).sdv_item_goodsphoto1.setImageURI(mDatas.get(position).getSimpleDraweeView1());
@@ -91,7 +98,7 @@ public class Recommend_Rv_Adapter extends RecyclerView.Adapter{
         TextView tv_nickname;
         TextView tv_sharecount;
         SimpleDraweeView sdv_item_headerphoto;
-        SimpleDraweeView  sdv_origin;
+        ImageView sdv_origin;
         SimpleDraweeView sdv_item_goodsphoto3;
         SimpleDraweeView  sdv_item_goodsphoto2;
         SimpleDraweeView sdv_item_goodsphoto1;

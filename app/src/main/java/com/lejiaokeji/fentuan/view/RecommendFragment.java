@@ -4,9 +4,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.view.helpview.GlideImageLoader;
@@ -23,6 +25,7 @@ import java.util.List;
     public class RecommendFragment extends LazyLoadFragment {
         private String[] mTitles = new String[]{"商品推荐", "营销素材", "新手必发"};
         private SimpleViewPagerIndicator mIndicator;
+        LinearLayout linearLayout;
         private ViewPager mViewPager;
         private FragmentPagerAdapter mAdapter;
         private RecommendTabFragment[] mFragments = new RecommendTabFragment[mTitles.length];
@@ -74,15 +77,35 @@ import java.util.List;
 
         private void initViews() {
             tabLayout=findViewById(R.id.mytablayout);
-         //   tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
             mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
-
+            linearLayout=findViewById(R.id.ly_tab);
             mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));
             tabLayout.setupWithViewPager(mViewPager);
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition()==1){
+                        linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_01));
+                    }else if (tab.getPosition()==2){
+                        linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_02));
+                    }else if (tab.getPosition()==3){
+                        linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_03));
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
 
         }
     }

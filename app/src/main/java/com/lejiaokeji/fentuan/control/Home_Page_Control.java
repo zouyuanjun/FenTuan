@@ -79,12 +79,16 @@ public class Home_Page_Control {
     public void searchgoods(String keyword ){
 
         String url="";
-        String data="{\"goodsName\":\"%name\"}";
-        data=data.replace("%name",keyword);
+        String data;
         if (Constants.SELECT_JD){
-            url=Constants.URL+"shopList/findByName";
+            data ="{\"goodsName\":\"%name\"}";
+            data=data.replace("%name",keyword);
+            url=Constants.URL+"shopList/selectGoods";
         }else {
-            url=Constants.URL+"goodsSearch/findByGoodsName";
+            url=Constants.URL+"goodsSearch/selectGoodsName";
+            data="{\"goodsName\":\"%name\",\"pddPid\":\"%pddPid\"}";
+            data=data.replace("%name",keyword);
+            data=data.replace("%pddPid",Constants.USERINFO.getPddpid());
         }
         network.connectnet(data,url,handler,2);
     }
