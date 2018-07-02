@@ -77,12 +77,12 @@
             <TextView
                 android:id="@+id/tv_select_jd"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="38dp"
+                android:layout_marginLeft="8dp"
                 android:textSize="15sp"
                 android:text="京东"
                 android:textColor="@color/hei3333"
                 android:gravity="center"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="30dp" />
             <ImageView
                 android:id="@+id/img_select_jd"
@@ -95,13 +95,13 @@
             <TextView
                 android:id="@+id/tv_select_pingduoduo"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="48dp"
+                android:layout_marginRight="15dp"
                 android:textSize="15sp"
                 android:text="拼多多"
                 android:textColor="@color/hui88888"
                 android:gravity="center"
                 android:layout_height="30dp"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
               />
             <ImageView
                 android:visibility="gone"
@@ -171,25 +171,26 @@
             android:layout_weight="1">
             <com.lejiaokeji.fentuan.view.helpview.ColorTrackTabLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/mytablayout"
                 android:layout_weight="1"
-
+                android:layout_centerVertical="true"
                 app:tabSelectedTextColor="#ff2d55"
                 app:tabTextColor="@color/blackfont0000"
                 app:tabIndicatorColor="#ff2d55"
                />
 
             <TextView
+                android:layout_centerVertical="true"
                 android:background="@color/whitefff"
                 android:id="@+id/tv_recomment"
                 android:focusable="true"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:textSize="40px"
                 android:textColor="#ff2d55"
-                android:text="  推 荐 |"/>
+                android:text=" 推 荐 | "/>
         </RelativeLayout>
         <ImageView
             android:id="@+id/im_hide"

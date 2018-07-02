@@ -18,9 +18,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -80,20 +82,27 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity=this;
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            Window window = activity.getWindow();
+//设置透明状态栏,这样才能让 ContentView 向上
+       //     window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
+//设置状态栏颜色
+           window.setStatusBarColor(Color.parseColor("#b2333333"));
+
+            ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
+            View mChildView = mContentView.getChildAt(0);
+            if (mChildView != null) {
+                //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
+                ViewCompat.setFitsSystemWindows(mChildView, false);
+            }
         }
         setContentView(R.layout.activity_jd_shop_details);
-        activity=this;
+
     //    verifyStoragePermissions(activity);
         shopid=getIntent().getStringExtra("shopid");
         discount_link=getIntent().getStringExtra("link");
@@ -154,12 +163,6 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
             }
             @Override
             public void getjdsharurl(String url) throws IOException {
-                String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价："+tv_sale_price.getText().toString()
-                        +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接打开或长按识别二维码领券即可购买";
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", shareText);
-                Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();
-                cm.setPrimaryClip(mClipData);
                 getbitmap(url);
             }
 
@@ -171,6 +174,11 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
             @Override
             public void sharepdd(String url) {
 
+            }
+
+            @Override
+            public void getdatafail() {
+                Toast.makeText(activity,"该商品数据异常，请换一个吧",Toast.LENGTH_LONG).show();
             }
         });
         lingquan.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +221,10 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         //获取二维码
         int size= (int) (qrbj.getHeight()*0.8);
         Bitmap qrbitmap=BitmapUtil.createQRBitmap(url,size);
+        if (null==qrbitmap){
+            Toast.makeText(activity,"获取链接失败,无法分享",Toast.LENGTH_LONG).show();
+            return;
+        }
         //合成二维码bj
         Bitmap erbgbitmap=bitmapUtil.toConformBitmap(qrbj,qrbitmap,qrbj.getHeight()/10,qrbj.getHeight()/10+50);
         //最终合成
@@ -224,6 +236,13 @@ public class JD_Shop_Details_Activity extends AppCompatActivity{
         List<String> imageUris=new ArrayList<>();
         imageUris.add(path+filename);
         imageUris.add(path+filename);
+        String shareText=tv_title.getText().toString()+"\n"+tv_price.getText().toString()+"\n"+tv_quan.getText().toString()+"\n"+"券后价："+tv_sale_price.getText().toString()
+                +"\n"+"购买链接："+url+"\n"+"~~~~~~~~~~~~~~~~~"+"\n"+"点击链接打开或长按识别二维码领券即可购买";
+        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData mClipData = ClipData.newPlainText("Label", shareText);
+        Toast.makeText(activity,"文案已复制，粘贴即可发圈",Toast.LENGTH_LONG).show();
+        cm.setPrimaryClip(mClipData);
+
        // WX_Share.sharePhotosToWX(activity,"hahahah",imageUris);
      WX_Share.sharePhotoToWX(activity,"hahahah",path+filename);
         Log.d("55","截图完成");

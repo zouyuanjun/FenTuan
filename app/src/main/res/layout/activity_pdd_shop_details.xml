@@ -199,7 +199,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/shape_corner444"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -214,16 +213,17 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="fdsfsf"
             android:scrollbars="vertical"
+            android:text="fdsfsf"
             android:textColor="@color/blackfont0000"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.014"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.125" />
 
         <TextView
             android:id="@+id/textView8"
@@ -232,9 +232,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/shape_corner_addshop"
-            android:text="推荐理由"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:text="推荐理由"
             android:textColor="@color/red"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"

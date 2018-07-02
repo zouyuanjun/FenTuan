@@ -41,7 +41,10 @@ public class NotificationFragment extends LazyLoadFragment {
 
     }
     public void setdata(){
+        list.clear();
         list.add(new Item_notificationBean("关于注册问题的通知","","比较宽松的和诺夫卡是男女萨卡加诺夫卡按实际肯定会诺夫卡山","2小时前"));
+        list.add(new Item_notificationBean("关于注册问题的通知","http://img2.imgtn.bdimg.com/it/u=633577398,100638800&fm=27&gp=0.jpg","比较宽松的和诺夫卡是男女萨卡加诺夫卡按实际肯定会诺夫卡山","3小时前"));
+        list.add(new Item_notificationBean("关于注册问题的通知","http://img4.imgtn.bdimg.com/it/u=2503058379,1253215927&fm=27&gp=0.jpg","比较宽松的和诺夫卡是男女萨卡加诺夫卡按实际肯定会诺夫卡山","2小时前"));
         list.add(new Item_notificationBean("关于注册问题的通知","http://img2.imgtn.bdimg.com/it/u=633577398,100638800&fm=27&gp=0.jpg","比较宽松的和诺夫卡是男女萨卡加诺夫卡按实际肯定会诺夫卡山","3小时前"));
         list.add(new Item_notificationBean("关于注册问题的通知","http://img4.imgtn.bdimg.com/it/u=2503058379,1253215927&fm=27&gp=0.jpg","比较宽松的和诺夫卡是男女萨卡加诺夫卡按实际肯定会诺夫卡山","2小时前"));
     }

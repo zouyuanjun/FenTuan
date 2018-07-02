@@ -71,7 +71,6 @@ public class Sign_In {
                 headimgurl = je.getAsJsonObject().get("headimgurl").getAsString();
 
             }else{
-
                 String retCode ="999";
                 try {
                     JsonElement je = new JsonParser().parse(result);
@@ -79,7 +78,13 @@ public class Sign_In {
                 }catch (JsonSyntaxException e){
                     signresult.othererr(retCode);
                 }
-
+                if (retCode.equals("-2")){
+                    netWorkerr.timeout();
+                    return;
+                }else if (retCode.equals("-1")){
+                    netWorkerr.connectfail();
+                    return;
+                }
                 if (what==2){
                     //请求注册验证码接口
                     if (retCode.equals("5")){
@@ -107,9 +112,9 @@ public class Sign_In {
                         String data = JSON.parseObject(result).getString("data");;
                         Constants.USERINFO = JSON.parseObject(data, new TypeReference<Userinfo_Bean>() {});
                         keepdata();  //保存账户信息
-                        signresult.signsuccessful();
+                        phoneSignin.phonesignin_successful();
                     } else {
-                        signresult.yaoqing_err(retCode);
+                        phoneSignin.phonesignin_fail();
                     }
                 }else if (what==6){
                     //手机号注册返回的结果
@@ -142,9 +147,26 @@ public class Sign_In {
         public void othererr(String errcode);
         public void get_code_err(String code);
     }
+    public interface PhoneSignin{
+        public void phonesignin_successful();
+        public void phonesignin_fail();
+    }
+    public interface NetWorkerr {
+        public void timeout();
+        public void connectfail();
+    }
+
+    private NetWorkerr netWorkerr;
+    public void setNetWorkListener(NetWorkerr netWorkerr){
+        this.netWorkerr=netWorkerr;
+    }
 
     private Signresult signresult;
+    private PhoneSignin phoneSignin;
 
+    public void setPhone_Sign_Listener(PhoneSignin phoneSignin){
+        this.phoneSignin=phoneSignin;
+    }
     public void setsignlistener(Signresult signresult1) {
         this.signresult = signresult1;
     }

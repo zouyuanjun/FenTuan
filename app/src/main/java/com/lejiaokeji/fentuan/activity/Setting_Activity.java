@@ -20,7 +20,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
-public class Setting_Activity extends AppCompatActivity {
+public class Setting_Activity extends BaseActivity {
     SimpleDraweeView sdv_photo;
     ImageView im_setting_back;
     TextView tv_chang_hear;
@@ -56,6 +56,7 @@ public class Setting_Activity extends AppCompatActivity {
                 editor.commit();
 
                 Intent intent=new Intent(activity,Sign_in_Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 activity.startActivity(intent);
                 finish();
             }

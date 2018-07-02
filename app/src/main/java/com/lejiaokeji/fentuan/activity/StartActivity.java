@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -37,7 +38,7 @@ import com.lejiaokeji.fentuan.wxapi.Constants;
 
 import java.util.Timer;
 import java.util.TimerTask;
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends BaseActivity {
     Activity activity;
     Timer timer;
     TimerTask task;
@@ -48,6 +49,7 @@ public class StartActivity extends AppCompatActivity {
     private DownloadBuilder builder;
     Sign_In sign_in;
     String isup;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class StartActivity extends AppCompatActivity {
         Log.d("ddd","开始页面启动成功");
         activity=this;
         context=this;
+    //    "1".substring(5);
         sign_in=Sign_In.getInstance();
         //  "1".substring(5);
         //获取保存的登陆密码
@@ -104,39 +107,28 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sign_in.setsignlistener(new Sign_In.Signresult() {
+        sign_in.setPhone_Sign_Listener(new Sign_In.PhoneSignin() {
             @Override
-            public void signsuccessful() {
-                Intent intent=new Intent(activity,MainActivity.class);
-                startActivity(intent);
+            public void phonesignin_successful() {
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.startActivity(intent);
                 finish();
             }
-
             @Override
-            public void yaoqing_err(String t) {
+            public void phonesignin_fail() {
                 Intent intent=new Intent(activity,Sign_in_Activity.class);
                 startActivity(intent);
                 finish();
             }
-
+        });
+        sign_in.setNetWorkListener(new Sign_In.NetWorkerr() {
             @Override
-            public void code_err() {
-
+            public void timeout() {
+                Toast.makeText(activity,"连接超时，请检查网络",Toast.LENGTH_LONG).show();
             }
-
             @Override
-            public void uppasswordsuccessful() {
-
-            }
-
-            @Override
-            public void othererr(String errcode) {
-
-            }
-
-            @Override
-            public void get_code_err(String code) {
-
+            public void connectfail() {
+                Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -200,24 +192,24 @@ public class StartActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onRequestVersionFailure(String message) {
-
+                        cheakversion();
+                        Toast.makeText(activity,"连接网络失败，重试中。。。",Toast.LENGTH_LONG).show();
                     }
                 });
        builder.excuteMission(context);
         builder.setShowDownloadFailDialog(true);
+
       builder.setOnCancelListener(new OnCancelListener() {
           @Override
           public void onCancel() {
               if (isup.equals("1")){
+                  //1不是强制更新
                   handler.sendEmptyMessageDelayed(0, 500);
               }else {
                   Toast.makeText(activity,"必须要更新才能正常使用哦",Toast.LENGTH_LONG).show();
                   cheakversion();
               }
-
           }
       });
-
     }
-
 }

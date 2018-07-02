@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
         <TextView
             android:id="@+id/tv_toolbar_xueyuan"
             android:layout_width="wrap_content"
@@ -119,7 +118,7 @@
             android:background="@drawable/home_ic_search" />
 
         <EditText
-            android:id="@+id/ed_search"
+            android:id="@+id/ed_search_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -131,7 +130,7 @@
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/im_searchbutton"
+            android:id="@+id/im_search_order_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -166,7 +165,7 @@
 
                 <TextView
                     android:id="@+id/tv_order_all"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -180,7 +179,7 @@
                     android:id="@+id/im_order_all"
                     android:layout_width="34dp"
                     android:layout_height="4dp"
-                    android:layout_alignStart="@+id/tv_order_all"
+         android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tv_order_all"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
@@ -194,7 +193,7 @@
 
                 <TextView
                     android:id="@+id/tv_order_pay"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -209,10 +208,10 @@
                     android:id="@+id/im_order_pay"
                     android:layout_width="45dp"
                     android:layout_height="4dp"
-                    android:layout_alignStart="@+id/tv_order_pay"
                     android:layout_below="@+id/tv_order_pay"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/gradientff286e" />
             </RelativeLayout>
 
@@ -223,7 +222,7 @@
 
                 <TextView
                     android:id="@+id/tv_order_shou"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -238,10 +237,11 @@
                     android:id="@+id/im_order_shouhuo"
                     android:layout_width="45dp"
                     android:layout_height="4dp"
-                    android:layout_alignStart="@+id/tv_order_shou"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tv_order_shou"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
+
                     android:src="@drawable/gradientff286e" />
             </RelativeLayout>
 
@@ -252,7 +252,7 @@
 
                 <TextView
                     android:id="@+id/tv_order_jiesuan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -267,10 +267,11 @@
                     android:id="@+id/im_order_jiesuan"
                     android:layout_width="45dp"
                     android:layout_height="4dp"
-                    android:layout_alignStart="@+id/tv_order_jiesuan"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tv_order_jiesuan"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
+
                     android:src="@drawable/gradientff286e" />
             </RelativeLayout>
 
@@ -281,7 +282,7 @@
 
                 <TextView
                     android:id="@+id/tv_order_shixiao"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -295,7 +296,7 @@
                     android:id="@+id/im_order_shixiao"
                     android:layout_width="45dp"
                     android:layout_height="4dp"
-                    android:layout_alignStart="@+id/tv_order_shixiao"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tv_order_shixiao"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"

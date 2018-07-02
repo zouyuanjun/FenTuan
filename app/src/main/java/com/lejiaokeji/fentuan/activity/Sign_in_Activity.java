@@ -1,7 +1,9 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +29,7 @@ import com.lejiaokeji.fentuan.utils.GetAlerDialog;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-public class Sign_in_Activity extends AppCompatActivity implements View.OnClickListener{
+public class Sign_in_Activity extends BaseActivity implements View.OnClickListener{
 
     AutoCompleteTextView autoCompleteTextView;
     EditText editText;
@@ -36,7 +39,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
     ImageButton bt_weixin_sign;
     Sign_In sign_in;
     Activity activity;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_sign_in);
         activity=this;
         autoCompleteTextView=findViewById(R.id.tv_input_phonenum);
+        progressBar=findViewById(R.id.pb_sign);
         editText=findViewById(R.id.tv_input_password);
         bt_signin=findViewById(R.id.bt_sign);
         tv_phone_sign_up=findViewById(R.id.tv_phone_sign_up);
@@ -81,6 +85,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
                 String password=editText.getText().toString();
                 if (phone.length()==11&&!(password.isEmpty())){
                     sign_in.sign_in(activity,phone,password);
+                    progressBar.setVisibility(View.VISIBLE);
                 }else{
                     AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"登陆失败","请填写正确的账号密码再登陆");
                     alertDialog.show();
@@ -113,34 +118,27 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
         }
     }
     private void listtener(){
-        sign_in.setsignlistener(new Sign_In.Signresult() {
+        sign_in.setPhone_Sign_Listener(new Sign_In.PhoneSignin() {
             @Override
-            public void signsuccessful() {
+            public void phonesignin_successful() {
                 Intent intent = new Intent(activity, MainActivity.class);
                 activity.startActivity(intent);
                 finish();
             }
             @Override
-            public void yaoqing_err(String t) {
-
+            public void phonesignin_fail() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity,"账号或密码有误",Toast.LENGTH_LONG).show();
+            }
+        });
+        sign_in.setNetWorkListener(new Sign_In.NetWorkerr() {
+            @Override
+            public void timeout() {
+                Toast.makeText(activity,"连接超时，请检查网络",Toast.LENGTH_LONG).show();
             }
             @Override
-            public void code_err() {
-
-            }
-            @Override
-            public void uppasswordsuccessful() {
-
-            }
-
-            @Override
-            public void othererr(String errcode) {
-
-            }
-
-            @Override
-            public void get_code_err(String code) {
-
+            public void connectfail() {
+                Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -148,7 +146,7 @@ public class Sign_in_Activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         if (isexit){
-            finish();
+            AtyContainer.getInstance().finishAllActivity();
         }else {
             isexit=true;
             Toast.makeText(activity,"再按一次返回退出",Toast.LENGTH_LONG).show();

@@ -84,26 +84,23 @@ import java.util.List;
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));
             tabLayout.setupWithViewPager(mViewPager);
+
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    if (tab.getPosition()==1){
+                    if (tab.getPosition()==0){
                         linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_01));
-                    }else if (tab.getPosition()==2){
+                    }else if (tab.getPosition()==1){
                         linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_02));
-                    }else if (tab.getPosition()==3){
+                    }else if (tab.getPosition()==2){
                         linearLayout.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.recom_bg_03));
                     }
                 }
-
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
-
                 }
-
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
-
                 }
             });
 

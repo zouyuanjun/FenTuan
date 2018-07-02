@@ -393,7 +393,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView20">
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/tv_yugushouyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -404,6 +404,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_shouyicount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -428,7 +429,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/tv_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -439,6 +440,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_order_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -485,7 +487,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView26">
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/tv_team_shouyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -496,6 +498,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_team_shouyi_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -520,7 +523,8 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout19">
 
         <TextView
-            android:id="@+id/textView28"
+
+            android:id="@+id/tv_team_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -531,6 +535,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_team_order_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -25,7 +25,7 @@ import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.utils.Network;
 
-public class WX_Signin_Activity extends AppCompatActivity {
+public class WX_Signin_Activity extends BaseActivity {
     String token = "";
     String openid = "";
     Network network;

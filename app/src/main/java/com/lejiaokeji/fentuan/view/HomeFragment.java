@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class HomeFragment extends LazyLoadFragment implements View.OnClickListener{
-    private String[] mTitles = new String[]{"推   荐", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
+    private String[] mTitles = new String[]{"          ", "女装", "男装","内衣配饰","母婴玩具", "美妆个护", "食品保健","居家生活", "鞋品箱包", "运动户外", "文体车品", "数码家电"};
     private SimpleViewPagerIndicator mIndicator;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;

@@ -62,9 +62,14 @@ public class Shop_Details {
                     //平多多商品相亲
                     String data=JSON.parseObject(result).getString("data");
                     JSONArray jsonObject=JSON.parseArray(data);
-                    JSONObject jsonObject1=jsonObject.getJSONObject(0);
-                    Pdd_Shop_Details_Bean pdd_shop_details_bean=JSON.parseObject(jsonObject1.toString(), new TypeReference<Pdd_Shop_Details_Bean>() {});
-                    detailsListener.getpdddata(pdd_shop_details_bean);
+                    try {
+                        JSONObject jsonObject1=jsonObject.getJSONObject(0);
+                        Pdd_Shop_Details_Bean pdd_shop_details_bean=JSON.parseObject(jsonObject1.toString(), new TypeReference<Pdd_Shop_Details_Bean>() {});
+                        detailsListener.getpdddata(pdd_shop_details_bean);
+                    }catch (IndexOutOfBoundsException e){
+                        detailsListener.getdatafail();
+                    }
+
                 }else if (what==4){
                     //分享京东商品到朋友圈
                     String url=JSON.parseObject(result).getString("data");
@@ -93,6 +98,7 @@ public class Shop_Details {
         public void getjdsharurl(String url) throws IOException;
         public void openpddurl(String url);
         public void sharepdd(String url);
+        public void getdatafail();
     }
     private DetailsListener detailsListener;
     public void setslistener( DetailsListener detailsListener){

@@ -61,8 +61,8 @@ public class WX_Share {
         Uri uri=FileProvider.getUriForFile(context, "com.lejiaokeji.fentuan.fileprovider", file);
 
         Intent intent = new Intent();
-        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
-        intent.setComponent(comp);
+//        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+//        intent.setComponent(comp);
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
