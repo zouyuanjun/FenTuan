@@ -16,15 +16,15 @@ import com.lejiaokeji.fentuan.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order_Activity extends AppCompatActivity implements View.OnClickListener{
+public class Order_Activity extends BaseActivity implements View.OnClickListener{
     ImageView im_order_back;
     TextView tv_order_all;
     TextView tv_order_pay;
     TextView tv_order_shou;
     TextView tv_order_jiesuan;
     TextView tv_order_shixiao;
-TextView textView;
-ImageView imageView;
+    TextView textView;
+    ImageView imageView;
     ImageView im_order_all;
     ImageView im_order_pay;
     ImageView im_order_shou;
@@ -72,9 +72,6 @@ ImageView imageView;
         tv_order_shou.setOnClickListener(this);
         tv_order_jiesuan.setOnClickListener(this);
         tv_order_shixiao.setOnClickListener(this);
-
-
-
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.activity.Find_Password_Activity;
 import com.lejiaokeji.fentuan.activity.Invite_Activity;
 import com.lejiaokeji.fentuan.activity.Order_Activity;
 import com.lejiaokeji.fentuan.activity.Setting_Activity;
@@ -24,12 +25,15 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
     ImageView im_user_centent_order;
     SimpleDraweeView sdv_photo;
     TextView tv_nickname;
+    TextView tv_yaoqingcode;
 
     LinearLayout rl_service;
     LinearLayout rl_help;
     LinearLayout rl_uppassword;
     LinearLayout rl_myfriend;
     LinearLayout rl_mycode;
+    LinearLayout ll_apply;
+    LinearLayout ll_pataer;
     Button bt_setting;
     @Override
     protected int setContentView() {
@@ -43,7 +47,10 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
         rl_uppassword=findViewById(R.id.rl_uppassword);
         rl_myfriend=findViewById(R.id.rl_myfriend);
         rl_mycode=findViewById(R.id.rl_mycode);
+        ll_apply=findViewById(R.id.ll_apply);
+        ll_pataer=findViewById(R.id.linearLayout4);
         bt_setting=findViewById(R.id.bt_setting);
+        tv_yaoqingcode=findViewById(R.id.tv_myyaoqingcaode);
         im_user_centent_order=findViewById(R.id.im_user_centent_order);
         im_user_centent_shouyi=findViewById(R.id.im_user_centent_shouyi);
         im_user_centent_renshu=findViewById(R.id.im_user_centent_renshu);
@@ -51,7 +58,7 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
         tv_nickname=findViewById(R.id.tv_user_centent_name);
         sdv_photo.setImageURI(Constants.USERINFO.getHeadportrait());
         tv_nickname.setText(Constants.USERINFO.getNickname());
-
+        tv_yaoqingcode.setText(Constants.USERINFO.getPhone());
         rl_help.setOnClickListener(this);
         rl_service.setOnClickListener(this);
         rl_uppassword.setOnClickListener(this);
@@ -61,7 +68,12 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
         im_user_centent_order.setOnClickListener(this);
         im_user_centent_shouyi.setOnClickListener(this);
         im_user_centent_renshu.setOnClickListener(this);
-
+        ll_apply.setOnClickListener(this);
+        if (Constants.USERINFO.getLevel()>1){
+            ll_apply.setVisibility(View.GONE);
+        }else {
+            ll_pataer.setVisibility(View.GONE);
+        }
 
 
     }
@@ -70,12 +82,16 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_help:{
+                Toast.makeText(getActivity(),"该功能正在开发，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.rl_service:{
+                Toast.makeText(getActivity(),"该功能正在开发，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.rl_uppassword:{
+                Intent intent=new Intent(getActivity(), Find_Password_Activity.class);
+                getActivity().startActivity(intent);
                 break;
             }
             case R.id.rl_myfriend:{
@@ -94,7 +110,7 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
                 getActivity().startActivity(intent);
                 break;
             }case R.id.im_user_centent_renshu:{
-                Toast.makeText(getActivity(),"该功能正在开发，敬请期待",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"该功能正在开发，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             }case R.id.bt_setting:{
                 Intent intent=new Intent(getActivity(), Setting_Activity.class);

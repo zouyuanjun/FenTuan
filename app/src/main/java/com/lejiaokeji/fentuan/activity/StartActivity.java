@@ -1,7 +1,6 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,24 +11,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.allenliu.versionchecklib.callback.OnCancelListener;
-import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
-import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
 import com.lejiaokeji.fentuan.MainActivity;
 import com.lejiaokeji.fentuan.R;
@@ -130,6 +125,11 @@ public class StartActivity extends BaseActivity {
             public void connectfail() {
                 Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public void severerr() {
+                Toast.makeText(activity,"服务器内部错误",Toast.LENGTH_LONG).show();
+            }
         });
     }
     @Override
@@ -144,6 +144,7 @@ public class StartActivity extends BaseActivity {
         try {
             //获取软件版本号，对应AndroidManifest.xml下android:versionCode
             versionCode = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0).versionName;
+            Constants.APP_VERSION=versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -188,7 +189,6 @@ public class StartActivity extends BaseActivity {
                             Toast.makeText(activity,"版本校验失败",Toast.LENGTH_LONG).show();
                             return null;
                         }
-
                     }
                     @Override
                     public void onRequestVersionFailure(String message) {

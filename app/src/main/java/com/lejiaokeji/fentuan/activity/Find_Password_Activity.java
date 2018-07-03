@@ -122,7 +122,7 @@ public class Find_Password_Activity extends AppCompatActivity {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                bt_getcode.setText("重新发送（" + millisUntilFinished / 1000 + ")秒");
+                bt_getcode.setText("重新发送(" + millisUntilFinished / 1000 + ")秒");
             }
 
             /**
@@ -140,25 +140,15 @@ public class Find_Password_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sign_in.setsignlistener(new Sign_In.Signresult() {
+        sign_in.setUpdataPassWordListener(new Sign_In.UpdataPassWord() {
             @Override
-            public void signsuccessful() {
-
-            }
-
-            @Override
-            public void yaoqing_err(String t) {
-
-            }
-
-            @Override
-            public void code_err() {
+            public void fail() {
                 Toast.makeText(activity,"验证码错误",Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void uppasswordsuccessful() {
-                AlertDialog alertDialog = GetAlerDialog.getdialog(activity, "修改密码", "密码重置成功，点击确定返回登陆");
+            public void successful() {
+                AlertDialog alertDialog = GetAlerDialog.getdialog(activity, "修改密码", "密码重置成功，点击确定返回");
                 alertDialog.show();
                 alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -166,19 +156,22 @@ public class Find_Password_Activity extends AppCompatActivity {
                         activity.finish();
                     }
                 });
-
+            }
+        });
+        sign_in.setNetWorkListener(new Sign_In.NetWorkerr() {
+            @Override
+            public void timeout() {
+                Toast.makeText(activity,"连接超时，请检查网络",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void connectfail() {
+                Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void othererr(String errcode) {
-
+            public void severerr() {
+                Toast.makeText(activity,"服务器内部错误",Toast.LENGTH_LONG).show();
             }
-
-            @Override
-            public void get_code_err(String code) {
-
-            }
-
         });
     }
 

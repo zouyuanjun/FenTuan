@@ -69,8 +69,8 @@ public class MainActivity extends BaseActivity {
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
         mNavigationController = pageBottomTabLayout.custom()
                 .addItem(newItem(R.drawable.tab_ic_home_def,R.drawable.tab_ic_home_sel))
-                .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))
-                .addItem(newItem(R.drawable.tab_ic_mall_def,R.drawable.tab_ic_mall_sel))
+//                .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))
+//                .addItem(newItem(R.drawable.tab_ic_mall_def,R.drawable.tab_ic_mall_sel))
                 .addItem(newItem(R.drawable.tab_ic_inform_def,R.drawable.tab_ic_inform_sel))
                 .addItem(newItem(R.drawable.tab_ic_my_def,R.drawable.tab_ic_my_sel))
                 .build();
@@ -79,8 +79,8 @@ public class MainActivity extends BaseActivity {
     private  void initview() {
 
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new RecommendFragment());
-        fragmentList.add(new Store_Fragment());
+//        fragmentList.add(new RecommendFragment());
+//        fragmentList.add(new Store_Fragment());
         fragmentList.add(new NotificationFragment());
         fragmentList.add(new UserCentreFragment());
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSelected(int index, int old) {
 
-               if (index>2){
+               if (index>0){
                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                        window.setStatusBarColor(Color.parseColor("#ff286e"));
                    }

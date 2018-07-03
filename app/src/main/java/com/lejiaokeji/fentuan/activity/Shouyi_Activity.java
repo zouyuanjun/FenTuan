@@ -55,6 +55,7 @@ public class Shouyi_Activity  extends AppCompatActivity implements View.OnClickL
         im_shouyi_back=findViewById(R.id.im_shouyi_back);
         select_jd=findViewById(R.id.img_select_jd);
         select_pdd=findViewById(R.id.img_select_pdd);
+        rl_select_jd=findViewById(R.id.rl_jd_selcet);
         tv_select_jd=findViewById(R.id.tv_select_jd);
         tv_select_jd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +79,26 @@ public class Shouyi_Activity  extends AppCompatActivity implements View.OnClickL
                 setdata(false);
             }
         });
+
         bt_tixian=findViewById(R.id.bt_tixian);
         bt_tixian.setOnClickListener(this);
         im_shouyi_back.setOnClickListener(this);
+
+         tv_yugushouyi=findViewById(R.id.tv_yugushouyi);
+         tv_shouyicount=findViewById(R.id.tv_shouyicount);
+         tv_order=findViewById(R.id.tv_order);
+         tv_order_count=findViewById(R.id.tv_order_count);
+
+         tv_team_shouyi=findViewById(R.id.tv_team_shouyi);
+         tv_team_shouyi_count=findViewById(R.id.tv_team_shouyi_count);
+         tv_team_order=findViewById(R.id.tv_team_order);
+         tv_team_order_count=findViewById(R.id.tv_team_order_count);
+
+        setdata(false);
+
+
+
+
     }
 
     @Override

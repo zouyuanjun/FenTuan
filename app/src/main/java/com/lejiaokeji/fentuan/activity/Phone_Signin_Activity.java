@@ -202,7 +202,7 @@ public class Phone_Signin_Activity extends AppCompatActivity {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                bt_getcode.setText("重新发送（" + millisUntilFinished/1000 + ")秒");
+                bt_getcode.setText("重新发送(" + millisUntilFinished/1000 + ")秒");
             }
 
             /**
@@ -214,31 +214,6 @@ public class Phone_Signin_Activity extends AppCompatActivity {
                 cansend = true;
             }
         };
-    }
-    /**
-     * 将毫秒转化为 分钟：秒 的格式
-     *
-     * @param millisecond 毫秒
-     * @return
-     */
-    public String formatTime(long millisecond) {
-        int minute;//分钟
-        int second;//秒数
-        minute = (int) ((millisecond / 1000) / 60);
-        second = (int) ((millisecond / 1000) % 60);
-        if (minute < 10) {
-            if (second < 10) {
-                return "0" + minute + ":" + "0" + second;
-            } else {
-                return "0" + minute + ":" + second;
-            }
-        } else {
-            if (second < 10) {
-                return minute + ":" + "0" + second;
-            } else {
-                return minute + ":" + second;
-            }
-        }
     }
     //请求验证码
     public void sendcode( String phone) {

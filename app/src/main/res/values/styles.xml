@@ -15,5 +15,8 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">#ff143c</item>
+    </style>
 </resources>

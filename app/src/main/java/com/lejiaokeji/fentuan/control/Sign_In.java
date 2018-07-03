@@ -71,12 +71,12 @@ public class Sign_In {
                 headimgurl = je.getAsJsonObject().get("headimgurl").getAsString();
 
             }else{
-                String retCode ="999";
+                String retCode ="500";
                 try {
                     JsonElement je = new JsonParser().parse(result);
                     retCode = je.getAsJsonObject().get("retCode").getAsString();
                 }catch (JsonSyntaxException e){
-                    signresult.othererr(retCode);
+                 netWorkerr.severerr();
                 }
                 if (retCode.equals("-2")){
                     netWorkerr.timeout();
@@ -102,9 +102,9 @@ public class Sign_In {
                 }else if (what == 4) {
                     //修改密码结果
                     if (retCode.equals("0")) {
-                        signresult.uppasswordsuccessful();
+                        updataPassWord.successful();
                     }else if (retCode.equals("16")){
-                        signresult.code_err();
+                       updataPassWord.fail();
                     }
                 }else if (what==5){
                     //手机号登陆返回的结果
@@ -151,26 +151,44 @@ public class Sign_In {
         public void phonesignin_successful();
         public void phonesignin_fail();
     }
+    public interface Faillcallback {
+      public void servererr();
+    }
+    public interface UpdataPassWord{
+        public void fail();
+        public void successful();
+    }
+    /**
+     * 网络请求状态回调接口
+     */
     public interface NetWorkerr {
         public void timeout();
         public void connectfail();
+        public void severerr();
     }
 
     private NetWorkerr netWorkerr;
     public void setNetWorkListener(NetWorkerr netWorkerr){
         this.netWorkerr=netWorkerr;
     }
-
+    private UpdataPassWord updataPassWord;
     private Signresult signresult;
     private PhoneSignin phoneSignin;
 
+    /**
+     * 手机号登陆回调
+     * @param phoneSignin
+     */
     public void setPhone_Sign_Listener(PhoneSignin phoneSignin){
         this.phoneSignin=phoneSignin;
     }
+
     public void setsignlistener(Signresult signresult1) {
         this.signresult = signresult1;
     }
-
+    public void setUpdataPassWordListener( UpdataPassWord updataPassWordListener) {
+        this.updataPassWord=updataPassWordListener;
+    }
     public void keepdata() {
         SharedPreferences sp = activity.getSharedPreferences("account", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -188,8 +206,11 @@ public class Sign_In {
         req.state = "fentuanyizhuang";
         Constants.api.sendReq(req);
     }
-
-    //获取微信用户基本信息
+    /**
+     * 获取微信用户基本信息
+     * @param token
+     * @param openid
+     */
     public void getwxinfo(String token, String openid) {
         String url = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
         url = url.replace("ACCESS_TOKEN", token);
@@ -205,7 +226,14 @@ public class Sign_In {
         network.connectnet(data, url, handler, 2);
     }
 
-    //绑定手机号
+    /**
+     * 微信登陆绑定手机号
+     * @param activity
+     * @param phone
+     * @param password
+     * @param code
+     * @param yaoqingcode
+     */
     public void bindphone(Activity activity, String phone, String password, String code, String yaoqingcode) {
         this.activity = activity;
         wx_info_bean.setAddress(province + "·" + city);
@@ -222,8 +250,12 @@ public class Sign_In {
         String url = Constants.URL + "/user/perfectInfo";
         network.connectnet(data, url, handler, 3);
     }
-
-    //找回密码
+    /**
+     * 修改手机密码
+     * @param phone
+     * @param code
+     * @param password
+     */
     public void findpassword(String phone, String code, String password) {
         String data = "{\"phone\":\"%phone\",\"code\":\"%code\",\"password\":\"%password\"}";
         data = data.replace("%phone", phone);
@@ -231,7 +263,12 @@ public class Sign_In {
         data = data.replace("%password", password);
         network.connectnet(data, Constants.URL + "user/findPassWord ", handler, 4);
     }
-    //手机号登陆
+    /**
+     * 手机号登陆
+     * @param activity
+     * @param phone
+     * @param password
+     */
     public void sign_in(Activity activity,String phone, String password) {
         this.activity=activity;
         this.phone = phone;
@@ -242,14 +279,23 @@ public class Sign_In {
         network.connectnet(data, Constants.URL + "user/login", handler, 5);
     }
 
-
-    //手机号注册
+    /**
+     * 通过手机号注册
+     * @param phone
+     * @param password
+     * @param code
+     * @param yaoqingcode
+     */
     public void phonesignin(String phone, String password, String code, String yaoqingcode){
         Phone_Sign_Bean phone_sign_bean=new Phone_Sign_Bean(phone,password,code,yaoqingcode);
         String data=new Gson().toJson(phone_sign_bean);
         network.connectnet(data,Constants.URL+"user/registAccount",handler,6);
     }
 
+    /**
+     * 找回密码时获取验证码
+     * @param phone
+     */
     public void findpassword_code(String phone){
         String url = Constants.URL + "/user/sendCodeXg";
         String data = "{\"phone\":\"%phone\"}";

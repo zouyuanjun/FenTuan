@@ -119,6 +119,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/tv_setting_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
@@ -130,6 +131,44 @@
                 android:textSize="13sp" />
 
             <ImageButton
+                android:id="@+id/imb_upnickname"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/setup_ic_modify" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="手机号"
+                android:textColor="@color/hei3333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_setting_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp"
+                android:text="*****"
+                android:textColor="@color/hei3333"
+                android:textSize="13sp" />
+
+            <ImageButton
+                android:id="@+id/imb_upphone"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
@@ -140,7 +179,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:paddingLeft="50dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -148,6 +186,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/rv_clean_cache"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -202,7 +241,8 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:layout_width="25dp"
+                android:id="@+id/tv_app_version"
+                android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"

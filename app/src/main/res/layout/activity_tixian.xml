@@ -139,15 +139,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textView23"
             app:srcCompat="@drawable/putforward_ic_rmb" />
 
-        <TextView
+        <EditText
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:text="0"
+            android:hint="0"
+            android:inputType="number|numberDecimal"
             android:textColor="@color/hei3333"
-            android:textSize="38sp"
+            android:textSize="48sp"
+            android:textColorHint="@color/hei3333"
+            android:background="@color/whitefff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/textView23" />
@@ -177,7 +180,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bt_enter"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:layout_marginEnd="45dp"

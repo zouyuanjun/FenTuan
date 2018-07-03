@@ -48,6 +48,7 @@
         <activity android:name=".activity.Order_Activity"></activity>
         <activity android:name=".activity.Shouyi_Activity"></activity>
         <activity android:name=".activity.Activity_tixian"></activity>
+        <activity android:name=".activity.Add_Alipay_Activity"></activity>
         <activity android:name=".activity.Phone_Signin_Activity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
