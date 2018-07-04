@@ -127,11 +127,12 @@
             android:background="@color/transparent"
             android:focusable="true"
             android:hint="请输入订单编号"
+            android:inputType="number"
             android:paddingLeft="5dp"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/im_search_order_button"
+            android:id="@+id/bt_search_order_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -317,6 +318,7 @@
         android:background="#f2f2f2"></LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout16"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="#f2f2f2"
@@ -325,4 +327,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/hei3333"
+        android:text="暂时没有获取到数据·····"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:indeterminateDrawable="@drawable/progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
 </android.support.constraint.ConstraintLayout>

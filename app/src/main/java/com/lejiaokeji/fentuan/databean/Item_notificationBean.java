@@ -2,15 +2,18 @@ package com.lejiaokeji.fentuan.databean;
 
 public class Item_notificationBean {
     String title;
-    String picture;
-    String content;
-    String time;
+    String imgurl;
+    String ms;
+    String startTime;
 
-    public Item_notificationBean(String title, String picture, String content, String time) {
+    public Item_notificationBean() {
+    }
+
+    public Item_notificationBean(String title, String imgurl, String ms, String startTime) {
         this.title = title;
-        this.picture = picture;
-        this.content = content;
-        this.time = time;
+        this.imgurl = imgurl;
+        this.ms = ms;
+        this.startTime = startTime;
     }
 
     public String getTitle() {
@@ -21,27 +24,27 @@ public class Item_notificationBean {
         this.title = title;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getImgurl() {
+        return imgurl;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public String getContent() {
-        return content;
+        return ms;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.ms = content;
     }
 
-    public String getTime() {
-        return time;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }

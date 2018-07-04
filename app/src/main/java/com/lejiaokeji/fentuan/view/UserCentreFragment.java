@@ -35,6 +35,7 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
     LinearLayout ll_apply;
     LinearLayout ll_pataer;
     Button bt_setting;
+    TextView tv_lever;
     @Override
     protected int setContentView() {
         return R.layout.fragment_usercentre;
@@ -75,7 +76,12 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
             ll_pataer.setVisibility(View.GONE);
         }
 
-
+        tv_lever=findViewById(R.id.tv_lever);
+        if (Constants.USERINFO.getLevel()>1){
+            tv_lever.setText("合伙人");
+        }else {
+            tv_lever.setText("普通会员");
+        }
     }
 
     @Override

@@ -43,7 +43,7 @@ public class Setting_Activity extends BaseActivity {
     ImageButton imb_upnickname;
     TextView tv_phone;
     ImageButton imb_upphone;
-    TextView tv_lever;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,11 +177,6 @@ public class Setting_Activity extends BaseActivity {
         tv_nickname.setText(Constants.USERINFO.getNickname());
         tv_versioncode=findViewById(R.id.tv_app_version);
         tv_versioncode.setText(Constants.APP_VERSION);
-        tv_lever=findViewById(R.id.tv_lever);
-        if (Constants.USERINFO.getLevel()>1){
-            tv_lever.setText("合伙人");
-        }else {
-            tv_lever.setText("普通会员");
-        }
+
     }
 }

@@ -1,16 +1,13 @@
-package com.lejiaokeji.fentuan.view.notification;
+package com.lejiaokeji.fentuan.view;
 
-import android.graphics.Color;
-import android.os.Build;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.app.Activity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.adapter.Notification_Adapter;
+import com.lejiaokeji.fentuan.control.Notification;
 import com.lejiaokeji.fentuan.databean.Item_notificationBean;
 import com.lejiaokeji.fentuan.view.helpview.LazyLoadFragment;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -22,6 +19,9 @@ public class NotificationFragment extends LazyLoadFragment {
     PullLoadMoreRecyclerView recyclerView;
     Notification_Adapter adapter;
     List<Item_notificationBean> list=new ArrayList<>();
+    Notification notification;
+    Activity activity;
+    ProgressBar progressBar;
 
     @Override
     protected int setContentView() {
@@ -31,13 +31,50 @@ public class NotificationFragment extends LazyLoadFragment {
 
     @Override
     protected void lazyLoad() {
-        setdata();
+        progressBar=findViewById(R.id.pb_notifition);
+        activity=getActivity();
+        notification=new Notification();
+        notification.getdata();
         recyclerView =findViewById(R.id.notification_rv);
         recyclerView.setLinearLayout();
         recyclerView.setPushRefreshEnable(false);
         recyclerView.setPullRefreshEnable(false);
         adapter=new Notification_Adapter(getContext(),list);
         recyclerView.setAdapter(adapter);
+
+        notification.setNetWorkListener(new Notification.NetWorkerr() {
+            @Override
+            public void timeout() {
+                Toast.makeText(activity, "连接超时，请检查网络", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void connectfail() {
+                Toast.makeText(activity, "与服务器连接失败，请检查网络", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void severerr() {
+                Toast.makeText(activity, "服务器内部错误", Toast.LENGTH_LONG).show();
+            }
+        });
+        notification.setDataCallListener(new Notification.DataCall() {
+            @Override
+            public void notificationData( List<Item_notificationBean> listdata) {
+                progressBar.setVisibility(View.GONE);
+                list.clear();
+                list.addAll(listdata);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void commit() {
+
+            }
+        });
+
+
+
 
     }
     public void setdata(){

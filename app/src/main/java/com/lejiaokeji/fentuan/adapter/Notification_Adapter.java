@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
-import com.lejiaokeji.fentuan.databean.Item_Shop;
 import com.lejiaokeji.fentuan.databean.Item_notificationBean;
 
 import java.util.List;
@@ -39,12 +38,12 @@ public class Notification_Adapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((Notification_Adapter.RecyclerHolder)holder).title.setText(mDatas.get(position).getTitle());
-        ((RecyclerHolder)holder).time.setText(mDatas.get(position).getTime());
+        ((RecyclerHolder)holder).time.setText(mDatas.get(position).getStartTime());
         ((RecyclerHolder)holder).content.setText(mDatas.get(position).getContent());
-        if (mDatas.get(position).getPicture().isEmpty()){
+        if (mDatas.get(position).getImgurl().isEmpty()){
             ((RecyclerHolder)holder).photo.setVisibility(View.GONE);
         }else {
-            ((RecyclerHolder)holder).photo.setImageURI(mDatas.get(position).getPicture());
+            ((RecyclerHolder)holder).photo.setImageURI(mDatas.get(position).getImgurl());
         }
         if (onItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {

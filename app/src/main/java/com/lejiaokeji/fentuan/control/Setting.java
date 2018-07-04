@@ -26,5 +26,24 @@ public class Setting {
     public void upnickname(String name){
 
     }
-
+    /**
+     * 网络请求状态回调接口
+     */
+    public interface NetWorkerr {
+        public void timeout();
+        public void connectfail();
+        public void severerr();
+    }
+    public interface DataCall{
+        public void getcode();
+        public void commit();
+    }
+    private NetWorkerr netWorkerr;
+    private DataCall dataCall;
+    public void setDataCallListener(DataCall dataCallListener){
+        this.dataCall=dataCallListener;
+    }
+    public void setNetWorkListener(NetWorkerr netWorkerr){
+        this.netWorkerr=netWorkerr;
+    }
 }
