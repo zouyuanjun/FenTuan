@@ -42,6 +42,8 @@ public class Shouyi {
             if (what==1){
                 if (retCode.equals("0")){
                     dataCall.getcode();
+                }else {
+                    dataCall.getcodefall(retCode);
                 }
             }else if (what==2){
                 if (retCode.equals("0")){
@@ -61,6 +63,7 @@ public class Shouyi {
     public interface DataCall{
         public void getcode();
         public void commit();
+        public void getcodefall(String errcode);
     }
     private NetWorkerr netWorkerr;
     private DataCall dataCall;

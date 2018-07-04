@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.lejiaokeji.fentuan.R;
 import com.lejiaokeji.fentuan.control.Shouyi;
 import com.lejiaokeji.fentuan.databean.Add_Alipay_Bean;
+import com.lejiaokeji.fentuan.wxapi.Constants;
 
 public class Add_Alipay_Activity  extends BaseActivity{
     Activity activity;
@@ -82,15 +83,15 @@ public class Add_Alipay_Activity  extends BaseActivity{
         bt_get_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone=ed_phone.getText().toString();
+             //   String phone=ed_phone.getText().toString();
                 String account=ed_alipayaccount.getText().toString();
-                if (phone.length()==11&&!account.isEmpty()){
-                    shouyi.getcode(phone,account);
+                if (!account.isEmpty()){
+                    shouyi.getcode(Constants.USERINFO.getPhone(),account);
                     cansend=false;
                     bt_get_code.setBackground(ContextCompat.getDrawable(context,R.drawable.signup_bt_verif_dis));
                     timer.start();
                 }else {
-                    Toast.makeText(context,"请填写正确的手机号码和支付宝账户",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"请填写完支付宝账户",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -99,7 +100,7 @@ public class Add_Alipay_Activity  extends BaseActivity{
             public void onClick(View v) {
                 String name=ed_name.getText().toString();
                 String alipayaccount=ed_alipayaccount.getText().toString();
-                String phone=ed_phone.getText().toString();
+                String phone=Constants.USERINFO.getPhone();
                 String code=ed_code.getText().toString();
                 if (!name.isEmpty()&&!alipayaccount.isEmpty()&&!phone.isEmpty()&&!code.isEmpty()){
                     Add_Alipay_Bean add_alipay_bean=new Add_Alipay_Bean(code,name,alipayaccount,phone);
@@ -164,6 +165,11 @@ public class Add_Alipay_Activity  extends BaseActivity{
             @Override
             public void commit() {
                 finish();
+            }
+
+            @Override
+            public void getcodefall(String errcode) {
+                Toast.makeText(activity,"获取失败，错误码:"+errcode,Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -5,7 +5,7 @@
     <string name="textsize12sp">12sp</string>
     <string name="SPname">lejiaouser</string>
 
-    <string name="crash_toast_text">抱歉，程序发生了点错误</string>
+    <string name="crash_toast_text">抱歉，程序异常退出，错误报告已发送</string>
 
 
     <string name="crash_toast_text2">抱歉，程序发生错误</string>

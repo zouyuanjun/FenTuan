@@ -1,6 +1,7 @@
 package com.lejiaokeji.fentuan.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -42,11 +43,19 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder)holder).title.setText(mDatas.get(position).getGoods_name());
         ((RecyclerHolder)holder).tv_item_price.setText("￥"+mDatas.get(position).getCoupon_price());
-        ((RecyclerHolder)holder).tv_item_yongjing.setText(mDatas.get(position).getCommission());
+
         ((RecyclerHolder)holder).sdv_item_goodsphoto.setImageURI(mDatas.get(position).getGoods_img());
         String youhuiquan=mDatas.get(position).getDiscount_price();
         youhuiquan=youhuiquan.substring(0,youhuiquan.length()-2);
         ((RecyclerHolder)holder).tv_youhuiquan.setText(youhuiquan+"元");
+        if (Constants.USERINFO.getLevel()>1){
+            ((RecyclerHolder)holder).tv_item_yongjing.setText(mDatas.get(position).getCommission());
+        }else {
+            ((RecyclerHolder)holder).tv_item_yongjing.setText("拿佣金");
+            ((RecyclerHolder)holder).tv_item_yongjing.setTextColor(Color.parseColor("#ff2d55"));
+            ((RecyclerHolder)holder).tv_usual.setText("升级");
+        }
+
         if (Constants.SELECT_JD){
             ((RecyclerHolder)holder).im_mall_ico.setBackground(ContextCompat.getDrawable(mContext,R.drawable.home_ic_jd));
         }else {
@@ -81,6 +90,7 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
         ImageView im_mall_ico;
         SimpleDraweeView  sdv_item_goodsphoto;
         SimpleDraweeView  sdv_qh_price;
+        TextView tv_usual;
 
         private RecyclerHolder(View itemView) {
             super(itemView);
@@ -91,6 +101,7 @@ public class Home_Re_Adapter extends RecyclerView.Adapter{
             tv_item_yongjing = itemView.findViewById(R.id.tv_item_yongjing);
             sdv_qh_price=itemView.findViewById(R.id.sdv_qh_price);
             tv_youhuiquan=itemView.findViewById(R.id.tv_youhuiquan);
+            tv_usual=itemView.findViewById(R.id.textView5);
         }
     }
     public interface OnItemClickListener{

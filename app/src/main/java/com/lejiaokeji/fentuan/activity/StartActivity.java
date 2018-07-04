@@ -65,7 +65,6 @@ public class StartActivity extends BaseActivity {
         Log.d("ddd","开始页面启动成功");
         activity=this;
         context=this;
-    //    "1".substring(5);
         sign_in=Sign_In.getInstance();
         //  "1".substring(5);
         //获取保存的登陆密码
@@ -119,7 +118,8 @@ public class StartActivity extends BaseActivity {
         sign_in.setNetWorkListener(new Sign_In.NetWorkerr() {
             @Override
             public void timeout() {
-                Toast.makeText(activity,"连接超时，请检查网络",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity,"连接服务器失败，正在重试···",Toast.LENGTH_LONG).show();
+                sign_in.sign_in(activity,phone,password);
             }
             @Override
             public void connectfail() {
@@ -128,7 +128,7 @@ public class StartActivity extends BaseActivity {
 
             @Override
             public void severerr() {
-                Toast.makeText(activity,"服务器内部错误",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity,"登陆失败，发生服务器内部错误",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -186,14 +186,14 @@ public class StartActivity extends BaseActivity {
                             }
 
                         }else {
-                            Toast.makeText(activity,"版本校验失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity,"版本校验数据异常",Toast.LENGTH_LONG).show();
                             return null;
                         }
                     }
                     @Override
                     public void onRequestVersionFailure(String message) {
                         cheakversion();
-                        Toast.makeText(activity,"连接网络失败，重试中。。。",Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity,"版本校验连接失败，重试中···",Toast.LENGTH_LONG).show();
                     }
                 });
        builder.excuteMission(context);

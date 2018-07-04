@@ -7,7 +7,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.5"
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -50,4 +50,5 @@ dependencies {
     implementation "ch.acra:acra-http:$acraVersion"
     implementation "ch.acra:acra-core:$acraVersion"
     implementation "ch.acra:acra-toast:$acraVersion"
+    implementation "ch.acra:acra-dialog:$acraVersion"
 }
