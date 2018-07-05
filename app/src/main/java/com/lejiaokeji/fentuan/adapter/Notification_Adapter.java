@@ -39,7 +39,7 @@ public class Notification_Adapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((Notification_Adapter.RecyclerHolder)holder).title.setText(mDatas.get(position).getTitle());
         ((RecyclerHolder)holder).time.setText(mDatas.get(position).getStartTime());
-        ((RecyclerHolder)holder).content.setText(mDatas.get(position).getContent());
+        ((RecyclerHolder)holder).content.setText(mDatas.get(position).getMs());
         if (mDatas.get(position).getImgurl().isEmpty()){
             ((RecyclerHolder)holder).photo.setVisibility(View.GONE);
         }else {

@@ -110,12 +110,12 @@ public class Sign_In {
                     //手机号登陆返回的结果
                     if (retCode.equals("0")) {
                         String data = JSON.parseObject(result).getString("data");
-
+                        Constants.AlipayAccount=JSON.parseObject(data).getString("zfbAccout");
                         data=JSON.parseObject(data).getString("login");
 
                         Constants.USERINFO = JSON.parseObject(data, new TypeReference<Userinfo_Bean>() {});
 
-                        Constants.AlipayAccount=JSON.parseObject(data).getString("zfbAccout");
+
 
                         Log.d("userinfo",data+Constants.AlipayAccount);
                         keepdata();  //保存账户信息

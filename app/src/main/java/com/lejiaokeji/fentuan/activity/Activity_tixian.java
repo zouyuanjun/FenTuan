@@ -1,6 +1,7 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ public class Activity_tixian extends AppCompatActivity {
     ConstraintLayout add_taobao;
     Activity activity;
     TextView tv_alipayaccount;
+    Button bt_enter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +53,23 @@ public class Activity_tixian extends AppCompatActivity {
                 if (null!=Constants.AlipayAccount){
                     Toast.makeText(activity,"暂不提供修改功能哦",Toast.LENGTH_SHORT).show();
                 }else {
-               //     Toast.makeText(activity,"要跳转",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(activity,Add_Alipay_Activity.class);
                     activity.startActivity(intent);
                 }
 
             }
         });
-//        Log.d("adssd",Constants.AlipayAccount.length()+Constants.AlipayAccount);
         if (null!=Constants.AlipayAccount){
             tv_alipayaccount.setText(Constants.AlipayAccount);
         }
+        bt_enter=findViewById(R.id.bt_enter);
+        bt_enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                Toast.makeText(activity,"提现功能还在完善中，敬请期待",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

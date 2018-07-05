@@ -32,16 +32,16 @@ public class Item_notificationBean {
         this.imgurl = imgurl;
     }
 
-    public String getContent() {
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getMs() {
         return ms;
     }
 
-    public void setContent(String content) {
-        this.ms = content;
-    }
-
-    public String getStartTime() {
-        return startTime;
+    public void setMs(String ms) {
+        this.ms = ms;
     }
 
     public void setStartTime(String startTime) {

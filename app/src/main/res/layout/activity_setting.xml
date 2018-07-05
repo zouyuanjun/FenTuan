@@ -168,6 +168,7 @@
                 android:textSize="13sp" />
 
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/imb_upphone"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

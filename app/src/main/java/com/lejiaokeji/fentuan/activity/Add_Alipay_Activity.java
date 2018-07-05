@@ -35,6 +35,7 @@ public class Add_Alipay_Activity  extends BaseActivity{
     boolean cansend = true;
     CountDownTimer timer;
     ImageView back;
+    String alipayaccount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +100,7 @@ public class Add_Alipay_Activity  extends BaseActivity{
             @Override
             public void onClick(View v) {
                 String name=ed_name.getText().toString();
-                String alipayaccount=ed_alipayaccount.getText().toString();
+                alipayaccount=ed_alipayaccount.getText().toString();
                 String phone=Constants.USERINFO.getPhone();
                 String code=ed_code.getText().toString();
                 if (!name.isEmpty()&&!alipayaccount.isEmpty()&&!phone.isEmpty()&&!code.isEmpty()){
@@ -164,6 +165,7 @@ public class Add_Alipay_Activity  extends BaseActivity{
 
             @Override
             public void commit() {
+                Constants.AlipayAccount=alipayaccount;
                 finish();
             }
 

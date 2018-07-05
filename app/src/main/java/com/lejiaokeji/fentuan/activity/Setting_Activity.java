@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.control.Setting;
 import com.lejiaokeji.fentuan.wxapi.Constants;
 
 import java.util.Timer;
@@ -43,6 +44,8 @@ public class Setting_Activity extends BaseActivity {
     ImageButton imb_upnickname;
     TextView tv_phone;
     ImageButton imb_upphone;
+    String nickname;
+    Setting setting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,12 +82,12 @@ public class Setting_Activity extends BaseActivity {
                  final AlertDialog dialog = builder.create();
                 Button button=view.findViewById(R.id.bt_upnickname);
                 final EditText editText=view.findViewById(R.id.editText);
-
+                //点击请求更改
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String nickname=editText.getText().toString();
-                        Toast.makeText(activity,nickname,Toast.LENGTH_LONG).show();
+                        nickname=editText.getText().toString();
+                        setting.upnickname(nickname);
                         dialog.dismiss();
                     }
                 });
@@ -178,5 +181,39 @@ public class Setting_Activity extends BaseActivity {
         tv_versioncode=findViewById(R.id.tv_app_version);
         tv_versioncode.setText(Constants.APP_VERSION);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setting=new Setting();
+        setting.setDataCallListener(new Setting.DataCall() {
+            @Override
+            public void upnamesuccessful() {
+                Toast.makeText(activity,"修改成功",Toast.LENGTH_LONG).show();
+                Constants.USERINFO.setNickname(nickname);
+                tv_nickname.setText(nickname);
+            }
+
+            @Override
+            public void commit() {
+
+            }
+        });
+        setting.setNetWorkListener(new Setting.NetWorkerr() {
+            @Override
+            public void timeout() {
+                Toast.makeText(activity,"连接超时，请检查网络",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void connectfail() {
+                Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void severerr() {
+                Toast.makeText(activity,"服务器内部错误",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
