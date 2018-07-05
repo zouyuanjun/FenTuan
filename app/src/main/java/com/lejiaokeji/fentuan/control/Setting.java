@@ -23,9 +23,9 @@ public class Setting {
         }
     };
 
-    public void upnickname(String name){
-
-    }
+//    public void upnickname(String name){
+//        String data="{\"\"}"
+//    }
     /**
      * 网络请求状态回调接口
      */

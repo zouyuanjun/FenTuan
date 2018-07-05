@@ -95,10 +95,6 @@ public class Shouyi_Activity  extends AppCompatActivity implements View.OnClickL
          tv_team_order_count=findViewById(R.id.tv_team_order_count);
 
         setdata(false);
-
-
-
-
     }
 
     @Override
@@ -109,6 +105,7 @@ public class Shouyi_Activity  extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.bt_tixian:{
+                Log.d("sdfa","sdfasdf");
                 Intent intent=new Intent(activity,Activity_tixian.class);
                 activity.startActivity(intent);
                 break;

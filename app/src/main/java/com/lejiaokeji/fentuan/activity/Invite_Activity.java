@@ -1,6 +1,8 @@
 package com.lejiaokeji.fentuan.activity;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.lejiaokeji.fentuan.R;
+import com.lejiaokeji.fentuan.utils.BitmapUtil;
+import com.lejiaokeji.fentuan.wxapi.Constants;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class Invite_Activity extends AppCompatActivity{
     TextView friendnum;
@@ -42,8 +51,28 @@ public class Invite_Activity extends AppCompatActivity{
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity,"该功能正在开发，敬请期待",Toast.LENGTH_LONG).show();
+                invite();
             }
         });
     }
+
+    public void invite(){
+        WXWebpageObject webpage=new WXWebpageObject();
+        webpage.webpageUrl="https://www.baidu.com";
+
+        WXMediaMessage msg=new WXMediaMessage(webpage);
+        msg.title="这是一个APP";
+        msg.description="APP的描述在这里，点击可以打开一个链接";
+        Bitmap thumb= BitmapFactory.decodeResource(getResources(),R.drawable.logo);
+        msg.thumbData= BitmapUtil.bmpToByteArray(thumb,true);
+        SendMessageToWX.Req req=new SendMessageToWX.Req();
+
+        req.transaction="sdfsdfsdf";
+        req.message=msg;
+        req.scene=SendMessageToWX.Req.WXSceneSession;
+        Constants.api = WXAPIFactory.createWXAPI(activity, Constants.APP_ID, false);
+        Constants.api.registerApp(Constants.APP_ID);
+        Constants.api.sendReq(req);
+    }
+
 }

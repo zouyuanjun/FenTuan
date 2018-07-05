@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -80,10 +81,13 @@ public class Sign_in_Activity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch ( v.getId()){
+            //登陆部分
             case R.id.bt_sign:{
                 String phone=autoCompleteTextView.getText().toString();
                 String password=editText.getText().toString();
                 if (phone.length()==11&&!(password.isEmpty())){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                     sign_in.sign_in(activity,phone,password);
                     progressBar.setVisibility(View.VISIBLE);
                 }else{

@@ -11,9 +11,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.TypeReference;
 import com.google.gson.Gson;
+import com.lejiaokeji.fentuan.databean.BannerImageList;
 import com.lejiaokeji.fentuan.databean.Shop_Data;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.wxapi.Constants;
+
+import java.util.List;
 
 public class Home_Page_Control {
     Network network;
@@ -35,7 +38,7 @@ public class Home_Page_Control {
             super.handleMessage(msg);
             int what=msg.what;
             String result=msg.obj.toString();
-            Log.d("5555","SIGN返回数据"+result);
+
             String retCode="999";
             try {
                 retCode=JSON.parseObject(result).getString("retCode");
@@ -51,9 +54,14 @@ public class Home_Page_Control {
                 if (what==1){
                     Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
                     home_page_listener.loadsuccefful(shop_data);
-                }else  if (what==2){
+                }else if (what==2){
                     Shop_Data shop_data = JSON.parseObject(result, new TypeReference<Shop_Data>() {});
                     home_page_listener.searchresult(shop_data);
+                }else if (what==3){
+                    String data=JSON.parseObject(result).getString("data");
+                    Log.d("5555","SIGN返回数据"+data);
+                    List<BannerImageList> lists=JSON.parseArray(data,BannerImageList.class);
+                    bannerBack.successful(lists);
                 }
             }else {
                 home_page_listener.loadfail(retCode);
@@ -72,7 +80,13 @@ public class Home_Page_Control {
     public void setlistener( Home_Page_Listener home_page_listener){
         this.home_page_listener=home_page_listener;
     }
-
+    public interface BannerBack{
+        void successful(List<BannerImageList> lists);
+    }
+    BannerBack bannerBack;
+    public void setBannerBackListener(BannerBack bannerBackListener){
+        this.bannerBack=bannerBackListener;
+    }
     public void loadData(String url,String data){
         network.connectnet(data,url,handler,1);
     }
@@ -92,4 +106,8 @@ public class Home_Page_Control {
         }
         network.connectnet(data,url,handler,2);
     }
+    public void getbanner(){
+        network.connectnet("",Constants.URL+"figure/getFigure",handler,3);
+    }
+
 }

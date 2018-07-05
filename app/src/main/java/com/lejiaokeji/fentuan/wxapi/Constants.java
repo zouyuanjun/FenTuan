@@ -11,4 +11,5 @@ public class Constants {
     public static  boolean SELECT_JD=false;   //首页是否选中京东还是拼多多
     public static Userinfo_Bean USERINFO;
     public static String APP_VERSION="1.0.0";
+    public static String AlipayAccount="";
 }

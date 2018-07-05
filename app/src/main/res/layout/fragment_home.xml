@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp" />
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal">
@@ -163,7 +164,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:background="@color/whitefff"
         android:orientation="horizontal">
         <RelativeLayout
@@ -189,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:textSize="40px"
+                android:textSize="50px"
                 android:textColor="#ff2d55"
                 android:text=" 推 荐 | "/>
         </RelativeLayout>

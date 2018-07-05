@@ -111,4 +111,10 @@ public class MainActivity extends BaseActivity {
         onlyIconItemView.initialize(drawable,checkedDrawable);
         return onlyIconItemView;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("mainactivity","sadfasdfa");
+    }
 }

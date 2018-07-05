@@ -67,10 +67,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 				weixinid=weixinid.replace("%openid",openid);
 				String url=Constants.URL+"/user/bindPhone";
 				//请求该微信号是否已注册
-//				Intent intent=new Intent(activity, MainActivity.class);
-//				intent.putExtra("phone","44");
-//				startActivity(intent);
-//				activity.finish();
 				network.connectnet(weixinid,url,handler,3);
 			}else if (what==3){
 				JsonElement je = null;
@@ -119,7 +115,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 		//注意：
 		//第三方开发者如果使用透明界面来实现WXEntryActivity，需要判断handleIntent的返回值，如果返回值为false，则说明入参不合法未被SDK处理，应finish当前透明界面，避免外部通过传递非法参数的Intent导致停留在透明界面，引起用户的疑惑
 		try {
-			Constants.api.handleIntent(getIntent(), this);
+			if (Constants.api.handleIntent(getIntent(), this)){
+				Log.d("微信登陆正常","");
+			}else {
+				Toast.makeText(activity,"微信功能异常，无法使用",Toast.LENGTH_SHORT).show();
+				finish();
+			};
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -17,7 +17,7 @@ public class Userinfo_Bean {
     private String phone;
     /**等级*/
     private Integer level;
-    /**佣金*/
+    /**预估佣金*/
     private float commission;
     /**京东推广id*/
     private String jdpid;
@@ -27,7 +27,7 @@ public class Userinfo_Bean {
     private String weixinNumber;
     /**上级邀请码*/
     private String superInvitecode;
-    /**收益*/
+    /**实际收益*/
     private float earnings;
     /**团队人数*/
     private Integer teamNumbers;
