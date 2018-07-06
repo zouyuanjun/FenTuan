@@ -3,6 +3,7 @@ package com.lejiaokeji.fentuan.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -23,7 +24,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class HomeTabFragment extends LazyLoadFragment {
     public static final String TITLE = "shoptype";
     private int mTitle = 0;
@@ -35,7 +35,9 @@ public class HomeTabFragment extends LazyLoadFragment {
      int  shoptype=0;
      int page=2;
     String url=Constants.URL+"shopList/recommended";
+    ConstraintLayout cl_try;
     Activity activity;
+    boolean isFirstload=true;
     public static HomeTabFragment newInstance(int type) {
         HomeTabFragment tabFragment = new HomeTabFragment();
         Bundle bundle = new Bundle();
@@ -46,16 +48,17 @@ public class HomeTabFragment extends LazyLoadFragment {
     @Override
     public void onStart() {
         super.onStart();
+        isFirstload=true;
          page=2;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity=getActivity();
+        home_page_control=Home_Page_Control.getInstance();
         if (getArguments() != null) {
             mTitle = getArguments().getInt(TITLE);
             shoptype=mTitle;
-            Log.d("当前标签","haha "+mTitle);
         }
     }
     @Override
@@ -63,85 +66,25 @@ public class HomeTabFragment extends LazyLoadFragment {
         return R.layout.fragment_home_tab;
     }
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
+    public void onResume() {
+        super.onResume();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myListData.clear();
     }
     @Override
     protected void lazyLoad() {
-        myListData.clear();
-        home_page_control=Home_Page_Control.getInstance();
-        String data="";
-        if (Constants.SELECT_JD){
-            Log.d("当前类型","京东"+shoptype);
-            if (shoptype==0){
-                url= Constants.URL+"shopList/sendJdData";
-                data="{\"pageStart\":\"1\"}";
-            }else {
-                url= Constants.URL+"shopList/findByTypePage";
-                data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
-                data=data.replace("type",String.valueOf(shoptype));
-            }
-        }else {
-            Log.d("当前类型","拼多多"+shoptype);
-            if (shoptype==0){
-                url= Constants.URL+"goodsSearch/recommend";
-                data="{\"pageStart\":\"1\",\"pddPid\":\"10004_15554651\"}";
-            }else {
-                PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,Constants.USERINFO.getPddpid());
-                switch (shoptype){
-                    case 1:{
-                        pdd_shop_bean.setCatId(210);
-                        break;
-
-                    }
-                    case 2:{
-                        pdd_shop_bean.setCatId(239);
-                        break;
-                    }
-                    case 3:{
-                        pdd_shop_bean.setCatId(3817);
-                        break;
-                    }
-                    case 4:{
-                        pdd_shop_bean.setCatId(77);
-                        break;
-                    }
-                    case 5:{
-                        pdd_shop_bean.setCatId(1464);
-                        break;
-                    }
-                    case 6:{
-                        pdd_shop_bean.setCatId(2);
-                        break;
-                    }
-                    case 7:{
-                        pdd_shop_bean.setCatId(489);
-                        break;
-                    }
-                    case 8:{
-                        pdd_shop_bean.setCatId(277);
-                        break;
-                    }
-                    case 9:{
-                        pdd_shop_bean.setCatId(2351);
-                        break;
-                    }
-                    case 10:{
-                        pdd_shop_bean.setCatId(7639);
-                        break;
-                    }
-                    case 11:{
-                        pdd_shop_bean.setCatId(6076);
-                        break;
-                    }
-                }
-                url= Constants.URL+"goodsSearch/selectCategory";
-                data=new Gson().toJson(pdd_shop_bean);
-            }
+        progressBar=findViewById(R.id.pb_shop_list);
+        if (isFirstload){
+            initdata();
+            isFirstload=false;
         }
-
-        home_page_control.loadData(url,data);
         home_page_control.setlistener(new Home_Page_Control.Home_Page_Listener() {
 
 
@@ -173,27 +116,36 @@ public class HomeTabFragment extends LazyLoadFragment {
             }
             @Override
             public void connecttimeout() {
-                Log.d("555","请求超时");
-                Toast.makeText(activity,"连接超时，请检查您的网络",Toast.LENGTH_LONG).show();
+                cl_try.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+         //       Toast.makeText(activity,"连接超时，请检查您的网络",Toast.LENGTH_LONG).show();
                 mRecyclerView.setPullLoadMoreCompleted();
             }
 
             @Override
             public void connectfail() {
+                cl_try.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 mRecyclerView.setPullLoadMoreCompleted();
-                Toast.makeText(activity,"连接失败，请检查您的网络",Toast.LENGTH_LONG);
+         //       Toast.makeText(activity,"连接失败，请检查您的网络",Toast.LENGTH_LONG);
             }
         });
-        progressBar=findViewById(R.id.pb_shop_list);
+        cl_try=findViewById(R.id.cl_try_again);
+        cl_try.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getdata();
+                cl_try.setVisibility(View.GONE);
+            }
+        });
+
         adapter=new Home_Re_Adapter(getContext(),myListData);
         mRecyclerView = findViewById(R.id.id_stickynavlayout_innerscrollview);
         mRecyclerView.setLinearLayout();
         mRecyclerView.setAdapter(adapter);
-        Log.d("55555","内标签正在渲染");
         adapter.notifyDataSetChanged();
         mRecyclerView.setPullRefreshEnable(false);
         mRecyclerView.setPushRefreshEnable(true);
-   //     getdata();
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
@@ -231,7 +183,11 @@ public class HomeTabFragment extends LazyLoadFragment {
             }
         });
     }
+    /**
+     * 加载更多数据
+     */
  public void getdata(){
+
         if (Constants.SELECT_JD){
             if (shoptype==0){
                 url= Constants.URL+"shopList/sendJdData";
@@ -305,5 +261,79 @@ public class HomeTabFragment extends LazyLoadFragment {
             home_page_control.loadData(url,data);
         }
  }
+    /**
+     * 第一次创建页面时初始化数据
+     */
+ public void initdata(){
 
+     String data="";
+     if (Constants.SELECT_JD){
+         Log.d("当前类型","京东"+shoptype);
+         if (shoptype==0){
+             url= Constants.URL+"shopList/sendJdData";
+             data="{\"pageStart\":\"1\"}";
+         }else {
+             url= Constants.URL+"shopList/findByTypePage";
+             data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
+             data=data.replace("type",String.valueOf(shoptype));
+         }
+     }else {
+         Log.d("当前类型","拼多多"+shoptype);
+         if (shoptype==0){
+             url= Constants.URL+"goodsSearch/recommend";
+             data="{\"pageStart\":\"1\",\"pddPid\":\"10004_15554651\"}";
+         }else {
+             PDD_Shop_Bean pdd_shop_bean=new PDD_Shop_Bean(1,Constants.USERINFO.getPddpid());
+             switch (shoptype){
+                 case 1:{
+                     pdd_shop_bean.setCatId(210);
+                     break;
+                 }
+                 case 2:{
+                     pdd_shop_bean.setCatId(239);
+                     break;
+                 }
+                 case 3:{
+                     pdd_shop_bean.setCatId(3817);
+                     break;
+                 }
+                 case 4:{
+                     pdd_shop_bean.setCatId(77);
+                     break;
+                 }
+                 case 5:{
+                     pdd_shop_bean.setCatId(1464);
+                     break;
+                 }
+                 case 6:{
+                     pdd_shop_bean.setCatId(2);
+                     break;
+                 }
+                 case 7:{
+                     pdd_shop_bean.setCatId(489);
+                     break;
+                 }
+                 case 8:{
+                     pdd_shop_bean.setCatId(277);
+                     break;
+                 }
+                 case 9:{
+                     pdd_shop_bean.setCatId(2351);
+                     break;
+                 }
+                 case 10:{
+                     pdd_shop_bean.setCatId(7639);
+                     break;
+                 }
+                 case 11:{
+                     pdd_shop_bean.setCatId(6076);
+                     break;
+                 }
+             }
+             url= Constants.URL+"goodsSearch/selectCategory";
+             data=new Gson().toJson(pdd_shop_bean);
+         }
+     }
+     home_page_control.loadData(url,data);
+ }
 }

@@ -76,7 +76,8 @@ public class Sign_In {
                     JsonElement je = new JsonParser().parse(result);
                     retCode = je.getAsJsonObject().get("retCode").getAsString();
                 }catch (JsonSyntaxException e){
-                 netWorkerr.severerr();
+                    netWorkerr.severerr();
+                    return;
                 }
                 if (retCode.equals("-2")){
                     netWorkerr.timeout();
@@ -88,7 +89,7 @@ public class Sign_In {
                 if (what==2){
                     //请求注册验证码接口
                     if (retCode.equals("5")){
-                        signresult.get_code_err(retCode);
+                        phoneSignUp.getcodeerr(result);
                     }
                 }else if (what == 3) {
                     //微信绑定绑定手机号的登陆结果
@@ -128,13 +129,11 @@ public class Sign_In {
                     if (retCode.equals("0")) {
                         String data = JSON.parseObject(result).getString("data");;
                         Constants.USERINFO = JSON.parseObject(data, new TypeReference<Userinfo_Bean>() {});
-                        signresult.signsuccessful();
+                        phoneSignUp.signupsuccessful();
                     } else if (retCode.equals("6")){
-                        signresult.yaoqing_err(retCode);
+                        phoneSignUp.youqingmaerr(retCode);
                     }else if (retCode.equals("16")){
-                        signresult.code_err();
-                    }else {
-                        signresult.othererr(retCode);
+                        phoneSignUp.codeerr(retCode);
                     }
                 }
             }
@@ -143,37 +142,49 @@ public class Sign_In {
     };
 
     public interface Signresult {
-        public void signsuccessful();
+         void signsuccessful();
 
-        public void yaoqing_err(String t);
+         void yaoqing_err(String t);
 
-        public void code_err();
-
-        public void uppasswordsuccessful();
-
-        public void othererr(String errcode);
-        public void get_code_err(String code);
     }
+
+    /**
+     * 手机号登陆回调接口
+     */
     public interface PhoneSignin{
-        public void phonesignin_successful();
-        public void phonesignin_fail();
+         void phonesignin_successful();
+         void phonesignin_fail();
     }
-    public interface Faillcallback {
-      public void servererr();
-    }
+
+    /**
+     * 修改密码回调接口
+     */
     public interface UpdataPassWord{
-        public void fail();
-        public void successful();
+         void fail();
+         void successful();
     }
     /**
      * 网络请求状态回调接口
      */
     public interface NetWorkerr {
-        public void timeout();
-        public void connectfail();
-        public void severerr();
+         void timeout();
+         void connectfail();
+         void severerr();
     }
 
+    /**
+     * 手机号注册回调接口
+     */
+    public interface PhoneSignUp{
+        void signupsuccessful();
+        void codeerr(String t);
+        void youqingmaerr(String t);
+        void getcodeerr(String t);
+    }
+    private  PhoneSignUp phoneSignUp;
+    public void setPhoneSignUpListener(PhoneSignUp phoneSignUpListener){
+        this.phoneSignUp=phoneSignUpListener;
+    }
     private NetWorkerr netWorkerr;
     public void setNetWorkListener(NetWorkerr netWorkerr){
         this.netWorkerr=netWorkerr;

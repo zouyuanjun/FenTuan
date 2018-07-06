@@ -192,15 +192,9 @@ public class Pdd_Shop_Details_Activity extends AppCompatActivity {
 
             @Override
             public void openpddurl(String url) {
-                if (uninstallSoftware(activity)) {
-                    Uri uri = Uri.parse(url);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    Intent intent = new Intent(activity,WebViewActivity.class);
+                    intent.putExtra("url",url);
                     startActivity(intent);
-                } else {
-                    Uri uri = Uri.parse(url);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
             }
 
             @Override

@@ -148,7 +148,6 @@ public class StartActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        Log.d("5555","本地版本"+versionCode);
         return versionCode;
     }
     public  void cheakversion(){

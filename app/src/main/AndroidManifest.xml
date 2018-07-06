@@ -51,7 +51,8 @@
         <activity android:name=".activity.Shouyi_Activity"></activity>
         <activity android:name=".activity.Activity_tixian"></activity>
         <activity android:name=".activity.Add_Alipay_Activity"></activity>
-        <activity android:name=".activity.Phone_Signin_Activity"></activity>
+        <activity android:name=".activity.WebViewActivity"></activity>
+        <activity android:name=".activity.Phone_SignUp_Activity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lejiaokeji.fentuan.fileprovider"

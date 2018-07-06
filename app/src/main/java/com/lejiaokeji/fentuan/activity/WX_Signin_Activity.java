@@ -141,28 +141,29 @@ public class WX_Signin_Activity extends BaseActivity {
 
             @Override
             public void yaoqing_err(String t) {
-                Toast.makeText(activity,"邀请码好像错了哦",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "邀请码好像错了哦", Toast.LENGTH_LONG).show();
             }
 
-            @Override
-            public void code_err() {
-                Toast.makeText(activity,"验证码好像错了哦",Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void uppasswordsuccessful() {
-            }
-
-            @Override
-            public void othererr(String errcode) {
-                Toast.makeText(activity,"抱歉，发生看意料之外的错误，错误码："+errcode,Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void get_code_err(String code) {
-
-            }
+//            @Override
+//            public void code_err() {
+//                Toast.makeText(activity,"验证码好像错了哦",Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void uppasswordsuccessful() {
+//            }
+//
+//            @Override
+//            public void othererr(String errcode) {
+//                Toast.makeText(activity,"抱歉，发生看意料之外的错误，错误码："+errcode,Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void get_code_err(String code) {
+//
+ //           }
         });
+
     }
 
     public void getinputdata() {

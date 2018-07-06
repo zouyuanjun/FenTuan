@@ -59,7 +59,6 @@ public class Home_Page_Control {
                     home_page_listener.searchresult(shop_data);
                 }else if (what==3){
                     String data=JSON.parseObject(result).getString("data");
-                    Log.d("5555","SIGN返回数据"+data);
                     List<BannerImageList> lists=JSON.parseArray(data,BannerImageList.class);
                     bannerBack.successful(lists);
                 }

@@ -28,7 +28,10 @@ import com.lejiaokeji.fentuan.control.Sign_In;
 import com.lejiaokeji.fentuan.utils.Network;
 import com.lejiaokeji.fentuan.view.helpview.GetAlerDialog;
 
-public class Phone_Signin_Activity extends AppCompatActivity {
+/**
+ * 手机号注册界面
+ */
+public class Phone_SignUp_Activity extends AppCompatActivity {
     Network network;
     Sign_In sign_in;
     EditText et_phone;
@@ -119,32 +122,27 @@ public class Phone_Signin_Activity extends AppCompatActivity {
         getinputdata();
     }
     public void init() {
-        sign_in.setsignlistener(new Sign_In.Signresult() {
+        sign_in.setPhoneSignUpListener(new Sign_In.PhoneSignUp() {
             @Override
-            public void signsuccessful() {
+            public void signupsuccessful() {
                 Intent intent = new Intent(activity, MainActivity.class);
                 activity.startActivity(intent);
                 finish();
             }
+
             @Override
-            public void yaoqing_err(String t) {
+            public void codeerr(String t) {
+                Toast.makeText(activity,"错误代码："+t+", 验证码错误或已失效",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void youqingmaerr(String t) {
                 Toast.makeText(activity,"错误代码："+t+", 邀请码好像错了哦",Toast.LENGTH_LONG).show();
             }
+
             @Override
-            public void code_err() {
-            }
-            @Override
-            public void uppasswordsuccessful() {
-            }
-            @Override
-            public void othererr(String errcode) {
-                    if (errcode.equals("999")){
-                        Toast.makeText(activity,"抱歉，服务器内部错误，请稍后再试",Toast.LENGTH_LONG).show();
-                    }
-            }
-            @Override
-            public void get_code_err(String code) {
-                AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"错误码："+code,"该手机号已注册或已绑定微信号，可直接登陆");
+            public void getcodeerr(String t) {
+                AlertDialog alertDialog= GetAlerDialog.getdialog(activity,"错误码："+t,"该手机号已注册或已绑定微信号，可直接登陆");
                 alertDialog.show();
                 alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -227,5 +225,25 @@ public class Phone_Signin_Activity extends AppCompatActivity {
         } else {
             Toast.makeText(activity, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sign_in.setNetWorkListener(new Sign_In.NetWorkerr() {
+            @Override
+            public void timeout() {
+                Toast.makeText(activity,"连接服务器失败，正在重试···",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void connectfail() {
+                Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void severerr() {
+                Toast.makeText(activity,"登陆失败，发生服务器内部错误",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

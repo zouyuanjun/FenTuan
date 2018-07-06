@@ -85,6 +85,12 @@ public class UserCentreFragment extends LazyLoadFragment implements View.OnClick
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        tv_nickname.setText(Constants.USERINFO.getNickname());
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_help:{
