@@ -32,7 +32,7 @@ import java.util.List;
         TabLayout tabLayout;
         @Override
         protected int setContentView() {
-            return R.layout.fragment_recommend;
+            return R.layout.fragment_rec;
         }
 
         @Override
@@ -42,7 +42,7 @@ import java.util.List;
         }
         //设置viewpage adapter
         private void initDatas() {
-            mIndicator.setTitles(mTitles);
+         //   mIndicator.setTitles(mTitles);
 
             for (int i = 0; i < mTitles.length; i++) {
                 mFragments[i] = (RecommendTabFragment) RecommendTabFragment.newInstance(mTitles[i]);
@@ -79,7 +79,7 @@ import java.util.List;
             tabLayout=findViewById(R.id.mytablayout);
             mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
             linearLayout=findViewById(R.id.ly_tab);
-            mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
+        //    mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[0]));
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[1]));
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[2]));

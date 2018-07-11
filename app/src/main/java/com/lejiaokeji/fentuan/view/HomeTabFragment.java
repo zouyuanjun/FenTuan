@@ -274,7 +274,7 @@ public class HomeTabFragment extends LazyLoadFragment {
              data="{\"pageStart\":\"1\"}";
          }else {
              url= Constants.URL+"shopList/findByTypePage";
-             data="{\"goodsType\":\"type\",\"pageStart\":\"1\"}";
+             data="锹";
              data=data.replace("type",String.valueOf(shoptype));
          }
      }else {

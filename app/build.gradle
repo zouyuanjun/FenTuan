@@ -51,4 +51,6 @@ dependencies {
     implementation "ch.acra:acra-core:$acraVersion"
     implementation "ch.acra:acra-toast:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
 }

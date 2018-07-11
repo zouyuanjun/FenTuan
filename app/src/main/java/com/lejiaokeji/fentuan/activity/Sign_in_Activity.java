@@ -141,10 +141,9 @@ public class Sign_in_Activity extends BaseActivity implements View.OnClickListen
             public void connectfail() {
                 Toast.makeText(activity,"与服务器连接失败，请检查网络",Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void severerr() {
-                Toast.makeText(activity,"服务器内部错误",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity,"服务器发生了一点问题，暂时无法登陆了",Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -18,6 +18,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lejiaokeji.fentuan.activity.BaseActivity;
 import com.lejiaokeji.fentuan.adapter.ViewPagerAdapter;
 import com.lejiaokeji.fentuan.view.HomeFragment;
+import com.lejiaokeji.fentuan.view.RecommendFragment;
 import com.lejiaokeji.fentuan.view.helpview.OnlyIconItemView;
 import com.lejiaokeji.fentuan.view.NotificationFragment;
 import com.lejiaokeji.fentuan.view.UserCentreFragment;
@@ -65,8 +66,8 @@ public class MainActivity extends BaseActivity {
         pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
         mNavigationController = pageBottomTabLayout.custom()
                 .addItem(newItem(R.drawable.tab_ic_home_def,R.drawable.tab_ic_home_sel))
-//                .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))
-//                .addItem(newItem(R.drawable.tab_ic_mall_def,R.drawable.tab_ic_mall_sel))
+                .addItem(newItem(R.drawable.tab_ic_recom_def,R.drawable.tab_ic_recom_sel))
+//  a              .addItem(newItem(R.drawable.tab_ic_mall_def,R.drawable.tab_ic_mall_sel))
                 .addItem(newItem(R.drawable.tab_ic_inform_def,R.drawable.tab_ic_inform_sel))
                 .addItem(newItem(R.drawable.tab_ic_my_def,R.drawable.tab_ic_my_sel))
                 .build();
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity {
     private  void initview() {
 
         fragmentList.add(new HomeFragment());
-//        fragmentList.add(new RecommendFragment());
+        fragmentList.add(new RecommendFragment());
 //        fragmentList.add(new Store_Fragment());
         fragmentList.add(new NotificationFragment());
         fragmentList.add(new UserCentreFragment());
@@ -115,6 +116,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("mainactivity","sadfasdfa");
+        Log.d("mainactivity","sa阀手动阀a");
     }
 }

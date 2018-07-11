@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.lejiaokeji.fentuan.R;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -24,13 +25,14 @@ public class MyApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-     //   ACRA.init(this);
+       ACRA.init(this);
     }
 
     @Override
     public void onCreate() {
         Log.d("MyApplication","初始化");
         super.onCreate();
+        LeakCanary.install(this);
 
     }
 }
